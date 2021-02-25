@@ -162,8 +162,6 @@ a.text-primary:focus {
   /*overflow-y: auto;*/
 }
 .wrap-upload {
-  width: 100%;
-  min-height: calc(100vh - 85px);
   background: url(../images/contents/bg-upload.png) center center;
   background-size: cover;
   background-position: 0 0;
@@ -189,8 +187,6 @@ a.text-primary:focus {
   min-height: calc(100vh - 85px);
   padding-right: 15px;
   padding-left: 15px;
-  background: url(../images/contents/bg-upload.png) center center;
-  background-size: cover;
 }
 .user-article-2 {
   width: calc(100% - 230px);
