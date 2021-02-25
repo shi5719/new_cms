@@ -1001,7 +1001,7 @@ a.badge-outline.focus {
 }
 .plupload_filelist li {
   padding: 6px 8px;
-  background: #f5f5f5 url("../images/plupload/backgrounds.gif") repeat-x 0 -156px;
+  background: #f5f5f5;
   border-bottom: 1px solid #ddd;
 }
 li.plupload_droptext {
