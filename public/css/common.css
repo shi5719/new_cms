@@ -166,6 +166,7 @@ a.text-primary:focus {
   min-height: calc(100vh - 85px);
   background: url(../images/contents/bg-upload.png) center center;
   background-size: cover;
+  background-position: 0 0;
 }
 .user-headbox {
   background-color: #e9e9e9;
