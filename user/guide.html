@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+        <title>춘천교육대학교 컨텐츠관리시스템</title>
+    
+        <!-- Core -->
+        <link rel="stylesheet" href="../public/vendor/jquery-ui-1.12.1/jquery-ui.css" type="text/css" />
+        <link rel="stylesheet" href="../public/vendor/bootstrap-4.5.3/css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="../public/vendor/fontawesome-free-5.15.2/css/all.css"/> <!-- font -->
+        <script src="../public/js/jquery-3.5.1.js"></script>  
+        <script src="../public/js/popper.min.js" type="text/javascript"></script>
+        <script src="../public/vendor/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="../public/vendor/bootstrap-4.5.3/js/bootstrap.js" type="text/javascript"></script>
+        <script src="../public/vendor/fontawesome-free-5.15.2/js/all.js" type="text/javascript"></script>
+    
+        <!-- External -->
+        <!-- icheck -->
+        <link rel="stylesheet" href="../public/vendor/icheck-material-master/icheck-material.css" type="text/css" /> <!-- chkbox, radiobtn -->
+        <!-- nicescroll -->
+        <script src="../public/vendor/jquery.nicescroll-master/jquery.nicescroll.js" type="text/javascript"></script>
+        <!-- slidemenu -->
+        <script src="../public/vendor/slidemenu/modernizr.custom.js" type="text/javascript"></script>
+        <script src="../public/vendor/slidemenu/classie.js" type="text/javascript"></script>
+        <!-- datatables -->
+        <script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
+        <!--fancytree -->
+        <script src="../public/vendor/fancytree/src/jquery.fancytree.js"></script>
+        <script src="../public/vendor/fancytree/src/jquery.fancytree.dnd5.js"></script>
+        <script src="../public/vendor/fancytree/src/jquery.fancytree.edit.js"></script>
+        <script src="../public/vendor/fancytree/src/jquery.fancytree.gridnav.js"></script>
+        <script src="../public/vendor/fancytree/src/jquery.fancytree.table.js"></script>
+        <link rel="stylesheet" href="../public/vendor/fancytree/src/ui.fancytree.css" />
+        <!-- Laby -->
+        <link rel="stylesheet" href="../public/css/common.css" type="text/css" /> <!-- common -->
+        <script src="../public/js/common.js"></script>
+        <!-- External //-->
+    </head>
+<body>
+    <div id="wrap-upload">
+        <!-- header -->
+        <nav class="navbar navbar-expand-xl navbar-light bg-primary">
+            <div class="navbar-brand">
+                <h4 class="mb-0"><a href="">콘텐츠관리시스템</a></h4>
+                <div style="text-align: center; font-size:0.75rem; color:#98acff">Contents Management System</div>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="upload.html"><i class="fas fa-file-upload"></i> 콘텐츠등록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-01.html"><i class="fas fa-bars"></i> 콘텐츠목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="helpdesk.html"><i class="fas fa-info-circle"></i> 헬프데스크</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-book"></i> 매뉴얼다운로드</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link2" href="guide.html">사용자가이드</a>
+                    </li>
+                </ul>
+                <!-- admin info -->
+                <div class="dropdown">
+                    <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdown-header" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../public/images/icon/user.png" />
+                        <span>테스트학생(test_02)</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-md-right dropdown-menu-header" aria-labelledby="dropdown-header">
+                        <li>
+                            <i class="fas fa-user mr-2"></i>테스트학생12345(test_02)
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope mr-2"></i>gildonghong@cnue.ac.kr
+                        </li>
+                        <li>
+                            <i class="fas fa-link mr-1"></i>
+                            <a type="button" class="btn btn-outline-primary btn-xs">Admin</a>
+                            <a type="button" class="btn btn-light btn-xs">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // admin info end -->
+            </div>
+        </nav>
+        <!--// header -->
+        <!-- contents (sidebar, article) -->
+        <div class="contents-upload" >
+            <div class="container-md mt-5 pb-5" style="background-color:#fff; min-height:700px;">
+                <div class="py-3">
+                    <span class="mr-3">사용자가이드( 예시예시예시 )</span>
+                    <span class="font-12">예시예시예시 뭐넣을까 CMS 초기 접속 후 원활한 사용을 위한 가이드입니다.</span>
+                </div>
+                <div class="w-100">
+                    <h6 class="text-left">1.콘텐츠목록</h6>
+                    <p class="mb-3"><img src="../public/images/contents/guide-01.png" style="border:1px solid #fff" alt="" /></p>
+                    <span class="text-left">기타 궁금하신 사항은 헬프데스크를 이용해주시기 바랍니다.</span>
+                    <a class="btn btn-orange btn-xs ml-1" href="helpdesk.html">헬프데스크 바로가기</a>
+                   
+                </div>    
+            </div>
+        <!--// contents (sidebar, article) -->
+        </div>
+        <!-- wrap (width 100% height 100%)-->
+    </div>
+</body>
+</html>
