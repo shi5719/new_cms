@@ -1229,3 +1229,7 @@ li.plupload_droptext {
   left: -4px;
   top: -32px;
 }
+.jspVerticalBar
+{
+	width: 5px;
+}
