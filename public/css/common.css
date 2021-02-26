@@ -1230,3 +1230,6 @@ li.plupload_droptext {
   top: -32px;
 }
 /* 123 */
+.jspVerticalBar {
+  width: 5px;
+}
