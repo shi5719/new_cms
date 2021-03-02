@@ -1,0 +1,33 @@
+
+
+
+
+/*
+	lab.UixPlayerFactory.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var UixPlayerFactory = {
+	
+	createPlayer: function() {
+
+		if (bizDevice.isMobile()) {
+			console.log('create UixPlayerMobile');
+			return new UixPlayerMobile();
+		}
+		else {
+            console.log('create UixPlayerDesktop');
+			return new UixPlayerDesktop();
+		}
+	},
+};
+
+
+
+
+
+
+

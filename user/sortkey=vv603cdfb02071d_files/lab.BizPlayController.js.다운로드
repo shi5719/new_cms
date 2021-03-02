@@ -1,0 +1,161 @@
+/*
+	lab.BizPlayController.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+	[Biz Component]
+*/
+
+
+
+var BizPlayController = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	uixPlayController: null,
+	eventTarget: null,
+	mainEventTarget: null,
+
+	constructor: function(_eventTarget) {        
+
+		this.eventTarget = new EventTargetArgs();
+		this.mainEventTarget = _eventTarget;
+
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	getUixPlayController: function() {
+		
+		return this.uixPlayController;
+	},
+
+	
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	initialize: function() {
+
+		this.uixPlayController = new UixPlayController(this.eventTarget);
+
+        this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_ALLWRAP_MOUSEOVER, this.OnControllerMouseoverWrap);
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_PLAY, this.OnControllerPlay);
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_PAUSE, this.OnControllerPause);		
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_TEST, this.OnControllerTest);
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_STOP, this.OnControllerStop);
+
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_SEEKSTART, this.OnControllerSeekStart);
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_SEEKEND, this.OnControllerSeekEnd);
+
+		this.eventTarget.addListener(EventDefine.PLAYCONTROLLER_CHANGEVOLUME, this.OnControllerChangevolume);
+
+		this.uixPlayController.load();
+	},
+
+
+	setCurrentTime: function(_time) {
+
+		this.uixPlayController.setCurrentTime(_time, false);
+	},
+
+	setCurrentVolume: function(_vol) {
+
+		this.uixPlayController.setCurrentVolume(_vol, false);
+	},
+
+		
+
+	setDurationTime: function(_time) {
+
+		this.uixPlayController.setDurationTime(_time);
+	},
+
+	stop: function() {
+		
+		this.uixPlayController.setStop();
+
+	},
+
+	play: function() {
+		
+		this.uixPlayController.setPlay();
+	},
+
+	showController: function() {
+
+		this.uixPlayController.showController();
+	},
+
+	hideController: function() {
+
+		this.uixPlayController.hideController();
+	},
+		
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	
+	etc: function() {
+
+	},
+
+    OnControllerMouseoverWrap: function () {
+
+        if (bizPlayController.mainEventTarget) {
+            bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_ALLWRAP_MOUSEOVER);
+        }
+    },
+
+	OnControllerPlay: function() {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_PLAY);
+		}
+	},
+
+	OnControllerPause: function() {
+
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_PAUSE);
+		}
+	},
+
+	OnControllerTest: function() {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_TEST);
+		}
+	},
+
+	OnControllerStop: function() {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_STOP);
+		}
+	},
+
+	OnControllerSeekStart: function() {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_SEEKSTART);
+		}
+	},
+
+	OnControllerSeekEnd: function(_event, _time) {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_SEEKEND, _time);
+		}
+	},
+
+
+	OnControllerChangevolume: function(_event, _vol) {
+		if (bizPlayController.mainEventTarget) {	        
+			bizPlayController.mainEventTarget.fire(EventDefine.PLAYCONTROLLER_CHANGEVOLUME, _vol);
+		}
+	},
+		
+});

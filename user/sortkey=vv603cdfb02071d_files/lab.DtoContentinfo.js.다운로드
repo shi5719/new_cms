@@ -1,0 +1,47 @@
+
+/*
+	lab.DtoContentinfo.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+var DtoContentinfo = Base.extend({
+
+    _contentid: '',
+	_techOrder: ['html5', 'flash'],
+    _contenttype: '',						
+
+    _contenturl1: '',						
+    _contenturl2: '',				
+    _contenturl3: '',                
+	_contenturl4: '',												
+
+    _contentstreamingtype: 'video/mp4',     
+
+    _m_contenturl1: '',                     
+    _m_contenturl2: '',                     
+    _m_contenturl3: '',                     
+	_m_contenturl4: '',                     
+    _m_contentstreamingtype: 'video/mp4',
+		
+
+	_content_httpurl1: '',
+	_content_httpurl2: '',
+	_content_httpurl3: '',
+	_content_httpurl4: '',
+	_http_content_streamingtype: '',
+
+    _cnt_linktype: '',
+	_content_title: '',
+    _content_desc: '',
+	_content_author: '',
+	_content_regdate: '',
+    _content_logo_isuse: '1',
+    _content_logo_path: '',
+    _content_logo_maxwidthpixel: 0,
+    _content_logo_minwidthpixel: 0,
+    _content_doc_cntid: '',
+    _content_speed_isuse: '1',
+    _volumechannelindex: '0'
+});

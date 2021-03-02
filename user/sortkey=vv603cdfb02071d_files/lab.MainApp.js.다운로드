@@ -1,0 +1,898 @@
+/*
+	lab.MainApp.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var MainApp = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	bodyElement: '',
+	uixBodyHtml: null,
+
+	mainEventTarget: null,
+
+	hideCoverTimer: null,
+    hideCovertimeInteval: 2000,
+	videoloadingCompleted: false,
+
+	weburlpath: '',
+	islive: "0",
+
+	contentinfoData: null,
+	serviceinfoData: null,
+
+	lastTime: 0,
+	lastChannelindex: 0,
+
+	//진도율 체크 관련 정보
+	wstoken : '', //토큰
+	wsfunction : 'mod_laby_track', //고정
+	moodlewsrestformat : 'json', //고정
+	asskey : '', //플레이어에서 전달
+	att : '', //플레이어에서 전달
+	cmsid : '',
+	tageturl : '', //정보를 보내려는 lms주소
+	intervalTime : 60, //업데이트 주기
+	firstPlayTime : '0', //재생 처음 시작시간
+	startTime : '0', //데이터 전송 주기 기준 재생 시작시간
+	duration : '0', //컨텐츠 전체 재생시간, 플레이어 로드시에 값이 들어감
+	cumulativeTime : '0', //컨텐츠 총 재생시간
+	page : '', //현재 슬라이드 번호 (안쓰임)
+	totalpage : '', //전체 슬라이드 개수 (안쓰임)
+	state: '', //재생 상태 2 = 일시정지, 3 = 재생 시작, 8 = 업데이트, 10 = 끝까지 시청, 99 = 플레이어 닫기
+	startat : '0', //이어보기 시작시간
+	endat : '0', //이 시간 이상 컨트롤 못하게
+
+	//유비온 뷰어에서 전달받은 정보
+	content_name : '',
+	isprg : '',
+	cpltime : '',
+	prgstart : '',
+	prgend : '',
+
+	constructor: function() {
+
+		var agent = navigator.userAgent.toUpperCase();
+		if ((agent.indexOf("MSIE 7") != -1) || (agent.indexOf("MSIE 8") != -1) || (agent.indexOf("MSIE 9") != -1)) {
+			alert('Chrome 혹은 IE 9 이상을 지원합니다.');
+			return;
+		}
+		this.mainEventTarget = new EventTargetArgs();
+
+		bizDevice = new BizDevice();
+
+		bizPlayController = new BizPlayController(this.mainEventTarget);
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	run: function (_bodyElement, _cnt_uid, _urlpath, _islive, _cos_uid, _usr_uid, _usr_type, _cnt_playtype, _targeturl, _startat, _endat, _wstoken, _asskey, _att, _pr, _cmsid, _content_name, _isprg, _cpltime, _prgstart, _prgend) {
+
+		if (_islive == "1") {
+			if (bizDevice.isWin7()) {
+				alert("지원되지 않는 OS 브라우저입니다. \r\nWindows 10 혹은 Chrome 사용을 권장합니다.");
+				return;
+			}
+		}
+
+		//console.log('test : ' + _usr_uid);
+
+		//진도율 체크 관련 정보
+		this.playKey = 'pKey0000' + Math.floor(Math.random() * 10) + 1;
+		this.cnt_uid = _cnt_uid;
+		this.usr_uid = _usr_uid;
+		if (_targeturl) {
+			mainApp.tageturl = _targeturl + '/webservice/rest/server.php';
+			//mainApp.tageturl2 = 'http://114.203.209.177:8000/postdata';
+		}
+		this.firstPlayTime = _startat;
+		this.startat = _startat;
+		this.endat = _endat;
+		this.wstoken = _wstoken;
+		this.asskey = _asskey;
+		this.att = _att;
+		this.pr = _pr;
+		this.cmsid = _cmsid;
+
+		this.content_name = _content_name;
+		this.isprg = _isprg;
+		this.cpltime = _cpltime;
+		this.prgstart = _prgstart;
+		this.prgend = _prgend;
+
+		this.bodyElement = _bodyElement;
+		this.islive = _islive;
+
+		var self_cnt_uid = _cnt_uid;
+		this.weburlpath = _urlpath;
+		var self_contenturlpath = this.weburlpath + 'contentinfo/contentinfo.xml';
+
+		dtoContentinfoService = new DtoContentinfoService();
+
+		if (self_cnt_uid !== "") {
+			if (_islive === "1") {
+				self_contenturlpath = '/HttpAPI/GetContentinfobyLivePlayer?cnt_uid=' + self_cnt_uid;						//urlpath = 'http://192.168.0.200:5009/HttpAPI/GetContentinfobyPlayer?cnt_uid=cnt0000001';
+			}
+			else {
+				self_contenturlpath = '/HttpAPI/GetContentinfobyPlayer?cnt_uid=' + self_cnt_uid + '&cnt_playtype=' + _cnt_playtype; //urlpath = 'http://192.168.0.200:5009/HttpAPI/GetContentinfobyPlayer?cnt_uid=cnt0000001';
+			}
+		}
+
+		//console.log(self_contenturlpath);
+
+		dtoContentinfoService.load(self_contenturlpath,
+			function () {
+				var data = dtoContentinfoService.getContentinfo();
+				mainApp.contentinfoData = data;
+				mainApp.duration = mainApp.contentinfoData._duration;
+				if (mainApp.duration < 600) {
+					mainApp.intervalTime = 30;
+				}
+				if (mainApp.contentinfoData._cnt_linktype === "Sns") {
+
+					$(HtmlDefine.MAIN_IFRAME).attr("src", mainApp.contentinfoData._contenturl1);
+					$(HtmlDefine.MAIN_IFRAME).width("100vw");
+					$(HtmlDefine.MAIN_IFRAME).height("100vh");
+					$(HtmlDefine.MAIN_IFRAME).show();
+					return;
+				}
+				console.log(mainApp.contentinfoData._contentid);
+				mainApp.loadBody();
+			},
+			function () {
+				alert('Can not load contentinfo');
+			});
+
+		//-- 사용자 접속정보 등록
+		var self_cos_uid = _cos_uid;
+		var self_usr_uid = _usr_uid;
+		var self_usr_type = _usr_type;
+		var self_cnt_flag = (_islive == "1" ? "3" : "6");
+		var self_statscontentspath = "";
+
+		//cnt_uid, usr_uid, usr_type, cnt_flag
+		if (self_usr_uid !== "") {
+			dtoStatscontentsinfoService = new DtoStatscontentsinfoService();
+			self_statscontentspath = '/HttpAPI/CreateStatscontents?cnt_uid=' + self_cnt_uid + '&usr_uid=' + self_usr_uid + '&usr_type=' + self_usr_type + '&cnt_flag=' + self_cnt_flag;
+			console.log(self_statscontentspath);
+			dtoStatscontentsinfoService.load(self_statscontentspath,
+				function () {
+					console.log(self_statscontentspath);
+				},
+				function () {
+				}
+			);
+		}
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	getUixBodyHtml: function() {
+
+		return this.uixBodyHtml;
+	},
+
+	loadBody: function () {
+
+		var devicetype = bizDevice.getDevice();
+
+		this.uixBodyHtml = new UixBodyHtml();
+
+
+		this.uixBodyHtml.load(this.bodyElement, this.weburlpath, devicetype, HtmlDefine.HTML_NAME, HtmlDefine.CSS_NAME, this.onBodyHtmlCompleted);
+
+
+
+	},
+
+	initPlayer: function() {
+
+		console.log('initPlayer');
+
+		bizPlayController.initialize();
+
+		mainApp.registerEvent();
+
+		mainApp.loadplay();
+	},
+
+	registerEvent: function() {
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_PLAY, this.OnControllerPlay);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_PAUSE, this.OnControllerPause);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_TEST, this.OnControllerTest);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_STOP, this.OnControllerStop);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_SEEKSTART, this.OnControllerSeekStart);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_SEEKEND, this.OnControllerSeekEnd);
+		this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_CHANGEVOLUME, this.OnControllerChangevolume);
+        this.mainEventTarget.addListener(EventDefine.PLAYCONTROLLER_ALLWRAP_MOUSEOVER, this.OnControllerMouseoverWrap);
+
+		this.mainEventTarget.addListener(EventDefine.VIDEO_ERROR, this.OnVideoError);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_TIMEUPDATE, this.OnVideoTimeUpdate);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_DURATIONCHANGE, this.OnVideoDurationchange);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_VOLUMECHANGE, this.OnVideoVolumechange);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_ENDED, this.OnVideoEnded);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_ALLWRAP_MOUSEOVER, this.OnMouseoverVideoWrap);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_LOADINGCOMPLETED, this.OnVideoLoadingCompleted);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_LAYOUTCHANGED, this.OnVideoLayoutChanged);
+		this.mainEventTarget.addListener(EventDefine.VIDEO_LAYOUTCHANGED_COMPLETED, this.OnVideoLayoutChangedCompleted);
+        this.mainEventTarget.addListener(EventDefine.VIDEO_LOADEDDATA, this.OnVideLoadeddata);
+
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_RESTART, this.OnMainBodyRestart);
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_MOBILESCREEN_RESTART, this.OnMainBodyMobileScreenRestart);
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_MOBILECAM_RESTART, this.OnMainBodyMobileCamRestart);
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_MOBILECAM2_RESTART, this.OnMainBodyMobileCam2Restart);
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_MOBILECAM3_RESTART, this.OnMainBodyMobileCam3Restart);
+
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_SPEEDCHANGE, this.OnMainBodySpeedchange);
+
+        this.mainEventTarget.addListener(EventDefine.MAINBODY_MAINCHANGE, this.OnMainBodyMainchannelchange);
+        this.mainEventTarget.addListener(EventDefine.MAINBODY_QUARDCHANGE, this.OnMainBodyQuardchange);
+
+		this.mainEventTarget.addListener(EventDefine.MAINBODY_TEST, this.OnMainBodyTest);
+
+		this.getUixBodyHtml().setEventTarget(this.mainEventTarget);
+
+	},
+
+	loadplay: function() {
+
+		mainApp.releaseVideoPlayer();
+
+		console.log('loadplay');
+
+		bizVideoPlayer = new BizVideoPlayer(this.mainEventTarget, mainApp.contentinfoData);
+		bizVideoPlayer.loadplay();
+
+	},
+
+	playchannel: function(_chindex) {
+
+		bizVideoPlayer.playchannel(_chindex);
+	},
+
+	play: function() {
+
+		bizVideoPlayer.play();
+	},
+
+	playchanneltoseek: function(_chindex, _time) {
+
+		bizVideoPlayer.playchannel(_chindex);
+
+		bizVideoPlayer.seekchannel(_chindex, _time);
+
+		/*
+		window.setTimeout(
+			function() {
+				bizVideoPlayer.seekchannel(_chindex, _time);
+			}, 1000);
+			*/
+	},
+
+	pause: function() {
+
+		bizVideoPlayer.pause();
+	},
+
+	pausechannel: function(_chindex) {
+
+        bizVideoPlayer.pause();
+
+		//bizVideoPlayer.pausechannel(_chindex);
+	},
+
+	test: function() {
+
+		bizVideoPlayer.test();
+	},
+
+	stop: function() {
+
+		bizVideoPlayer.stop();
+	},
+
+	seekStart: function() {
+
+		bizVideoPlayer.seekStart();
+	},
+
+	seek: function(_time) {
+
+		bizVideoPlayer.seek(_time);
+	},
+
+	seekchannel: function(_chindex, _time) {
+
+		bizVideoPlayer.seekchannel(_chindex, _time);
+	},
+
+
+	volStart: function() {
+
+		bizVideoPlayer.volStart();
+	},
+
+	vol: function(_vol) {
+
+		bizVideoPlayer.vol(_vol);
+	},
+
+	releaseVideoPlayer: function() {
+
+		if(bizVideoPlayer == null) return;
+
+		bizVideoPlayer.release();
+		bizVideoPlayer = null;
+
+	},
+
+	showCoverlayer: function() {
+
+		mainApp.getUixBodyHtml().showBody();
+
+		if (bizDevice.isMobile())
+		{
+			mainApp.getUixBodyHtml().showMobileRestartPlayBtn();
+		}
+
+		bizPlayController.showController();
+	},
+
+	hideCoverlayer: function() {
+
+		mainApp.getUixBodyHtml().hideBody();
+
+		if (bizDevice.isMobile())
+		{
+			mainApp.getUixBodyHtml().hideMobileRestartPlayBtn();
+		}
+
+		bizPlayController.hideController();
+	},
+
+	//lms로 데이터 전송하는 기능
+	SendDataToLms: function(_state, _positionold, _positionnew) {
+    	if (mainApp.tageturl) {
+			$.ajax({
+				type : "POST",
+				url: mainApp.tageturl,
+				data: {
+					wstoken : mainApp.wstoken,
+					wsfunction : mainApp.wsfunction,
+					moodlewsrestformat : mainApp.moodlewsrestformat,
+					asskey : mainApp.asskey,
+					att : mainApp.att,
+					cmsid : mainApp.cmsid,
+					state : _state,
+					positionold : _positionold,
+					positionnew : _positionnew
+				},
+				dataType: "json",
+				cache : false,
+				success: function(data) {
+					console.log(data);
+				}, error : function(err) {
+					console.log(err);
+				}
+			});
+		}
+	},
+	//lms로 데이터 전송하는 기능 (테스트 서버로)
+	SendDataToLms2: function(_state, _positionold, _positionnew) {
+		if (mainApp.tageturl) {
+			$.ajax({
+				type : "POST",
+				url: mainApp.tageturl2,
+				data: {
+					wstoken : mainApp.wstoken,
+					wsfunction : mainApp.wsfunction,
+					moodlewsrestformat : mainApp.moodlewsrestformat,
+					asskey : mainApp.asskey,
+					att : mainApp.att,
+					cmsid : mainApp.cmsid,
+					state : _state,
+					positionold : _positionold,
+					positionnew : _positionnew
+				},
+				dataType: "json",
+				cache : false,
+				success: function(data) {
+					console.log(data);
+				}, error : function(err) {
+					console.log(err);
+				}
+			});
+		}
+	},
+
+	//lms로 데이터 전송하는 기능
+	SendDataToLmsBeforeExit: function() {
+		window.addEventListener('beforeunload', function() {
+			$.ajax({
+				type : "POST",
+				url: mainApp.tageturl,
+				data: {
+					wstoken : mainApp.wstoken,
+					wsfunction : mainApp.wsfunction,
+					moodlewsrestformat : mainApp.moodlewsrestformat,
+					asskey : mainApp.asskey,
+					att : mainApp.att,
+					cmsid : mainApp.cmsid,
+					state : 99,
+					positionold : mainApp.firstPlayTime,
+					positionnew : mainApp.lastTime
+				},
+				dataType: "json",
+				cache : false,
+				success: function(data) {
+					console.log(data);
+				}, error : function(err) {
+					console.log(err);
+				}
+			});
+		});
+	},
+
+	//lms로 데이터 전송하는 기능 (테스트 서버로)
+	SendDataToLmsBeforeExit2: function() {
+		window.addEventListener('beforeunload', function() {
+			$.ajax({
+				type : "POST",
+				url: mainApp.tageturl2,
+				data: {
+					wstoken : mainApp.wstoken,
+					wsfunction : mainApp.wsfunction,
+					moodlewsrestformat : mainApp.moodlewsrestformat,
+					asskey : mainApp.asskey,
+					att : mainApp.att,
+					cmsid : mainApp.cmsid,
+					state : 99,
+					positionold : mainApp.firstPlayTime,
+					positionnew : mainApp.lastTime
+				},
+				dataType: "json",
+				cache : false,
+				success: function(data) {
+					console.log(data);
+				}, error : function(err) {
+					console.log(err);
+				}
+			});
+		});
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	etc: function() {
+
+	},
+
+	onBodyHtmlCompleted: function() {
+
+		mainApp.getUixBodyHtml().setContents(mainApp.contentinfoData, mainApp.content_name, mainApp.isprg, mainApp.cpltime, mainApp.prgstart, mainApp.prgend);
+
+		if (bizDevice.isMobile()) {
+			// 모바일의 경우 비디오 로딩하기전에 화면보여줌
+			//mainApp.getUixBodyHtml().showMobileRestartPlayBtn();
+		}
+
+		mainApp.initPlayer();
+
+		mainApp.SendDataToLmsBeforeExit();
+		//mainApp.SendDataToLmsBeforeExit2();
+	},
+
+	//-- 컨트롤러에서 시작 버튼 클릭시
+	OnControllerPlay: function() {
+
+		if (bizDevice.isMobile()) {
+
+			if ( mainApp.lastTime === 0) mainApp.playchannel(mainApp.lastChannelindex);
+			else mainApp.playchanneltoseek(mainApp.lastChannelindex, mainApp.lastTime);
+
+		}
+		else {
+
+			mainApp.play();
+			mainApp.getUixBodyHtml().hideRestartPlayBtn();
+		}
+
+		mainApp.startTime = mainApp.lastTime;
+		mainApp.firstPlayTime = mainApp.startTime;
+		mainApp.SendDataToLms(3, mainApp.startTime, mainApp.startTime);
+		//mainApp.SendDataToLms2(3, mainApp.startTime, mainApp.startTime);
+
+
+
+
+	},
+
+	//-- 컨트롤러에서 일시정지 버튼 클릭시
+	OnControllerPause: function() {
+
+		if (bizDevice.isMobile()) {
+			mainApp.pausechannel(mainApp.lastChannelindex);
+		}
+		else {
+			mainApp.pause();
+			mainApp.getUixBodyHtml().hideRestartPlayBtn();
+		}
+
+		mainApp.SendDataToLms(2, mainApp.startTime, mainApp.lastTime);
+		//mainApp.SendDataToLms2(2, mainApp.startTime, mainApp.lastTime);
+	},
+
+
+	//-- 컨트롤러에서 테스트 버튼 클릭시
+	OnControllerTest: function() {
+
+		mainApp.test();
+	},
+
+	//-- 컨트롤러에서 정지 버튼 클릭시
+	OnControllerStop: function() {
+
+		mainApp.stop();			//-> 0에서 일시정지
+
+		bizPlayController.stop();
+
+		mainApp.SendDataToLms(1, mainApp.startTime, mainApp.lastTime);
+		//mainApp.SendDataToLms2(1, mainApp.startTime, mainApp.lastTime);
+		mainApp.firstPlayTime = 0;
+	},
+
+	OnVideoError: function() {
+
+		alert('재생에 문제가 발생하였습니다.');
+	},
+
+	//-- 컨트롤러에서 트래바 스크롤 시작시
+	OnControllerSeekStart: function() {
+		mainApp.seekStart();
+		clearTimeout(mainApp.hideCoverTimer);
+		mainApp.showCoverlayer();
+	},
+
+	//-- 컨트롤러에서 트래바 스크롤 종료시
+	OnControllerSeekEnd: function(_e, _time) {
+		if (mainApp.tageturl == "") {
+			mainApp.hideCoverTimer = setTimeout(function () {
+				mainApp.hideCoverlayer();
+			}, mainApp.hideCovertimeInteval);
+
+			if (bizDevice.isMobile()) {
+
+				//seek 하는경우
+				mainApp.startTime = _time;
+				mainApp.seekchannel(mainApp.lastChannelindex, _time);
+			}
+			else {
+				//seek 하는경우
+				mainApp.startTime = _time;
+				mainApp.seek(_time);
+			}
+		} else {
+			if(mainApp.endat == -9999) {
+				mainApp.hideCoverTimer = setTimeout(function () {
+					mainApp.hideCoverlayer();
+				}, mainApp.hideCovertimeInteval);
+
+				if (bizDevice.isMobile()) {
+
+					//seek 하는경우
+					mainApp.startTime = _time;
+					mainApp.seekchannel(mainApp.lastChannelindex, _time);
+				}
+				else {
+					//seek 하는경우
+					mainApp.startTime = _time;
+					mainApp.seek(_time);
+				}
+			} else {
+				if (_time > mainApp.endat){
+					//seek 안하는경우
+					return;
+				} else {
+					mainApp.hideCoverTimer = setTimeout(function () {
+						mainApp.hideCoverlayer();
+					}, mainApp.hideCovertimeInteval);
+
+					if (bizDevice.isMobile()) {
+
+						//seek 하는경우
+						mainApp.startTime = _time;
+						mainApp.seekchannel(mainApp.lastChannelindex, _time);
+					}
+					else {
+						//seek 하는경우
+						mainApp.startTime = _time;
+						mainApp.seek(_time);
+					}
+				}
+			}
+
+		}
+	},
+
+	//-- 컨트롤러에서 볼륨트래바 스크롤 종료시
+	OnControllerChangevolume: function(_e, _vol) {
+
+		if (bizDevice.isMobile()) {
+
+		}
+
+		mainApp.vol(_vol);
+	},
+
+	//-- 영상에서 볼륨값 설정완료시
+	OnVideoVolumechange: function(_e, _vol) {
+
+		bizPlayController.setCurrentVolume(_vol);
+	},
+
+	OnVideoTimeUpdate: function(_e, _time) {
+
+		bizPlayController.setCurrentTime(_time);
+
+		// subtitle test - 19.07.11
+		// mainApp.getUixBodyHtml().setCheckSubtitle(_time);
+
+		mainApp.lastTime = parseInt(_time);
+
+		if(mainApp.endat != -9999) {
+			if (mainApp.lastTime > mainApp.endat) {
+				mainApp.endat = mainApp.lastTime;
+			}
+		}
+
+		// //진도율 연동할 때 사용
+		var gapTime = parseInt(_time) - mainApp.startTime;
+		if (gapTime >= mainApp.intervalTime) {
+
+			mainApp.SendDataToLms(8, mainApp.startTime, mainApp.lastTime);
+			//mainApp.SendDataToLms2(8, mainApp.startTime, mainApp.lastTime);
+			mainApp.startTime = mainApp.lastTime;
+		}
+	},
+
+	OnVideoDurationchange: function(_e, _time) {
+
+		bizPlayController.setDurationTime(_time);
+	},
+
+	OnVideoEnded: function() {
+		//lastTime 초기화전에 전송
+		mainApp.SendDataToLms(10, mainApp.lastTime - mainApp.firstPlayTime, mainApp.lastTime);
+		//mainApp.SendDataToLms2(10, mainApp.lastTime - mainApp.firstPlayTime, mainApp.lastTime);
+		mainApp.lastTime = 0;
+		mainApp.stop();
+		bizPlayController.stop();
+	},
+
+
+	OnMainBodyRestart: function() {
+		mainApp.play();
+
+		mainApp.getUixBodyHtml().hideRestartPlayBtn();
+		bizPlayController.play();
+
+		mainApp.hideCoverlayer();
+
+		mainApp.startTime = mainApp.lastTime;
+		mainApp.firstPlayTime = mainApp.startTime;
+		mainApp.SendDataToLms(3, mainApp.startTime, mainApp.startTime);
+		//mainApp.SendDataToLms2(3, mainApp.startTime, mainApp.startTime);
+	},
+
+	/* 모바일 1번 채널 시작 버튼 */
+	OnMainBodyMobileScreenRestart: function() {
+
+		mainApp.stop();
+
+		mainApp.lastChannelindex = 0;
+		if ( mainApp.lastTime === 0) mainApp.playchannel(mainApp.lastChannelindex);
+		else mainApp.playchanneltoseek(mainApp.lastChannelindex, mainApp.lastTime);
+
+		bizPlayController.play();
+
+		if (bizDevice.isMobile()) mainApp.hideCoverlayer();
+	},
+
+
+	/* 모바일 2번 채널 시작 버튼 */
+	OnMainBodyMobileCamRestart: function() {
+
+		mainApp.stop();
+
+		mainApp.lastChannelindex = 1;
+		if ( mainApp.lastTime === 0) mainApp.playchannel(mainApp.lastChannelindex);
+		else mainApp.playchanneltoseek(mainApp.lastChannelindex, mainApp.lastTime);
+
+		bizPlayController.play();
+
+		if (bizDevice.isMobile()) mainApp.hideCoverlayer();
+
+	},
+
+	/* 모바일 3번 채널 시작 버튼 */
+	OnMainBodyMobileCam2Restart: function() {
+
+		mainApp.stop();
+
+		mainApp.lastChannelindex = 2;
+		if ( mainApp.lastTime == 0) mainApp.playchannel(mainApp.lastChannelindex);
+		else mainApp.playchanneltoseek(mainApp.lastChannelindex, mainApp.lastTime);
+
+		bizPlayController.play();
+
+		if (bizDevice.isMobile()) mainApp.hideCoverlayer();
+	},
+
+
+	/* 모바일 4번 채널 시작 버튼 */
+	OnMainBodyMobileCam3Restart: function() {
+
+		mainApp.stop();
+
+		mainApp.lastChannelindex = 3;
+		if ( mainApp.lastTime === 0) mainApp.playchannel(mainApp.lastChannelindex);
+		else mainApp.playchanneltoseek(mainApp.lastChannelindex, mainApp.lastTime);
+
+		bizPlayController.play();
+
+		if (bizDevice.isMobile()) mainApp.hideCoverlayer();
+	},
+
+	OnMainBodyTest: function() {
+
+		// 
+		if (bizVideoPlayer) bizVideoPlayer.test();
+
+	},
+
+	OnResizeWindow: function () {
+
+		console.log('resize');
+
+		if (mainApp.getUixBodyHtml()) mainApp.getUixBodyHtml().resizeWindow();
+		if (bizVideoPlayer) bizVideoPlayer.resizeWindow();
+
+		/*
+	    mainApp.setIsSpecificRatio();
+	    
+	    if (mainApp.getUixPlayerSkinHtml()) mainApp.getUixPlayerSkinHtml().resize();
+	    if (bizMetainfo) bizMetainfo.resize();
+	    if (bizPlayController) bizPlayController.resize();
+	    if (bizContentPlayer) bizContentPlayer.resize();
+	    if (bizFrontScreen) bizFrontScreen.resize();
+        
+	    // 데스크탑일 경우의 처리
+	    if (!skinManager.isMobile()) {
+	        if (mainApp.isHidePlayControllerMode()) {	            
+	            mainApp.hideCoveringControlsDesktop();	            
+	        } else {
+	            if (mainApp._hasStarted) {	                
+	                $(DefineHtml.PLAY_CONTROLLER).hide().show(0);
+	            }	            
+	        }
+	    }
+		*/
+	},
+
+	OnMouseoverVideoWrap: function() {
+
+		//console.log('OnMouseoverVideoWrap');
+
+		if (mainApp.videoloadingCompleted)
+		{
+			mainApp.showCoverlayer();
+
+			clearTimeout(mainApp.hideCoverTimer);
+
+			mainApp.hideCoverTimer = setTimeout(function () {
+				mainApp.hideCoverlayer();
+			}, mainApp.hideCovertimeInteval);
+		}
+	},
+
+    OnControllerMouseoverWrap: function () {
+
+        if (mainApp.videoloadingCompleted)
+        {
+            mainApp.showCoverlayer();
+
+            clearTimeout(mainApp.hideCoverTimer);
+
+            mainApp.hideCoverTimer = setTimeout(function () {
+                mainApp.hideCoverlayer();
+            }, mainApp.hideCovertimeInteval);
+        }
+    },
+
+    OnVideLoadeddata: function (_e, _cnt) {
+
+        mainApp.getUixBodyHtml().changeVideoloadedatamessage(_cnt);
+    },
+
+
+	OnVideoLoadingCompleted: function() {
+
+		mainApp.videoloadingCompleted = true;
+		console.log('mainApp::OnVideoLoadingCompleted');
+
+        mainApp.getUixBodyHtml().hideVideoloadeddatamessage();
+
+		if (bizDevice.isMobile()) {
+
+			// 모바일은 무조건 정지 후 다시시작함(loadmeta event 문제)
+            mainApp.stop();
+			mainApp.showCoverlayer();
+			window.onresize = mainApp.OnResizeWindow;
+		}
+		else {
+
+			if (mainApp.islive == "1") {
+
+				// 라이브시 무조건 시작버튼 클릭해야 함(load event 크롬에서발생 안함, 보안분제)
+				mainApp.getUixBodyHtml().showRestartPlayBtn();
+				mainApp.showCoverlayer();
+
+
+			}
+			else {
+                mainApp.getUixBodyHtml().showRestartPlayBtn();
+                mainApp.showCoverlayer();
+			}
+
+			window.onresize = mainApp.OnResizeWindow;
+
+            window.onresize();
+
+			if (bizDevice.isIE11() && bizDevice.isWin7()) {
+
+				// flash 경우 로딩 문제발생
+				//window.onresize();
+			}
+		}
+	},
+
+	OnVideoLayoutChanged: function(_e, _layoutargs) {
+
+		mainApp.getUixBodyHtml().changeLayoutManual(_layoutargs);
+	},
+
+	OnVideoLayoutChangedCompleted: function(_e) {
+
+		mainApp.getUixBodyHtml().changeLayoutManualCompleted();
+	},
+
+
+
+	OnMainBodySpeedchange: function(_e, _rate) {
+
+		bizVideoPlayer.speed(_rate);
+	},
+
+    OnMainBodyMainchannelchange: function (_e, _index) {
+
+        if (bizVideoPlayer) bizVideoPlayer.mainchannel(_index);
+    },
+
+    OnMainBodyQuardchange: function (_e, _index) {
+
+        if (bizVideoPlayer) bizVideoPlayer.quardchannel(_index);
+    },
+
+});

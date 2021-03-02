@@ -1,0 +1,63 @@
+/*
+ lab.UtilString.js, version 1.0
+ Copyright 2018.04,04 ywtag
+ Re...
+ */
+
+
+var UtilString = {
+
+	test: function(val) {
+
+		return val + " - test";
+	},
+
+	nullPassString: function(val) {
+
+		if (val !== undefined) {
+			return val;
+		} else {
+			return "";
+		}
+	},
+
+	nullPassInt: function(val) {
+
+		if (val !== undefined) {
+			return val;
+		} else {
+			return 0;
+		}
+	},
+
+    replaceAll: function(str, searchStr, replaceStr) {
+        return str.split(searchStr).join(replaceStr);
+    },
+
+    leadingZeros: function(n, digits) {
+		var zero = '';
+		n = n.toString();
+
+		if (n.length < digits) {
+			for (i = 0; i < digits - n.length; i++)
+				zero += '0';
+		}
+		return zero + n;
+	},
+
+	leadingZerosNew: function(n, digits, newvalue) {
+        var zero = '';
+		n = n.toString();
+
+		if (n.length < digits) {
+			for (i = 0; i < digits - n.length; i++)
+				zero += '0';
+		}
+
+		if ((zero + n) === '00') {
+			return newvalue;
+		}
+
+		return zero + n;
+	}
+};

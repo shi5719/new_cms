@@ -1,0 +1,613 @@
+
+/*
+	lab.UixPlayController.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var UixPlayController = UixBase.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	eventTarget: null,
+
+	currentTime: 0.0,
+	durationTime: 0.0,
+	currentVolume: 0.0,
+	isplaying: false,
+	isseeking: false,
+	isvolumeseeking: false,
+
+	constructor: function(_eventTarget) { 
+
+		this.eventTarget = _eventTarget;		
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	load: function() {
+	
+		this.initialize();
+		this.registerEvent();
+		this.initUI();		
+	},
+
+	initialize: function() {
+
+		this.currentTime = 0.0;
+		this.durationTime = 0.0;
+		this.currentVolume = 0.0;
+		this.isplaying = false;
+		this.isseeking = false;
+		this.isvolumeseeking = false;
+	},
+
+	registerEvent: function() {
+
+
+
+		this.attachEventClick(HtmlDefine.PLAYCONTROLLER_PLAY_PAUSE_BTN_CLASS, this.OnClickPlayPause);		// "click"
+		this.attachEventClick(HtmlDefine.TEST_BTN_CLASS, this.OnClickTest);					// "click"
+		this.attachEventClick(HtmlDefine.PLAYCONTROLLER_STOP_BTN_CLASS, this.OnClickStop);					// "click"
+		this.attachEventClick(HtmlDefine.PLAYCONTROLLER_FULL_CLASS, this.OnClickFull);						// "full"
+
+		if(bizDevice.isMobile()) {
+			//if (bizDevice.isAndroid()) {
+				this.attachEventDown(HtmlDefine.PLAYCONTROLLER_TRACKBAR_CLASS, this.OnTrackDown);	// "trackbar Down"
+				this.attachEventDown(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_CLASS, this.OnVolumeDown);	// "volume Down"
+			//}
+		}
+		else {
+            $(HtmlDefine.PLAY_CONTROLLER_FOOTER).on('mousemove', this.OnMouseMoveControllerWrapper);
+
+			this.attachEventDown(HtmlDefine.PLAYCONTROLLER_TRACKBAR_CLASS, this.OnTrackDown);	// "trackbar Down"
+			this.attachEventDown(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_CLASS, this.OnVolumeDown);	// "volume Down"
+		}
+
+		$(document).on('keydown', this.OnKeyDownDocument);
+	},
+
+	initUI: function() {
+
+		if (bizDevice.isMobile()) {
+			if (bizDevice.isAndroid()) {
+			}
+			else {
+				// 아이폰일 경우 전체화면 버튼기능을 제공하지 않는다.
+				//$(HtmlDefine.PLAYCONTROLLER_FULL_CLASS).css('display', 'none');
+			}
+		}
+
+		this.hideController();
+	},
+
+	showController: function() {
+
+		$(HtmlDefine.PLAY_CONTROLLER_FOOTER).show();
+		$(HtmlDefine.PLAY_CONTROLLER_WRAP).show();
+
+		if(bizDevice.isMobile()) {
+			/*
+			if(bizDevice.isAndroid()) {
+
+				$(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).show();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_PLAY).show();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_STOP).show();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_VOLUME).show();
+			}
+			else {
+				$(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).hide();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_PLAY).hide();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_STOP).hide();
+				$(HtmlDefine.PLAY_CONTROLLER_FOOTER_VOLUME).hide();
+			}*/
+            //$(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).show();
+            $(HtmlDefine.PLAY_CONTROLLER_FOOTER_PLAY).show();
+            $(HtmlDefine.PLAY_CONTROLLER_FOOTER_STOP).show();
+            //$(HtmlDefine.PLAY_CONTROLLER_FOOTER_VOLUME).show();
+		}
+	},
+
+	hideController: function() {
+
+		$(HtmlDefine.PLAY_CONTROLLER_FOOTER).hide();
+		$(HtmlDefine.PLAY_CONTROLLER_WRAP).hide();
+
+        if(bizDevice.isMobile()) {
+            $(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).hide();
+            $(HtmlDefine.PLAY_CONTROLLER_FOOTER_VOLUME).hide();
+        }
+	},
+
+	setCurrentTime: function(_time, _isinternalCall) {
+
+		// 마우스로 검색중이며, 외부 호출일 경우는 설정안됨
+		if (!_isinternalCall && this.isseeking) return;
+
+		if (_time > this.durationTime) _time = this.durationTime;
+        if (_time < 0) _time = 0;
+
+		this.currentTime = _time;
+
+		this.setCurrentTimeUI(_time);
+	},
+
+	setDurationTime: function(_time) {
+
+		this.durationTime = _time;
+
+		$(HtmlDefine.PLAYCONTROLLER_DURATION_CLASS).text(Util.secToTimerString(_time));
+	},
+
+	setCurrentTimeUI: function(_time) {
+
+		if (this.durationTime < 1) return;
+
+		$(HtmlDefine.PLAYCONTROLLER_CURRTIME_CLASS).text(Util.secToTimerString(_time));
+
+		this.setSeekThumbUI(_time);
+
+	},
+
+	setSeekThumbUI: function(_time) {
+
+		if (this.durationTime < 1) return;
+
+		var controllerWidth = $(HtmlDefine.PLAY_CONTROLLER_WRAP).innerWidth();
+		var thumbWidth = $(HtmlDefine.PLAYCONTROLLER_SEEKTHUMB_CLASS).width();
+		var totalpercent = 100;//(controllerWidth - thumbWidth) / controllerWidth * 100;
+
+		var percent = (_time / this.durationTime * totalpercent);
+		percent = percent.toFixed(1).toString();
+		
+		if (percent > 100) percent = 100;
+		if (percent < 0) percent = 0;
+
+		$(HtmlDefine.PLAYCONTROLLER_SEEKTHUMB_CLASS).css('left', '{0}%'.format(percent));
+		$(HtmlDefine.PLAYCONTROLLER_TRACKBAR_PROGRESS).css('width', '{0}%'.format(percent));
+
+		
+	},
+
+
+	//-- 사용자에 의해 씨크바 스크롤로 움직일때
+	changeTrackbarManual: function(_time, event) {
+
+		if (_time > this.durationTime) _time = this.durationTime;
+        if (_time < 0) _time = 0;
+
+		this.setCurrentTime(_time, true);
+
+		switch(event)
+		{
+			case EventDefine.PLAYCONTROLLER_SEEKSTART:
+
+				this.eventTarget.fire(EventDefine.PLAYCONTROLLER_SEEKSTART);
+				break;
+
+			case EventDefine.PLAYCONTROLLER_SEEKEND:
+
+				this.eventTarget.fire(EventDefine.PLAYCONTROLLER_SEEKEND, _time);
+				break;
+		}
+
+	},
+
+	setCurrentVolume: function(_vol, _isinternalCall) {
+
+		console.log('setCurrentVolume:' + _vol);
+
+		// 마우스로 검색중이며, 외부 호출일 경우는 설정안됨
+		if (!_isinternalCall && this.isvolumeseeking) return;
+
+		if (_vol > 1.0) _vol = 1.0;
+        if (_vol < 0) _vol = 0;
+
+		this.currentVolume = _vol;
+
+		this.setCurrentVolumeUI(_vol);
+	},
+
+	setCurrentVolumeUI: function(_vol) {
+
+		this.setVolSeekThumbUI(_vol);
+	},
+
+	setVolSeekThumbUI: function(_vol) {
+
+		var controllerWidth = $(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).innerWidth();
+		var thumbWidth = $(HtmlDefine.PLAYCONTROLLER_VOLUMESEEKTHUMB_CLASS).width();
+		var totalpercent = 100;//(controllerWidth - thumbWidth) / controllerWidth * 100;
+
+		var percent = (_vol / 1.0 * totalpercent);
+		percent = percent.toFixed(1).toString();
+		
+		if (percent > 100) percent = 100;
+		if (percent < 0) percent = 0;
+
+		$(HtmlDefine.PLAYCONTROLLER_VOLUMESEEKTHUMB_CLASS).css('left', '{0}%'.format(percent));
+		$(HtmlDefine.PLAYCONTROLLER_VOLUME_PROGRESS).css('width', '{0}%'.format(percent));
+	},
+
+
+	//-- 사용자에 의해 불륨씨크바 스크롤로 움직일때
+	changeVolumeTrackbarManual: function(_vol, event) {
+
+		if (_vol > 1.0) _vol = 1.0;
+        if (_vol < 0) _vol = 0;
+
+		this.setCurrentVolume(_vol, true);
+
+		switch(event)
+		{
+			case EventDefine.PLAYCONTROLLER_CHANGEVOLUME:
+
+				this.eventTarget.fire(EventDefine.PLAYCONTROLLER_CHANGEVOLUME, _vol);
+				break;
+		}
+
+	},
+
+	setPlayUI: function(_isplaying)	{
+
+		if (_isplaying) {
+			$(HtmlDefine.PLAYCONTROLLER_PLAY_PAUSE_BTN_CLASS).removeClass('btn-con-pause').addClass('btn-con-play');	
+		}
+		else {
+			$(HtmlDefine.PLAYCONTROLLER_PLAY_PAUSE_BTN_CLASS).removeClass('btn-con-play').addClass('btn-con-pause');
+		}
+	},
+
+	//-- 클릭위치를 트랙시간으로 변환
+    getTracktimebyClickX: function (offset, duration) {
+
+        var left = $(HtmlDefine.PLAYCONTROLLER_TRACKBAR_CLASS).offset().left;
+        var width = $(HtmlDefine.PLAY_CONTROLLER_WRAP).innerWidth();				
+
+        return Math.round((offset - left) / width * duration);
+    },
+
+	//-- 클릭위치를 트랙시간으로 변환
+    getVolumebyClickX: function (offset, duration) {
+
+        var left = $(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_CLASS).offset().left;
+        var width = $(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_WRAP).innerWidth();				
+
+		//console.log("getVolumebyClickX offset:" + offset + ", left:" + left + ", width:" + width);
+		var getX = ((offset - left) / width * duration).toFixed(2);;
+		
+        return getX;
+    },
+
+	setStop: function() {
+
+		this.isplaying = false;
+		this.setPlayUI(true);
+
+	},
+
+	setPlay: function() {
+
+		this.isplaying = true;
+		this.setPlayUI(false);
+	},
+
+
+	toggleFullScreenX: function(elem) {
+
+		/* IE 11부터 지원됨 */
+		if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+		if (elem.requestFullScreen) {
+		elem.requestFullScreen();
+		} else if (elem.mozRequestFullScreen) {
+		elem.mozRequestFullScreen();
+		} else if (elem.webkitRequestFullScreen) {
+		elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+		} else if (elem.msRequestFullscreen) {
+		elem.msRequestFullscreen();
+		}
+		} else {
+		if (document.cancelFullScreen) {
+		document.cancelFullScreen();
+		} else if (document.mozCancelFullScreen) {
+		document.mozCancelFullScreen();
+		} else if (document.webkitCancelFullScreen) {
+		document.webkitCancelFullScreen();
+		} else if (document.msExitFullscreen) {
+		document.msExitFullscreen();
+		}
+		}
+	},
+
+	toggleFullScreenManually: function() {
+
+		
+
+
+	},
+
+
+
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+    OnMouseMoveControllerWrapper: function() {
+
+        var me = bizPlayController.getUixPlayController();
+        me.eventTarget.fire(EventDefine.PLAYCONTROLLER_ALLWRAP_MOUSEOVER);
+    },
+
+
+	OnClickPlayPause: function() {
+
+		var me = bizPlayController.getUixPlayController();
+
+		if (me.isplaying) {			
+		
+			me.setPlayUI(me.isplaying);
+			me.eventTarget.fire(EventDefine.PLAYCONTROLLER_PAUSE);
+		}
+		else {			
+			// 일시정지 중이면 재생하고, 화면은 일시정지 디자인
+			
+			me.setPlayUI(me.isplaying);
+			me.eventTarget.fire(EventDefine.PLAYCONTROLLER_PLAY);
+		}
+
+		me.isplaying = !me.isplaying;
+	},
+
+	OnClickTest: function() {
+
+		var me = bizPlayController.getUixPlayController();
+		me.eventTarget.fire(EventDefine.PLAYCONTROLLER_TEST);
+	},
+
+	OnClickStop: function() {
+
+		var me = bizPlayController.getUixPlayController();
+		me.eventTarget.fire(EventDefine.PLAYCONTROLLER_STOP);
+	},
+
+	OnClickFull: function(e) {
+
+		var me = bizPlayController.getUixPlayController();				
+		me.toggleFullScreenX(document.querySelector(HtmlDefine.MAIN_BODY));
+
+	},
+
+	OnTrackDown: function(e) {
+
+		e.preventDefault();  // 다른이벤트는 막음
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+
+		if (bizDevice.isLowIE()) {
+			me.attachEventMove(window.document, me.OnTrackMove);
+			me.attachEventUp(window.document, me.OnTrackUp);
+		}
+		else {
+			me.attachEventMove(window, me.OnTrackMove);
+			me.attachEventUp(window, me.OnTrackUp);
+		}
+		
+		var trackerTime = me.getTracktimebyClickX(Util.getClientX(mouseObj), me.durationTime);
+		if (trackerTime > me.duration) {
+			trackerTime = me.duration;
+		}
+
+		me.isseeking = true;
+		me.changeTrackbarManual(trackerTime, EventDefine.PLAYCONTROLLER_SEEKSTART);
+	},
+
+	OnTrackMove: function(e) {
+
+		e.preventDefault();  // 다른이벤트는 막지않으면 간섭이 생겨 문제생김
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+		var trackerTime = me.getTracktimebyClickX(Util.getClientX(mouseObj), me.durationTime);
+
+		if (trackerTime > me.duration) {
+			trackerTime = me.duration;
+		}
+
+		me.changeTrackbarManual(trackerTime, null);		
+
+	},
+
+	OnTrackUp: function(e) {
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+
+		if (bizDevice.isLowIE()) {
+			me.deattachEventMove(window.document, me.OnTrackMove);
+			me.deattachEventUp(window.document, me.OnTrackUp);
+		}
+		else {
+			me.deattachEventMove(window, me.OnTrackMove);
+			me.deattachEventUp(window, me.OnTrackUp);
+		}
+
+		console.log("OnTrackUp");
+
+		var me = bizPlayController.getUixPlayController();
+		var trackerTime = me.getTracktimebyClickX(Util.getClientX(mouseObj), me.durationTime);
+
+		if (trackerTime > me.duration) {
+			trackerTime = me.duration;
+		}
+
+		me.isseeking = false;
+		me.changeTrackbarManual(trackerTime, EventDefine.PLAYCONTROLLER_SEEKEND);
+
+	},
+
+
+	OnVolumeDown: function(e) {
+
+		e.preventDefault();  // 다른이벤트는 막음
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+
+		if (bizDevice.isLowIE()) {
+			me.attachEventMove(window.document, me.OnVolumeMove);
+			me.attachEventUp(window.document, me.OnVolumeUp);
+		}
+		else {
+			me.attachEventMove(window, me.OnVolumeMove);
+			me.attachEventUp(window, me.OnVolumeUp);
+		}
+
+		var trackerVolume = me.getVolumebyClickX(Util.getClientX(mouseObj), 1.0);
+		if (trackerVolume > 1.0) {
+			trackerVolume = 1.0;
+		}
+
+		me.isvolumeseeking = true;
+
+	},
+
+
+	OnVolumeMove: function(e) {
+
+		e.preventDefault();  // 다른이벤트는 막지않으면 간섭이 생겨 문제생김
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+		var trackerVolume = me.getVolumebyClickX(Util.getClientX(mouseObj), 1.0);
+
+		if (trackerVolume > 1.0) {
+			trackerVolume = 1.0;
+		}
+
+		me.changeVolumeTrackbarManual(trackerVolume, EventDefine.PLAYCONTROLLER_CHANGEVOLUME);
+
+	},
+
+	OnVolumeUp: function(e) {
+
+		//e.preventDefault();
+
+		var mouseObj;
+		if(bizDevice.isMobile()) {			
+			mouseObj = event.touches ? event.changedTouches[0] : event;
+		}
+		else {
+			mouseObj = e;
+		}
+
+		var me = bizPlayController.getUixPlayController();
+
+		if (bizDevice.isLowIE()) {
+			me.deattachEventMove(window.document, me.OnVolumeMove);
+			me.deattachEventUp(window.document, me.OnVolumeUp);
+		}
+		else {
+			me.deattachEventMove(window, me.OnVolumeMove);
+			me.deattachEventUp(window, me.OnVolumeUp);
+		}
+
+		var me = bizPlayController.getUixPlayController();
+		var trackerVolume = me.getVolumebyClickX(Util.getClientX(mouseObj), 1.0);
+
+		if (trackerVolume > 1.0) {
+			trackerVolume = 1.0;
+		}
+
+		me.isvolumeseeking = false;
+		me.changeVolumeTrackbarManual(trackerVolume, EventDefine.PLAYCONTROLLER_CHANGEVOLUME);
+	},
+
+
+	OnKeyDownDocument: function(e) {
+
+		var keycode = (e.keyCode ? e.keyCode : e.which);
+
+		if (keycode == KeyCode.KEY_SPACEBAR) {
+			
+			var me = bizPlayController.getUixPlayController();
+
+			if (me.isplaying) {			
+				
+				me.setPlayUI(me.isplaying);
+				me.eventTarget.fire(EventDefine.PLAYCONTROLLER_PAUSE);
+			}
+			else {			
+				// 일시정지 중이면 재생하고, 화면은 일시정지 디자인
+				
+				me.setPlayUI(me.isplaying);
+				me.eventTarget.fire(EventDefine.PLAYCONTROLLER_PLAY);
+			}
+
+			console.log('spacebar click');
+
+			me.isplaying = !me.isplaying;
+
+			// IE경우 videojs에 자동으로 이벤트가 등록는 현상 처리
+			e.preventDefault();			
+		}
+	},
+
+
+
+
+});
+
+
+
+
+
+
+

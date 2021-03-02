@@ -1,0 +1,95 @@
+/*
+	lab.DtoStatscontentsinfoService.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+	[Biz Component]
+*/
+
+var DtoStatscontentsinfoService = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	dtoStatscontentsinfo: null,
+
+
+	constructor: function() {
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	getStatscontentsinfo: function() {
+
+		return this.dtoStatscontentsinfo;
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	xmlTagNamesValue: function(_valus, _i, _defaultval) {
+		val = _valus[_i];
+
+		try {
+			if (val.childNodes[0] == null)
+				return _defaultval;
+			else
+				return val.childNodes[0].nodeValue;
+		}
+		catch (e) {
+			return _defaultval;
+		}
+	},
+
+	load: function(_url, _callback, _errorcallback) {
+
+		var self = this;
+
+		if (mainApp.weburlpath == "") {
+
+			var xmlDoc;
+			xmlDoc = new ActiveXObject("Microsoft.XMLDOM");  // XMLHttpRequest 도 문제발생
+			xmlDoc.async = false;
+
+			xmlDoc.onreadystatechange = function() {
+
+				if (xmlDoc.readyState == 4) {
+
+					_callback();
+
+					//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					//_errorcallback();
+				}
+			};
+
+			xmlDoc.load(_url);
+		}
+		else {
+
+			$.ajax({
+				url: _url,
+				dataType: "xml",
+				async: true,
+				success: function (obj) {
+					//self.dtoStatscontentsinfo = self.loadContentinfo($(obj));
+					_callback();
+				},
+				error: function (request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					_errorcallback();
+				}
+			});
+		}
+	},
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	etc: function() {
+
+	}
+});

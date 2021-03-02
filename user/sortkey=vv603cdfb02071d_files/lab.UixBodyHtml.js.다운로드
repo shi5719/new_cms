@@ -1,0 +1,648 @@
+/*
+	lab.UixBodyHtml.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var UixBodyHtml = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+	
+	isCssLoaded: false,
+	isHtmlLoaded: false,
+
+	isTest: true,
+
+	mainEventTarget: null,
+	dtoContentInfo: null,
+
+	weburlpath: '',
+	rate: 1.0,
+    mainchannelindex: 0,
+
+	constructor: function() { 
+		
+		
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	setEventTarget: function(_eventTarget) {
+
+		this.mainEventTarget = _eventTarget;
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	load: function(_bodyele, _weburlpath, _devicetype, _htmlname, _cssname, _callback) {
+
+		this.weburlpath = _weburlpath;
+		var selfObj = this;
+
+		if (mainApp.weburlpath == "") {
+				// local 버전일 경우
+				selfObj.isCssLoaded = true;				
+				selfObj.isHtmlLoaded = true;
+				selfObj.onHtmlCssLoaded(_callback);
+				return;
+		}
+
+		//var cssPath = new URITemplate('/public/01.Lab241Player/lab-script/html/{devicetype}/{cssname}');
+        var cssPath = new URITemplate(_weburlpath + 'lab-script/html/{devicetype}/{cssname}');
+		var cssUrl = cssPath.expand({
+						'devicetype': _devicetype,
+						'cssname': _cssname
+		});
+
+		console.log(cssUrl);
+
+		// URI.decode(cssUrl) : lab-script/html/PC/lab-player.css
+		// external.head.js
+
+		head.load(URI.decode(cssUrl), function() {
+			
+			if (_callback){
+				selfObj.isCssLoaded = true;
+				selfObj.onHtmlCssLoaded(_callback);
+			}
+		});
+
+		var htmlPath = new URITemplate(_weburlpath + 'lab-script/html/{devicetype}/{htmlname}');
+		var htmlUrl = htmlPath.expand({
+						'devicetype': _devicetype,
+						'htmlname': _htmlname
+		});
+
+		console.log(URI.decode(htmlUrl));
+		// URI.decode(htmlUrl) : lab-script/html/PC/lab-player.html
+
+		$(_bodyele).load(URI.decode(htmlUrl), function() {
+
+			if (_callback){
+				selfObj.isHtmlLoaded = true;
+				selfObj.onHtmlCssLoaded(_callback);
+			}
+		});
+	},
+
+	showRestartPlayBtn: function() {
+
+		$(HtmlDefine.MAINBODY_RESTART_BTN_CLASS).css('display', 'inline-block');
+	},
+
+	hideRestartPlayBtn: function() {
+
+		$(HtmlDefine.MAINBODY_RESTART_BTN_CLASS).hide();
+	},
+
+	setTitle: function(_title) {
+
+		$(HtmlDefine.MAINBODY_TITLE_CLASS).text(_title);
+		$(HtmlDefine.MAINBODY_POPUP_TITLE).text(_title);
+	},
+
+	setAdmitTime: function(_time) {
+
+		$(HtmlDefine.MAINBODY_ADMITTIME_CLASS).text(_time);
+	},
+
+	setAdmitPeriod: function(_period) {
+
+		$(HtmlDefine.MAINBODY_ADMITPERIOD_CLASS).text(_period);
+	},
+
+	setDesc: function(_desc) {
+
+		$(HtmlDefine.MAINBODY_POPUP_DESC).html(_desc);
+	},
+
+	setAuthor: function(_title) {
+
+		$(HtmlDefine.MAINBODY_POPUP_AUTHOR).text(_title);
+	},
+
+	setLogopath: function(_path, _maxwidthpixel, _minwidthpixel) {
+
+		//"http://www.ywtag.com:9111/lab-script/cg_logo.png"
+		$(HtmlDefine.MAINBODY_LOGO_PATH).attr("src", _path);
+		$(HtmlDefine.MAINBODY_LOGO_PATH).css('width', '{0}px'.format(_minwidthpixel));
+
+
+	},
+
+	// 자막 표시
+	setSubtitle: function(_data) {
+
+	},
+
+	// subtitle test - 19.07.11
+	setCheckSubtitle: function(_time) {
+
+		// find : 검색하여 첫번째 객체 반환
+		// filter : 검색하여 배열 객체 반환
+		var jsonvalue = [
+			{"time" : "0", "value" : "<span style=\"color: #fdff05;font-size: 32px;font-weight: bold\">한양대학교 - 탁유원 강사님</span>"},
+			{"time" : "10", "value" : "<span style=\"color: #ff0000;font-size: 20px;\">January 30, 2019</span>"},
+			{"time" : "15", "value" : "<span style=\"color: #ff2005;font-size: 32px; text-shadow: -2px 0 #F2F1F6, 0 2px #F2F1F6, 2px 0 #F2F1F6, 0 -2px #F2F1F6;\">on the move - count basic</span>"},
+			{"time" : "20", "value" : "<span style=\"color: #0aff27\">아쉬운 수요일 입니다.</span>"},
+			{"time" : "30", "value" : "<span style=\"color: #0825ff\">내가 그럴줄 알았어!!!</span>"},
+			{"time" : "50", "value" : "<span style=\"color: #0825ff\">내가 그럴줄 알았어!!!</span>"}
+		];
+
+		var searchtime = "0";
+		$.each(jsonvalue,function(key, value) {
+
+			if (_time > parseInt(value.time)) searchtime = value.time;
+			else return false;
+		});
+
+		var se = jsonvalue.find(function (value) {
+			return value.time === searchtime;
+		});
+
+		if (se !== undefined) {
+			$("#video_subtitle").html(se.value);
+		}
+		else {
+			$("#video_subtitle").html("");
+		}
+	},
+
+	// 컨텐츠정보 표시
+	setContents: function(_data, _content_name, _isprg, _cpltime, _prgstart, _prgend) {
+
+		this.dtoContentInfo = _data;
+		//isprg가 1인 경우에는 lms에서 학생 계정으로 시청, 0인 경우에는 교수 계정으로 시청
+		//this.setTitle(_data._content_title);
+		//this.setTitle(_content_name + ' ' + _cpltime + ' 출석인정기간 ' + _prgstart + ' ~ ' + _prgend);
+		this.setTitle(_content_name);
+		this.setAdmitTime(_cpltime);
+		this.setAdmitPeriod('출석인정기간 ' + _prgstart + ' ~ ' + _prgend);
+		this.setAuthor(_data._content_author + " / " + _data._content_regdate);
+		this.setDesc(_data._content_desc);
+
+		// subtitle test - 19.07.11
+		//this.setSubtitle(_data);
+
+		if (_data._content_logo_isuse === 1) {
+			if (_data._content_logo_path !== "") {
+				this.setLogopath(_data._content_logo_path, _data._content_logo_maxwidthpixel, _data._content_logo_minwidthpixel);
+			}
+		}
+
+		for(var i = 0; i < this.dtoContentInfo._content_doc_cntid.split('/').length; i++) {
+
+			var itm = this.dtoContentInfo._content_doc_cntid.split('/')[i];
+			if (itm !== "") {
+				var cntid = itm.split('@')[0];
+				var cntname = '>' + itm.split('@')[1];
+				if (i === 0) {
+					$(HtmlDefine.MAINBODY_POPUP_FILE1).text(cntname);
+					$(HtmlDefine.MAINBODY_POPUP_FILE1).attr('cntid', cntid);
+					$(HtmlDefine.MAINBODY_POPUP_FILE1).show();
+				} else if (i === 1) {
+					$(HtmlDefine.MAINBODY_POPUP_FILE2).text(cntname);
+					$(HtmlDefine.MAINBODY_POPUP_FILE2).attr('cntid', cntid);
+					$(HtmlDefine.MAINBODY_POPUP_FILE2).show();
+				} else if (i === 2) {
+					$(HtmlDefine.MAINBODY_POPUP_FILE3).text(cntname);
+					$(HtmlDefine.MAINBODY_POPUP_FILE3).attr('cntid', cntid);
+					$(HtmlDefine.MAINBODY_POPUP_FILE3).show();
+				}
+			}
+		}
+
+		//$(HtmlDefine.MAINBODY_POPUP_FILE1).on('click', this.OnDownFile1);
+
+		//HtmlDefine
+
+	},
+
+	setSpeedTitle: function(_rate) {
+
+		$(HtmlDefine.MAINBODY_VIDEO_SPEEDTITLE).text('{0} x'.format(_rate));
+	},
+
+	setSpeedUp: function() {
+		
+		if (this.rate < 2.0) {
+			if (this.rate == 0.5) {
+				this.rate = (Number(this.rate) + Number(0.1)).toFixed(1);
+			} else {
+				this.rate = (Number(this.rate) + Number(0.2)).toFixed(1);
+			}
+		}
+	},
+
+	setSpeedDown: function() {
+
+		if (this.rate > 0.5) {
+			if (this.rate == 0.6) {
+				this.rate = (Number(this.rate) - Number(0.1)).toFixed(1);
+			} else {
+				this.rate = (Number(this.rate) - Number(0.2)).toFixed(1);
+			}
+		}
+	},
+
+    setMainchannelindex: function (_index) {
+
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH1).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH2).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH3).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH4).attr("class", '');
+
+        $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH1).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH2).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH3).attr("class", '');
+        $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH4).attr("class", '');
+
+        if (_index === 0) {
+            $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH1).attr("class", 'active');
+            $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH1).attr("class", 'active');
+		}
+		else if (_index === 1) {
+            $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH2).attr("class", 'active');
+            $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH2).attr("class", 'active');
+        }
+        else if (_index === 2) {
+            $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH3).attr("class", 'active');
+            $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH3).attr("class", 'active');
+        }
+        else if (_index === 3) {
+            $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH4).attr("class", 'active');
+            $(HtmlDefine.MAINBODY_LAYOUT4_MAINCH4).attr("class", 'active');
+        }
+
+        this.mainchannelindex = _index;
+    },
+
+	changeLayoutManualCompleted: function() {
+
+		$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('background', '{0}'.format('#51c4ff'));
+	},
+
+	changeLayoutManual: function(_layoutargs) {
+
+		var scenemode = _layoutargs[0];
+		var mainwidth = _layoutargs[1];
+		var subwidth = _layoutargs[2];
+		var isreadymode = _layoutargs[3];
+
+		if (scenemode === SceneMode.POP) {
+
+			if (isreadymode == 'true') {				
+				$(HtmlDefine.MAINBODY_SCALE_LEFT).css('width', '{0}px'.format(mainwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('width', '{0}px'.format(subwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('background', '{0}'.format('#FF0000'));
+			}
+			else {
+				$(HtmlDefine.MAINBODY_SCALE_LEFT).css('width', '{0}px'.format(mainwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('width', '{0}px'.format(subwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('background', '{0}'.format('#51c4ff'));
+			}
+		}
+		else if (scenemode === SceneMode.PIP) {
+
+			if (isreadymode == 'true') {
+				$(HtmlDefine.MAINBODY_SCALE_LEFT).css('width', '{0}px'.format(mainwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('width', '{0}px'.format(subwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('background', '{0}'.format('#FF0000'));
+			}
+			else {
+				$(HtmlDefine.MAINBODY_SCALE_LEFT).css('width', '{0}px'.format(mainwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('width', '{0}px'.format(subwidth));
+				$(HtmlDefine.MAINBODY_SCALE_RIGHT).css('background', '{0}'.format('#51c4ff'));
+			}
+
+		}
+		else {
+
+		}
+	},
+
+	showMobileRestartPlayBtn: function() {
+
+		if (this.dtoContentInfo._contenttype === ContentType.VIDEO1) {
+			$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-60px");			
+			$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+			$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+			$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+		}
+		else if (this.dtoContentInfo._contenttype === ContentType.VIDEO2) {
+			$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-140px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "40px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+			$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+		}
+		else if (this.dtoContentInfo._contenttype === ContentType.VIDEO3) {
+			$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-200px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-60px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "80px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).css('display', 'none');
+		}
+		else if (this.dtoContentInfo._contenttype === ContentType.VIDEO4) {
+			$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-250px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "-124px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "4px");
+			$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).css('display', 'inline-block').css('margin-left', "130px");
+		}
+	},
+
+	mobileCustomUI: function() {
+
+		if(bizDevice.isMobile()) {
+
+/*
+			$(HtmlDefine.PLAY_CONTROLLER_WRAP).css('bottom', '100px');
+			$(HtmlDefine.PLAY_CONTROLLER_FOOTER).css('height', '106px');
+			$(HtmlDefine.PLAY_CONTROLLER_FOOTER_PLAY).css('margin-top', '20px');			
+			$(HtmlDefine.PLAYCONTROLLER_TRACKBAR_CLASS).css('height', '40px');
+
+
+			$(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_CLASS).css('top', '20px');
+			$(HtmlDefine.PLAYCONTROLLER_VOLUMEBAR_CLASS).css('height', '40px');
+
+			*/
+		}
+		
+	},
+		
+
+
+	hideMobileRestartPlayBtn: function() {
+
+		$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).hide();
+		$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).hide();
+		$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).hide();
+		$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).hide();
+	},
+
+
+	showBody: function() {
+
+		$(HtmlDefine.MAINBODY_HEADER_ID).show();
+		$(HtmlDefine.MAINBODY_SCALEBAR_ID).show();
+
+		if (this.isTest) {
+			
+			$(HtmlDefine.MAINBODY_SCALETHUMB_CLASS).show();
+			$(HtmlDefine.MAINBODY_INFO_BTN).show();
+
+			if (this.dtoContentInfo._content_speed_isuse === 1) {
+				$(HtmlDefine.MAINBODY_VIDEO_SPEED).show();
+			}
+			else {
+				$(HtmlDefine.MAINBODY_VIDEO_SPEED).hide();
+			}
+
+			$(HtmlDefine.MAINBODY_SETTING_BTN).hide();
+		}
+		else {
+			$(HtmlDefine.MAINBODY_SCALETHUMB_CLASS).hide();
+			$(HtmlDefine.MAINBODY_INFO_BTN).hide();
+			$(HtmlDefine.MAINBODY_VIDEO_SPEED).hide();
+			$(HtmlDefine.MAINBODY_SETTING_BTN).hide();
+		}
+	},
+
+	hideBody: function() {
+
+		$(HtmlDefine.MAINBODY_HEADER_ID).hide();
+		$(HtmlDefine.MAINBODY_SCALEBAR_ID).hide();
+		$(HtmlDefine.MAINBODY_SCALETHUMB_CLASS).hide();
+		$(HtmlDefine.MAINBODY_INFO_BTN).hide();
+		$(HtmlDefine.MAINBODY_VIDEO_SPEED).hide();
+		$(HtmlDefine.MAINBODY_SETTING_BTN).hide();
+	},
+
+    hideVideoloadeddatamessage: function () {
+
+        $(HtmlDefine.MAINBODY_LOADING_MESSAGE).hide();
+    },
+
+    changeVideoloadedatamessage: function (_cnt) {
+
+        if (_cnt === 1) {
+            $(HtmlDefine.MAINBODY_LOADING_MESSAGE).html("loading ... ... ... (" + _cnt + ")");
+		}
+		else if (_cnt === 2) {
+            $(HtmlDefine.MAINBODY_LOADING_MESSAGE).html("... loading ... ... (" + _cnt + ")");
+		}
+        else if (_cnt === 3) {
+            $(HtmlDefine.MAINBODY_LOADING_MESSAGE).html("... ... loading ... (" + _cnt + ")");
+        }
+        else if (_cnt === 4) {
+            $(HtmlDefine.MAINBODY_LOADING_MESSAGE).html("... ... ... loading (" + _cnt + ")");
+        }
+    },
+
+	registEvent: function() {
+
+
+
+		$(HtmlDefine.MAINBODY_RESTART_BTN_CLASS).on('click', this.OnClickRestart);
+		$(HtmlDefine.MAINBODY_MOBILE_CAM_PLAY_PAUSE_BTN_CLASS).on('click', this.OnClickScreen);
+		$(HtmlDefine.MAINBODY_MOBILE_CAM2_PLAY_PAUSE_BTN_CLASS).on('click', this.OnClickCam);
+		$(HtmlDefine.MAINBODY_MOBILE_CAM3_PLAY_PAUSE_BTN_CLASS).on('click', this.OnClickCam2);
+		$(HtmlDefine.MAINBODY_MOBILE_CAM4_PLAY_PAUSE_BTN_CLASS).on('click', this.OnClickCam3);
+
+		$(HtmlDefine.MAINBODY_VIDEO_SPEEDUP).on('click', this.OnClickSpeedup);
+		$(HtmlDefine.MAINBODY_VIDEO_SPEEDDOWN).on('click', this.OnClickSpeeddown);
+
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH1).on('click', this.OnClickMainch1);
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH2).on('click', this.OnClickMainch2);
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH3).on('click', this.OnClickMainch3);
+        $(HtmlDefine.MAINBODY_LAYOUT3_MAINCH4).on('click', this.OnClickMainch4);
+
+        $(HtmlDefine.MAINBODY_LAYOUT4).on('click', this.OnClickQuardch1);
+
+		$(HtmlDefine.MAINBODY_POPUP_FILE1).on('click', this.OnDownFile);
+		$(HtmlDefine.MAINBODY_POPUP_FILE2).on('click', this.OnDownFile);
+		$(HtmlDefine.MAINBODY_POPUP_FILE3).on('click', this.OnDownFile);
+
+		$('.layout-left').on('click', this.OnClickTest);
+	},
+	
+	initUI: function() {
+
+        $(HtmlDefine.MAINBODY_LOADING_MESSAGE).show();
+		$(HtmlDefine.MAINBODY_LOGOIMAGE_CLASS).attr("src", this.weburlpath + "lab-script/logo.png");
+
+		this.hideMobileRestartPlayBtn();
+		this.hideRestartPlayBtn();			
+
+		this.hideBody();
+
+		//this.showBody();
+
+
+		this.mobileCustomUI();
+
+
+	},
+
+	resizeWindow: function() {
+
+		var w = $(window).innerWidth();
+
+		// Logo 크기조절
+		if (this.dtoContentInfo._content_logo_isuse === 1) {
+			if (this.dtoContentInfo._content_logo_path !== "") {
+
+				if (w >= 1280) {
+					$(HtmlDefine.MAINBODY_LOGO_PATH).css('width', '{0}px'.format(this.dtoContentInfo._content_logo_maxwidthpixel));
+				} else if ((w > 640) && (w < 1280)) {
+					var ratio = parseFloat((w / (1280 - 640)).toFixed(2));
+					//console.log("ratio:" + ratio);
+					var len = this.dtoContentInfo._content_logo_maxwidthpixel - this.dtoContentInfo._content_logo_minwidthpixel;
+					var pixxWidth = (len * ratio);
+					$(HtmlDefine.MAINBODY_LOGO_PATH).css('width', '{0}px'.format(pixxWidth));
+				} else {
+					$(HtmlDefine.MAINBODY_LOGO_PATH).css('width', '{0}px'.format(this.dtoContentInfo._content_logo_minwidthpixel));
+				}
+			}
+		}
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	
+	onHtmlCssLoaded: function(_callback) {
+
+		if (this.isCssLoaded && this.isHtmlLoaded) {
+
+			this.initUI();
+			this.registEvent();
+
+			_callback();
+		}
+	},
+
+	OnClickRestart: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_RESTART);
+	},
+
+
+	OnClickScreen: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MOBILESCREEN_RESTART);
+	},
+
+	OnClickCam: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MOBILECAM_RESTART);
+	},
+
+	OnClickCam2: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MOBILECAM2_RESTART);
+	},
+
+	OnClickCam3: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MOBILECAM3_RESTART);
+	},
+
+	OnClickTest: function() {
+
+		var me = mainApp.getUixBodyHtml();
+        me.mainEventTarget.fire(EventDefine.MAINBODY_TEST);
+	},
+
+	OnClickSpeedup: function() {
+
+		var me = mainApp.getUixBodyHtml();
+
+		me.setSpeedUp();
+		me.setSpeedTitle(me.rate);
+
+        me.mainEventTarget.fire(EventDefine.MAINBODY_SPEEDCHANGE, me.rate);
+
+	},
+
+	OnDownFile: function() {
+
+		var me = mainApp.getUixBodyHtml();
+		var cntid = $(this).attr('cntid');
+		window.open("/HttpAPI/DownLoadDoc?cnt_uid=" + cntid + "&ispublic=1");
+		return;
+	},
+
+
+	OnClickSpeeddown: function() {
+
+		var me = mainApp.getUixBodyHtml();
+
+		me.setSpeedDown();
+		me.setSpeedTitle(me.rate);
+
+        me.mainEventTarget.fire(EventDefine.MAINBODY_SPEEDCHANGE, me.rate);
+	},
+
+    OnClickMainch1: function () {
+
+        $('.layer .bg').trigger('click');
+
+        var me = mainApp.getUixBodyHtml();
+
+        me.setMainchannelindex(0);
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MAINCHANGE, 0);
+    },
+
+    OnClickMainch2: function () {
+
+        $('.layer .bg').trigger('click');
+
+        var me = mainApp.getUixBodyHtml();
+
+        me.setMainchannelindex(1);
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MAINCHANGE, 1);
+    },
+
+    OnClickMainch3: function () {
+
+        $('.layer .bg').trigger('click');
+
+        var me = mainApp.getUixBodyHtml();
+
+        me.setMainchannelindex(2);
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MAINCHANGE, 2);
+    },
+
+    OnClickMainch4: function () {
+
+        $('.layer .bg').trigger('click');
+
+        var me = mainApp.getUixBodyHtml();
+
+        me.setMainchannelindex(3);
+        me.mainEventTarget.fire(EventDefine.MAINBODY_MAINCHANGE, 3);
+    },
+
+    OnClickQuardch1: function () {
+
+        $('.layer .bg').trigger('click');
+
+        var me = mainApp.getUixBodyHtml();
+
+        me.mainEventTarget.fire(EventDefine.MAINBODY_QUARDCHANGE, 0);
+    },
+
+});

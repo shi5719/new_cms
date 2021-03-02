@@ -1,0 +1,48 @@
+/*
+ lab.UtilAjax.js, version 1.0
+ Copyright 2018.04,04 ywtag
+ Re...
+ */
+
+var UtilAjax = {};
+
+UtilAjax.test = function(val) {
+	return val + " - test";
+};
+
+//--
+// ex) UtilAjax.postJson("/serial/action_relay_j/", {relay_num:num, relay_action:action}, action_relay_j, function (a, b, c) {});
+/*
+$.ajax({
+	type: "post",
+	url: "/serial/action_relay_j/",
+	data : {relay_num:num, relay_action:action},
+	dataType: "json",
+	success: action_relay_j,
+	error: function (a, b, c) {
+		alert(a.responseText + "/");
+	}
+});
+*/
+
+UtilAjax.postJson = function(_url, _param, _callback, _errcallback) {
+	$.ajax({
+		type: "post",
+		url: _url,
+		data : _param,
+		dataType: "json",
+		success: _callback,
+		error: _errcallback
+	});
+};
+
+UtilAjax.getJson = function(_url, _param, _callback, _errcallback) {
+	$.ajax({
+		type: "get",
+		url: _url,
+		data : _param,
+		dataType: "json",
+		success: _callback,
+		error: _errcallback
+	});
+};

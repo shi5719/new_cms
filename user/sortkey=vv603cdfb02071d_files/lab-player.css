@@ -1,0 +1,50 @@
+
+
+#player-main{
+      width:100%; height: 100%; position: relative; clear: both; overflow: hidden; background: #000
+}
+
+#videoall-wrapper {
+	position: relative;
+    width: 100%;
+    height: 100%;
+    border: solid;
+    border-width: 1px;
+}
+
+#video1-wrapper {
+   position: absolute;
+   float: inline-block;
+}
+
+#video2-wrapper {
+   position: absolute;
+   float: inline-block;
+}
+
+#video3-wrapper {
+   position: absolute;
+   display: inline-block;
+}
+
+#video4-wrapper {
+   position: absolute;
+   display: inline-block;				/* left, none */
+}
+
+#lab-player1 {
+   position: relative;
+}
+
+#lab-player2 {
+   position: relative;
+}
+
+#lab-player3 {
+   position: relative;
+}
+
+#lab-player4 {
+   position: relative;
+}
+

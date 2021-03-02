@@ -1,0 +1,41 @@
+/*
+ lab.AppImport.js, version 1.0
+ Copyright 2019.06,18 ywtag
+ Re...
+ */
+
+
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/videojs-ie8.min.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/video.js'><\/script>");    
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/videojs-flash.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/videojs-contrib-hls.js" + ver + "'><\/script>");
+// document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/jquery-2.1.1.min.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/jquery-3.4.1.min.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/external.Base.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/external.URI.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/external.URITemplate.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/external.head.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/external.EventTarget.js'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.DtoStatscontentsinfoService.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.DtoServiceinfoService.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.DtoServiceinfo.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.DtoContentinfoService.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.DtoContentinfo.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.Util.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UtilAjax.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UtilString.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.Mainlauncher.js" + ver + "'><\/script>");
+
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.MainApp.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.AppDefine.js" + ver + "'><\/script>");
+
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixBase.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixBodyHtml.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixPlayController.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixPlayerFactory.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixPlayerDesktop.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.UixPlayerMobile.js" + ver + "'><\/script>");
+
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.BizDevice.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.BizVideoPlayer.js" + ver + "'><\/script>");
+document.write("<script type='text/javascript' src='" + global_absolutepath + "/lab-script/lab.BizPlayController.js" + ver + "'><\/script>");

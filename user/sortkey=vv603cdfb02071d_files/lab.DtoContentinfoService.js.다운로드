@@ -1,0 +1,560 @@
+/*
+	lab.DtoContentinfoService.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+	[Biz Component]
+*/
+
+var DtoContentinfoService = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	dtoContentinfo: null,
+	
+
+	constructor: function() {        
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	getContentinfo: function() {
+
+		return this.dtoContentinfo;
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	xmlTagNamesValue: function(_valus, _i, _defaultval) {
+        val = _valus[_i];
+
+        try {
+          if (val.childNodes[0] == null)
+            return _defaultval;
+          else
+            return val.childNodes[0].nodeValue;
+        }
+        catch (e) {
+          return _defaultval;
+        }
+      },
+
+
+
+	load: function(_url, _callback, _errorcallback) {
+
+		var self = this;
+
+		if (mainApp.weburlpath == "") {
+
+			var xmlDoc;
+			xmlDoc = new ActiveXObject("Microsoft.XMLDOM");  // XMLHttpRequest 도 문제발생
+			xmlDoc.async = false;
+			
+			xmlDoc.onreadystatechange = function() {
+
+				if (xmlDoc.readyState == 4) {
+					
+					//xmlDoc.status 문제있음
+					self.dtoContentinfo = self.loadContentinfoFile(xmlDoc);
+					//alert(self.dtoContentinfo._contentid);
+
+					_callback();
+				
+					//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);					
+					//_errorcallback();					
+				}
+			};
+
+			xmlDoc.load(_url);
+		}
+		else {
+
+			$.ajax({
+				url: _url,
+				dataType: "xml",
+				async: true,
+				success: function (obj) {
+					self.dtoContentinfo = self.loadContentinfo($(obj));
+					_callback();
+				},
+				error: function (request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					_errorcallback();
+				}
+			});
+		}
+
+	},
+
+
+	loadContentinfoFile: function (_xmlDoc) {
+
+		var dto = new DtoContentinfo();
+		var contentid = this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_id'), 0, "");
+		if (contentid.length > 0) {
+            dto._contentid = contentid;
+        } else {
+            dto._contentid = "";
+		}
+
+		var techOrder = this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('techorder'), 0, "");//_obj.find('techorder');
+		if (bizDevice.isIE11() && bizDevice.isWin7()) {
+			dto._techOrder = ['flash', 'html5'];
+		}
+		else {
+			dto._techOrder = ['html5', 'flash'];
+		}
+
+		dto._techOrder = ['html5', 'flash'];
+
+		var contenttype = this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_type'), 0, "");//_obj.find('content_type');
+		if (contenttype.length > 0) {
+            dto._contenttype = contenttype;
+        } else {
+            dto._contenttype = ContentType.VIDEO1;
+		}
+
+		var content_url1=this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_url1'), 0, "");// _obj.find('content_url1');
+		if (content_url1.length > 0) {
+            dto._contenturl1 = content_url1;
+        } else {
+            dto._contenturl1 = "";
+		}
+
+		var content_url2= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_url2'), 0, "");//_obj.find('content_url2');
+		if (content_url2.length > 0) {
+            dto._contenturl2 = content_url2;
+        } else {
+            dto._contenturl2 = "";
+		}
+
+		var content_url3= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_url3'), 0, "");//_obj.find('content_url3');
+		if (content_url3.length > 0) {
+            dto._contenturl3 = content_url3;
+        } else {
+            dto._contenturl3 = "";
+		}
+
+		var content_url4= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_url4'), 0, "");//_obj.find('content_url4');
+		if (content_url4.length > 0) {
+            dto._contenturl4 = content_url4;
+        } else {
+            dto._contenturl4 = "";
+		}
+
+		var content_streamingtype= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_streamingtype'), 0, "");//_obj.find('content_streamingtype');
+		if (content_streamingtype.length > 0) {
+            dto._contentstreamingtype = content_streamingtype;
+        } else {
+            dto._contentstreamingtype = "video/mp4";
+		}
+
+		var m_content_url1= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('m_content_url1'), 0, "");//_obj.find('m_content_url1');
+		if (m_content_url1.length > 0) {
+            dto._m_contenturl1 = m_content_url1;
+        } else {
+            dto._m_contenturl1 = "";
+		}
+
+		var m_content_url2= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('m_content_url2'), 0, "");//_obj.find('m_content_url2');
+		if (m_content_url2.length > 0) {
+            dto._m_contenturl2 = m_content_url2;
+        } else {
+            dto._m_contenturl2 = "";
+		}
+
+		var m_content_url3= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('m_content_url3'), 0, "");//_obj.find('m_content_url3');
+		if (m_content_url3.length > 0) {
+            dto._m_contenturl3 = m_content_url3;
+        } else {
+            dto._m_contenturl3 = "";
+		}
+
+		var m_content_url4= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('m_content_url4'), 0, "");//_obj.find('m_content_url4');
+		if (m_content_url4.length > 0) {
+            dto._m_contenturl4 = m_content_url4;
+        } else {
+            dto._m_contenturl4 = "";
+		}
+
+		var m_content_streamingtype= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('m_content_streamingtype'), 0, "");//_obj.find('m_content_streamingtype');
+		if (m_content_streamingtype.length > 0) {
+            dto._m_contentstreamingtype = m_content_streamingtype;
+        } else {
+            dto._m_contentstreamingtype = "video/mp4";
+		}
+
+		var content_httpurl1= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_httpurl1'), 0, "");//_obj.find('content_httpurl1');
+		if (content_httpurl1.length > 0) {
+            dto._content_httpurl1 = content_httpurl1;
+        } else {
+            dto._content_httpurl1 = "";
+		}
+
+		var content_httpurl2= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_httpurl2'), 0, "");//_obj.find('content_httpurl2');
+		if (content_httpurl2.length > 0) {
+            dto._content_httpurl2 = content_httpurl2;
+        } else {
+            dto._content_httpurl2 = "";
+		}
+
+		var content_httpurl3= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_httpurl3'), 0, "");//_obj.find('content_httpurl3');
+		if (content_httpurl3.length > 0) {
+            dto._content_httpurl3 = content_httpurl3;
+        } else {
+            dto._content_httpurl3 = "";
+		}
+
+		var content_httpurl4= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_httpurl4'), 0, "");// _obj.find('content_httpurl4');
+		if (content_httpurl4.length > 0) {
+            dto._content_httpurl4 = content_httpurl4;
+        } else {
+            dto._content_httpurl4 = "";
+		}
+
+		var http_content_streamingtype= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('http_content_streamingtype'), 0, "");//_obj.find('http_content_streamingtype');
+		if (http_content_streamingtype.length > 0) {
+            dto._http_content_streamingtype = http_content_streamingtype;
+        } else {
+            dto._http_content_streamingtype = "video/mp4";
+		}
+
+        var cnt_linktype= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('cnt_linktype'), 0, "");//_obj.find('cnt_linktype');
+        if (cnt_linktype.length > 0) {
+            dto._cnt_linktype = cnt_linktype;
+        } else {
+            dto._cnt_linktype = "";
+        }
+
+		var content_title= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_title'), 0, "");//_obj.find('content_title');
+		if (content_title.length > 0) {
+            dto._content_title = content_title;
+        } else {
+            dto._content_title = "";
+		}
+
+		var content_desc= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_desc'), 0, "");//_obj.find('content_desc');
+		if (content_desc.length > 0) {
+			dto._content_desc = content_desc;
+		} else {
+			dto._content_desc = "";
+		}
+
+		var content_author= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_author'), 0, "");//_obj.find('content_author');
+		if (content_author.length > 0) {
+            dto._content_author = content_author;
+        } else {
+            dto._content_author = "";
+		}
+
+		var content_regdate= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_regdate'), 0, "");//_obj.find('content_regdate');
+		if (content_regdate.length > 0) {
+            dto._content_regdate = content_regdate;
+        } else {
+            dto._content_regdate = "";
+		}
+
+		var content_logo_path= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_logo_path'), 0, "");//_obj.find('content_logopath');
+		if (content_logo_path.length > 0) {
+			dto._content_logo_path = content_logo_path;
+		} else {
+			dto._content_logo_path = "";
+		}
+
+		var content_logo_isuse= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_logo_isuse'), 0, "");//_obj.find('content_logopath');
+		if (content_logo_isuse.length > 0) {
+			dto._content_logo_isuse = parseInt(content_logo_isuse);
+		} else {
+			dto._content_logo_isuse = 0;
+		}
+
+		var content_logo_maxwidthpixel= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_logo_maxwidthpixel'), 0, "");//_obj.find('content_logopath');
+		if (content_logo_maxwidthpixel.length > 0) {
+			dto._content_logo_maxwidthpixel = parseInt(content_logo_maxwidthpixel);
+		} else {
+			dto._content_logo_maxwidthpixel = 0;
+		}
+
+		var content_logo_minwidthpixel= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_logo_minwidthpixel'), 0, "");//_obj.find('content_logopath');
+		if (content_logo_minwidthpixel.length > 0) {
+			dto._content_logo_minwidthpixel = parseInt(content_logo_minwidthpixel);
+		} else {
+			dto._content_logo_minwidthpixel = 0;
+		}
+
+		var content_doc_cntid= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_doc_cntid'), 0, "");//_obj.find('content_logopath');
+		if (content_doc_cntid.length > 0) {
+			dto._content_doc_cntid = content_doc_cntid;
+		} else {
+			dto._content_doc_cntid = "";
+		}
+
+		var content_speed_isuse= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('content_speed_isuse'), 0, "");//_obj.find('content_logopath');
+		if (content_speed_isuse.length > 0) {
+			dto._content_speed_isuse = parseInt(content_speed_isuse);
+		} else {
+			dto._content_speed_isuse = 0;
+		}
+
+		var volumechannelindex= this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('volumechannelindex'), 0, "");//_obj.find('content_logopath');
+		if (volumechannelindex.length > 0) {
+			dto._volumechannelindex = parseInt(volumechannelindex);
+		} else {
+			dto._volumechannelindex = 0;
+		}
+
+		var duration = this.xmlTagNamesValue(_xmlDoc.getElementsByTagName('duration'), 0, "");//_obj.find('content_logopath');
+		if (duration.length > 0) {
+			dto._duration = parseInt(duration);
+		} else {
+			dto._duration = 0;
+		}
+
+		return dto;
+	},
+
+
+	loadContentinfo: function (_obj) {
+
+		var dto = new DtoContentinfo();
+
+		var contentid = _obj.find('content_id');
+		if (contentid.length > 0) {
+            dto._contentid = contentid.text();
+        } else {
+            dto._contentid = "";
+		}
+
+		var techOrder = _obj.find('techorder');
+
+		if (bizDevice.isIE11() && bizDevice.isWin7()) {
+			dto._techOrder = ['flash', 'html5'];
+		}
+		else {
+			dto._techOrder = ['html5', 'flash'];
+		}
+
+		dto._techOrder = ['html5', 'flash'];
+
+		var contenttype = _obj.find('content_type');
+		if (contenttype.length > 0) {
+            dto._contenttype = contenttype.text();
+        } else {
+            dto._contenttype = ContentType.VIDEO1;
+		}
+
+		var content_url1= _obj.find('content_url1');
+		if (content_url1.length > 0) {
+            dto._contenturl1 = content_url1.text();
+        } else {
+            dto._contenturl1 = "";
+		}
+
+		var content_url2= _obj.find('content_url2');
+		if (content_url2.length > 0) {
+            dto._contenturl2 = content_url2.text();
+        } else {
+            dto._contenturl2 = "";
+		}
+
+		var content_url3= _obj.find('content_url3');
+		if (content_url3.length > 0) {
+            dto._contenturl3 = content_url3.text();
+        } else {
+            dto._contenturl3 = "";
+		}
+
+		var content_url4= _obj.find('content_url4');
+		if (content_url4.length > 0) {
+            dto._contenturl4 = content_url4.text();
+        } else {
+            dto._contenturl4 = "";
+		}
+
+		var content_streamingtype= _obj.find('content_streamingtype');
+		if (content_streamingtype.length > 0) {
+            dto._contentstreamingtype = content_streamingtype.text();
+        } else {
+            dto._contentstreamingtype = "video/mp4";
+		}
+
+		var m_content_url1= _obj.find('m_content_url1');
+		if (m_content_url1.length > 0) {
+            dto._m_contenturl1 = m_content_url1.text();
+        } else {
+            dto._m_contenturl1 = "";
+		}
+
+		var m_content_url2= _obj.find('m_content_url2');
+		if (m_content_url2.length > 0) {
+            dto._m_contenturl2 = m_content_url2.text();
+        } else {
+            dto._m_contenturl2 = "";
+		}
+
+		var m_content_url3= _obj.find('m_content_url3');
+		if (m_content_url3.length > 0) {
+            dto._m_contenturl3 = m_content_url3.text();
+        } else {
+            dto._m_contenturl3 = "";
+		}
+
+		var m_content_url4= _obj.find('m_content_url4');
+		if (m_content_url4.length > 0) {
+            dto._m_contenturl4 = m_content_url4.text();
+        } else {
+            dto._m_contenturl4 = "";
+		}
+
+		var m_content_streamingtype= _obj.find('m_content_streamingtype');
+		if (m_content_streamingtype.length > 0) {
+            dto._m_contentstreamingtype = m_content_streamingtype.text();
+        } else {
+            dto._m_contentstreamingtype = "video/mp4";
+		}
+
+		var content_httpurl1= _obj.find('content_httpurl1');
+		if (content_httpurl1.length > 0) {
+            dto._content_httpurl1 = content_httpurl1.text();
+        } else {
+            dto._content_httpurl1 = "";
+		}
+
+		var content_httpurl2= _obj.find('content_httpurl2');
+		if (content_httpurl2.length > 0) {
+            dto._content_httpurl2 = content_httpurl2.text();
+        } else {
+            dto._content_httpurl2 = "";
+		}
+
+		var content_httpurl3= _obj.find('content_httpurl3');
+		if (content_httpurl3.length > 0) {
+            dto._content_httpurl3 = content_httpurl3.text();
+        } else {
+            dto._content_httpurl3 = "";
+		}
+
+		var content_httpurl4= _obj.find('content_httpurl4');
+		if (content_httpurl4.length > 0) {
+            dto._content_httpurl4 = content_httpurl4.text();
+        } else {
+            dto._content_httpurl4 = "";
+		}
+
+		var http_content_streamingtype= _obj.find('http_content_streamingtype');
+		if (http_content_streamingtype.length > 0) {
+            dto._http_content_streamingtype = http_content_streamingtype.text();
+        } else {
+            dto._http_content_streamingtype = "video/mp4";
+		}
+
+        var cnt_linktype= _obj.find('cnt_linktype');
+        if (cnt_linktype.length > 0) {
+            dto._cnt_linktype = cnt_linktype.text();
+        } else {
+            dto._cnt_linktype = "";
+        }
+
+		var content_title= _obj.find('content_title');
+		if (content_title.length > 0) {
+            dto._content_title = content_title.text();
+        } else {
+            dto._content_title = "";
+		}
+
+		var content_desc= _obj.find('content_desc');
+		if (content_desc.length > 0) {
+			dto._content_desc = content_desc.text();
+		} else {
+			dto._content_desc = "";
+		}
+
+		var content_author= _obj.find('content_author');
+		if (content_author.length > 0) {
+            dto._content_author = content_author.text();
+        } else {
+            dto._content_author = "";
+		}
+
+		var content_regdate= _obj.find('content_regdate');
+		if (content_regdate.length > 0) {
+            dto._content_regdate = content_regdate.text();
+        } else {
+            dto._content_regdate = "";
+		}
+
+		var content_logo_path= _obj.find('content_logo_path');
+		if (content_logo_path.length > 0) {
+			dto._content_logo_path = content_logo_path.text();
+		} else {
+			dto._content_logo_path = "";
+		}
+
+		var content_logo_isuse= _obj.find('content_logo_isuse');
+		if (content_logo_isuse.length > 0) {
+			dto._content_logo_isuse = parseInt(content_logo_isuse.text());
+		} else {
+			dto._content_logo_isuse = 0;
+		}
+
+		var content_logo_maxwidthpixel= _obj.find('content_logo_maxwidthpixel');
+		if (content_logo_maxwidthpixel.length > 0) {
+			dto._content_logo_maxwidthpixel = parseInt(content_logo_maxwidthpixel.text());
+		} else {
+			dto._content_logo_maxwidthpixel = 0;
+		}
+
+		var content_logo_minwidthpixel= _obj.find('content_logo_minwidthpixel');
+		if (content_logo_minwidthpixel.length > 0) {
+			dto._content_logo_minwidthpixel = parseInt(content_logo_minwidthpixel.text());
+		} else {
+			dto._content_logo_minwidthpixel = 0;
+		}
+
+		var content_doc_cntid= _obj.find('content_doc_cntid');
+		if (content_doc_cntid.length > 0) {
+			dto._content_doc_cntid = content_doc_cntid.text();
+		} else {
+			dto._content_doc_cntid = "";
+		}
+
+		var content_speed_isuse= _obj.find('content_speed_isuse');
+		if (content_speed_isuse.length > 0) {
+			dto._content_speed_isuse = parseInt(content_speed_isuse.text());
+		} else {
+			dto._content_speed_isuse = 0;
+		}
+
+		var volumechannelindex= _obj.find('volumechannelindex');
+		if (volumechannelindex.length > 0) {
+			dto._volumechannelindex = parseInt(volumechannelindex.text());
+		} else {
+			dto._volumechannelindex = 0;
+		}
+
+		var duration= _obj.find('duration');
+		if (duration.length > 0) {
+			dto._duration = parseInt(duration.text());
+		} else {
+			dto._duration = 0;
+		}
+
+		return dto;
+	},
+
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	etc: function() {
+
+	}
+});

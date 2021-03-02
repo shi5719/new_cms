@@ -1,0 +1,127 @@
+
+/*
+	lab.UixBase.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var UixBase = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	
+	constructor: function() { 
+
+		alert('con');
+
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	// 부모에서 정의할 경우에도 자식클래스에서 사용하면 부모에서 호출안됨
+
+	attachEventClick: function(_htmlelement, _eventhandler) {
+
+		$(_htmlelement).on('click', _eventhandler);
+	},
+
+	deattachEventClick: function(_htmlelement, _eventhandler) {
+
+		$(_htmlelement).off('click');
+	},
+
+
+	attachEventDown: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()){
+			$(_htmlelement).on('touchstart', _eventhandler);
+		}
+		else {
+			$(_htmlelement).on('mousedown', _eventhandler);
+		}
+	},
+
+	deattachEventDown: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()) {
+			$(_htmlelement).off('touchdown', _eventhandler);
+		}
+		else {
+			$(_htmlelement).off('mousedown', _eventhandler);
+		}
+	},
+
+
+	attachEventMove: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()) {
+			$(_htmlelement).on('touchmove', _eventhandler);
+		}
+		else {
+			$(_htmlelement).on('mousemove', _eventhandler);
+		}
+	},
+
+	deattachEventMove: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()) {
+			$(_htmlelement).off('touchmove', _eventhandler);
+		}
+		else {
+			$(_htmlelement).off('mousemove', _eventhandler);
+		}
+		
+	},
+
+	attachEventUp: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()) {
+            $(_htmlelement).on('touchend', _eventhandler);
+		}
+		else {
+			$(_htmlelement).on('mouseup', _eventhandler);
+		}
+	},
+
+	deattachEventUp: function(_htmlelement, _eventhandler) {
+
+		if (bizDevice.isMobile()) {
+            $(_htmlelement).off('touchend', _eventhandler);
+		}
+		else {
+			$(_htmlelement).off('mouseup', _eventhandler);
+		}
+
+	},
+
+
+
+
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+	evt: function() {
+		
+	},
+});
+
+
+
+
+
+
+

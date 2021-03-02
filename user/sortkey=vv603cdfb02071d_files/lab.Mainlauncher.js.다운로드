@@ -1,0 +1,38 @@
+/*
+ lab.Mainlauncher.js, version 1.0
+ Copyright 2017.09.08, ywtag
+ Re...
+
+ */
+
+
+var mainApp;
+var bizDevice;
+var bizPlayController;
+var bizVideoPlayer;
+var dtoContentinfoService;
+var dtoStatscontentsinfoService;
+
+var Mainlauncher = Base.extend({
+
+    constructor: function() {
+    },
+
+    // 사용안함
+    run: function (_cnt_uid, _urlpath, _islive) {
+
+        mainApp = new MainApp();
+        mainApp.run(HtmlDefine.MAIN_BODY, _cnt_uid, _urlpath, _islive, "", "", "");
+    },
+
+    //-- 접속정보 추가
+    runex: function (_cnt_uid, _urlpath, _islive, _cosuid_val, _usruid_val, _usrtype_val, _cnt_playtype, _targeturl, _startat, _endat, _wstoken, _asskey, _att, _pr, _cmsid, _content_name, _isprg, _cpltime, _prgstart, _prgend) {
+
+        mainApp = new MainApp();
+        mainApp.run(HtmlDefine.MAIN_BODY, _cnt_uid, _urlpath, _islive, _cosuid_val, _usruid_val, _usrtype_val, _cnt_playtype, _targeturl, _startat, _endat, _wstoken, _asskey, _att, _pr, _cmsid, _content_name, _isprg, _cpltime, _prgstart, _prgend);
+    }
+});
+
+
+
+

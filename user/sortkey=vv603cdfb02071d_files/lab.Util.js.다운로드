@@ -1,0 +1,116 @@
+
+var Util = {
+
+	//-- 90 -> 00:00:30
+	secToTimerString: function (sec) {
+		sec = parseInt(sec);
+		var min = parseInt(sec / 60);
+		sec = sec - min * 60;
+		var hour = parseInt(min / 60);
+		min = min - hour * 60;
+		return ((hour > 0) ? this.timeToString(hour) + ':' : '') +
+							this.timeToString(min) + ':' + this.timeToString(sec);
+	},
+
+	//-- 밀리세컨드를 00:00:30
+	msecToTimerString: function (msec) {
+		msec = Math.floor(msec);
+		var sec = Math.round(msec / 1000);
+		return secToTimerString(sec);
+	},
+
+	//-- 0 => 09
+	timeToString: function (time) {
+		return ((time < 10) ? '0' : '') + time.toString();
+	},
+
+	getClientX: function (e) {
+		
+			return e.clientX;
+		
+	},
+
+	getClientY: function (e) {
+		
+			return e.clientY;
+		
+	},
+
+	getBooleanValue: function (strBoolean) {
+		return (strBoolean == '1' || strBoolean.toLowerCase() == 'true');
+	},
+
+	//-- 두 소수를 범위내에서 비교함
+	// -- Util.isFloatEqual(currRatio, 4 / 3, 0.025)
+	isFloatEqual: function (a, b, errorRange) {
+		return (Math.abs(a - b)) <= errorRange;
+	},
+
+	//-- 퍼센트를 전체 길이 픽셀로 변환(반올림)
+	//-- 0.5% * 100(전체px) -> 50(px)
+	percentToPixel: function(per, totalpix) {
+
+		return parseFloat((per * totalpix).toFixed(2));
+	},
+
+	//-- 픽셀을 퍼센트로 변환
+	//-- 50(px) / 100(전체px) -> 0.5(%)
+	pixelToPercent: function(pix, totalpix) {
+
+		return parseFloat((pix / totalpix).toFixed(2));
+	},
+
+	//-- 동영상 비율을 사용하여 실width 에 대한 실height
+	//-- 1920, 1080, 100(px) -> 80..px
+	videowidthToheight: function(videow, videoh, widthpixel) {
+
+		return parseFloat((widthpixel * videoh / videow).toFixed(5));
+	},
+};
+
+String.prototype.format = function () {
+    var args = arguments;
+    return this.replace(/\{\{|\}\}|\{(\d+)\}/g, function (m, n) {
+        if (m == "{{") {
+            return "{";
+        }
+        if (m == "}}") {
+            return "}";
+        }
+        return args[n];
+    });
+};
+
+
+/*layer popup*/
+function layer_open(el){
+
+		var temp = $('#' + el);
+		var bg = temp.prev().hasClass('bg');	//dimmed 레이어를 감지하기 위한 boolean 변수
+
+		if(bg){
+			$('.layer').fadeIn();	//'bg' 클래스가 존재하면 레이어가 나타나고 배경은 dimmed 된다.
+		}else{
+			temp.fadeIn();
+		}
+
+		// 화면의 중앙에 레이어를 띄운다.
+		//if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+		//else temp.css('top', '0px');
+		//if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+		//else temp.css('left', '0px');
+
+		temp.find('a.cbtn').click(function(e){
+			if(bg){
+				$('.layer').fadeOut(); //'bg' 클래스가 존재하면 레이어를 사라지게 한다.
+			}else{
+				temp.fadeOut();
+			}
+			e.preventDefault();
+		});
+
+		$('.layer .bg').click(function(e){	//배경을 클릭하면 레이어를 사라지게 하는 이벤트 핸들러
+			$('.layer').fadeOut();
+			e.preventDefault();
+		});
+}

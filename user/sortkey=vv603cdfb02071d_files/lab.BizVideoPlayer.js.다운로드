@@ -1,0 +1,262 @@
+
+/*
+	lab.BizVideoPlayer.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+
+var BizVideoPlayer = Base.extend({
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ variant block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	eventTarget: null,
+	mainEventTarget: null,
+	
+	uixVideoPlayer: null,
+	dtoContentinfo: null,
+
+	
+	constructor: function(_eventTarget, _contentinfo) {        
+
+		this.eventTarget = new EventTargetArgs();
+		this.mainEventTarget = _eventTarget;
+		this.dtoContentinfo = _contentinfo;
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ get/set block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	getUixVideoPlayer: function() {
+
+		return this.uixVideoPlayer;
+	},
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+	loadplay: function()	{
+
+		this.registerEvent();
+		this.loadVideoPlayer();
+	},
+	
+	registerEvent: function() {
+
+		this.eventTarget.addListener(EventDefine.VIDEO_ERROR, this.OnVideoError);
+		this.eventTarget.addListener(EventDefine.VIDEO_TIMEUPDATE, this.OnVideoTimeUpdate);		
+		this.eventTarget.addListener(EventDefine.VIDEO_DURATIONCHANGE, this.OnVideoDurationChange);
+		this.eventTarget.addListener(EventDefine.VIDEO_ENDED, this.OnVideoEnded);		
+		this.eventTarget.addListener(EventDefine.VIDEO_ALLWRAP_MOUSEOVER, this.OnMouseMoveVideoWrapper);		
+
+		this.eventTarget.addListener(EventDefine.VIDEO_LOADINGCOMPLETED, this.OnVideoLoadingCompleted);	
+		this.eventTarget.addListener(EventDefine.VIDEO_VOLUMECHANGE, this.OnVideoVolumeChange);	
+
+		this.eventTarget.addListener(EventDefine.VIDEO_LAYOUTCHANGED, this.OnVideoLayoutChanged);	
+		this.eventTarget.addListener(EventDefine.VIDEO_LAYOUTCHANGED_COMPLETED, this.OnVideoLayoutChangedCompleted);
+
+		this.eventTarget.addListener(EventDefine.VIDEO_LOADEDDATA, this.OnVideLoadeddata);
+
+	},
+
+	loadVideoPlayer: function() {
+
+		this.uixVideoPlayer = UixPlayerFactory.createPlayer();
+		this.uixVideoPlayer.setEventTarget(bizVideoPlayer.eventTarget);
+		this.uixVideoPlayer.initialize(this.dtoContentinfo);
+
+		
+	},
+
+	release: function() {
+		
+		bizVideoPlayer.getUixVideoPlayer().release();
+        //bizVideoPlayer.hideVideoPlayer();
+        this.eventTarget = null;
+		this.mainEventTarget = null;
+
+		//this.base();
+
+	},
+
+
+
+
+
+
+	
+
+	playchannel: function(_chindex) {
+		
+		this.uixVideoPlayer.play(_chindex);
+	},
+
+	seekchannel: function(_chindex, _time) {
+
+		this.uixVideoPlayer.seek(_chindex, _time);
+	},
+
+	pausechannel: function(_chindex) {
+
+		this.uixVideoPlayer.pause(_chindex);
+	},
+
+	play: function() {
+		
+		this.uixVideoPlayer.play();
+	},
+
+	pause: function() {
+		
+		this.uixVideoPlayer.pause();
+	},
+
+/*
+	stopchannel: function(_chindex) {
+		
+		this.uixVideoPlayer.stop(_chindex);
+	},
+*/
+	stop: function() {
+		
+		this.uixVideoPlayer.stop();
+	},
+
+	seekStart: function() {
+		
+		this.uixVideoPlayer.seekStart();
+	},
+
+	seek: function(_time) {
+
+		this.uixVideoPlayer.seek(_time);
+	},
+
+	vol: function(_vol) {
+		
+		this.uixVideoPlayer.vol(_vol);
+	},
+
+	test: function() {
+
+		this.uixVideoPlayer.test();
+	},
+
+	resizeWindow: function() {
+
+		this.uixVideoPlayer.resizeWindow();
+
+	},
+
+	speed: function(_rate) {
+
+		this.uixVideoPlayer.speed(_rate);
+	},
+
+    mainchannel: function (_index) {
+
+        this.uixVideoPlayer.mainchannel(_index);
+    },
+
+    quardchannel: function (_index) {
+
+        this.uixVideoPlayer.quardchannel(_index);
+    },
+
+	/* ------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------ event function block --------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+	evt: function() {
+		
+	},
+
+	OnVideoError: function(_e, _code) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_ERROR);
+		}
+	},
+
+	OnVideoTimeUpdate: function(_e, _time) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_TIMEUPDATE, _time);			
+		}
+	},
+
+	OnVideoVolumeChange: function(_e, _vol) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_VOLUMECHANGE, _vol);			
+		}
+	},	
+
+	OnVideoDurationChange: function(_e, _time) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, _time);
+		}
+	},
+
+	OnVideoEnded: function(_e) {
+
+		if (bizVideoPlayer.mainEventTarget) {	        
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_ENDED);
+		}
+	},
+
+	OnMouseMoveVideoWrapper: function(_e) {
+
+		if (bizVideoPlayer.mainEventTarget) {	        
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_ALLWRAP_MOUSEOVER);
+		}
+	},
+
+	OnVideoLoadingCompleted: function(_e) {
+
+		if (bizVideoPlayer.mainEventTarget) {	        
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_LOADINGCOMPLETED);
+		}
+	},
+
+	OnVideoLayoutChanged: function(_e, _layoutargs) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_LAYOUTCHANGED, _layoutargs);
+		}
+	},
+
+	OnVideoLayoutChangedCompleted: function(_e) {
+
+		if (bizVideoPlayer.mainEventTarget) {
+			bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_LAYOUTCHANGED_COMPLETED);
+		}
+	},
+
+    OnVideLoadeddata: function (_e, _cnt) {
+
+        if (bizVideoPlayer.mainEventTarget) {
+            bizVideoPlayer.mainEventTarget.fire(EventDefine.VIDEO_LOADEDDATA, _cnt);
+        }
+    },
+
+		
+
+});
+
+
+
+
+
+
+
+

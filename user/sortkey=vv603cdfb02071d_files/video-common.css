@@ -1,0 +1,195 @@
+html, body { height:100%}
+body {margin:0; padding:0; font-family:Nanum Gothic, "나눔 고딕",Malgun Gothic, "맑은 고딕", 'Apple SD Gothic Neo','돋움','Dotum',Gulim, "굴림",Arial,Sans-serif,  Century Gothic, Sans-serif;  /* font-size:13px; */ font-size:14px; color:#555; line-height:18px}
+body, p, ul, ol, li, dl, dt, dd, form, table, th, td, fieldset, input, textarea, select, button, span, h1, h2, h3, h4, h5, h6, pre, address {margin:0; padding:0; -webkit-text-size-adjust:none;}
+ul, li, dl, dt, dd {list-style:none;}
+img	{border:0px; }
+
+#player-main{ position:relative}
+#video-header{ background:url(bg.png) repeat; width:100%; height: 36px; position: absolute; top:0; z-index: 10; clear: both; overflow: hidden;}
+#video-header .vh-logo{ float:left; display: inline-block; margin-left: 10px; margin-top: 8px; width:50px }
+#video-header .vh-title{ float:left; display: inline-block; color: #ffffff;  margin-left: 5px; margin-top: 10px;  font-size: 14px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+#video-header .vh-admittime{ float:left; display: inline-block; color: grey;  margin-left: 15px; margin-top: 10px;  font-size: 14px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+#video-header .vh-info{ display: inline-block; position: absolute; right:0; top:5px; height:100%;  padding: 0 10px;  border-left: 1px solid #000; text-align: center}
+#video-header .vh-setting{ display: inline-block; position: absolute; right:45px; top:5px; height:100%;  padding: 0 10px;  border-left: 1px solid #000; text-align: center}
+.bar{width:1px; height: 36px; display: inline-block; background: #000;}
+#video-footer{min-width:510px; width:100%; height: 92px; position: absolute; bottom:0; z-index: 10; clear: both; overflow: hidden}
+#video-footer .vf-control-box{background:url(bg.png) repeat; position: relative; top:0; height:56px;}
+#video-footer .vf-scale{  position: absolute; right:0; top:0px; display: inline-block; height:28px;  padding: 15px 20px;  border-left: 1px solid #000; text-align: center}
+#video-footer .vf-play{ display: inline-block; height:28px;  padding: 15px 20px;  border-right: 1px solid #000; text-align: center}
+#video-footer .vf-stop{ display: inline-block; height:28px;  padding: 15px 20px;  border-right: 1px solid #000; text-align: center; margin-left: -10px}
+#video-footer .vh-admitperiod{ float:left; display: inline-block; color: #ffffff;  margin-left: 5px; margin-top: 10px;  font-size: 14px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width:calc(90% - 100px)}
+.vf-volume{ display: inline-block; color: #fff; padding: 0 20px; }
+.vf-time{ display: inline-block; color:#676768; font-size: 12px; margin-left: 5px}
+.vf-time-live{ display: inline-block; color:#e88c1e}
+/*.vf-gage-wrap{ display:inline-block; position: relative; margin-left: -12px; top: -2px}				/* ywtag 수정 : 15.10.16 */
+.vf-gage-wrap{ display:inline-block; position: relative; margin-left: -22px; top: -2px}
+.vf-gage-box{ display:inline-block; width:120px; height: 5px; background: #545461; position: relative}
+.vf-gage-box .vf-gage{ display:inline-block; width:50%; height: 5px; background: #e88c1e; position: absolute}
+.vf-gage-box .vf-gage-btn{background:url(icon.png) no-repeat; background-position:0px -300px; width:15px; height:15px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; left:50%; top:-5px; z-index: 2; margin-left: -10px }
+.vf-gage-box .vf-gage-btn:hover{background:url(icon.png) no-repeat; background-position:-50px -300px; width:15px; height:15px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; left:50%; top:-5px; z-index: 2; margin-left: -10px }
+
+.icon-info{background:url(icon.png) no-repeat; background-position:0px 0px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.icon-info:hover{background:url(icon.png) no-repeat; background-position:-50px 0px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.icon-info:active{background:url(icon.png) no-repeat; background-position:-100px 0px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-play{background:url(icon.png) no-repeat; background-position:0px -330px; width:77px; height:77px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: -38px; margin-top: -38px}
+.btn-play:hover{background:url(icon.png) no-repeat; background-position:-100px -330px; width:77px; height:77px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: -38px; margin-top: -38px}
+.btn-play:active{background:url(icon.png) no-repeat; background-position:-200px -330px; width:77px; height:77px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: -38px; margin-top: -38px}
+
+#video-gage-wrap{ min-width:510px; width:100%;position: absolute; bottom: 86px; z-index: 11;}
+.video-gage-box{ display:inline-block; width:100%; height: 5px; background: #545461; position: relative}
+.video-gage-box .video-gage{ display:inline-block; width:50%; height: 5px; background: #e88c1e; position: absolute}
+.video-gage-box .video-gage-btn{background:url(icon.png) no-repeat; background-position:0px -270px; width:21px; height:21px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; left:50%; top:-8px; z-index: 2; margin-left: -10px }
+.video-gage-box .video-gage-btn:hover{background:url(icon.png) no-repeat; background-position:-50px -270px; width:21px; height:21px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; left:50%; top:-8px; z-index: 2; margin-left: -10px }
+
+#video-scale-wrap{ width:100%;position: absolute; top: 30px; z-index: 20;}
+.video-scale-box{ display:inline-block; width:100%; height: 10px; position: relative;   }
+
+/* 17.11.02 ywtag 반투명시 오류로 수정 */
+.video-scale-box .video-scale-L{ display:inline-block; width:50%; height: 3px; position: absolute; background: #e88c1e; }
+.video-scale-box .video-scale-R{ display:inline-block; width:50%; height: 3px; position: absolute; right:0; background: #51c4ff; }
+.video-scale-btn{background:url(icon.png) no-repeat; background-position:0px -430px; width:40px; height:29px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; left:50%; top:-0px; z-index: 100; margin-left: -19px }
+
+.btn-con-play{background:url(icon.png) no-repeat; background-position:0px -30px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-play:hover{background:url(icon.png) no-repeat; background-position:-50px -30px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-play:active{background:url(icon.png) no-repeat; background-position:-100px -30px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-pause{background:url(icon.png) no-repeat; background-position:0px -60px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-pause:hover{background:url(icon.png) no-repeat; background-position:-50px -60px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-pause:active{background:url(icon.png) no-repeat; background-position:-100px -60px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-stop{background:url(icon.png) no-repeat; background-position:0px -90px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-stop:hover{background:url(icon.png) no-repeat; background-position:-50px -90px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-stop:active{background:url(icon.png) no-repeat; background-position:-100px -90px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-full{background:url(icon.png) no-repeat; background-position:0px -120px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-full:hover{background:url(icon.png) no-repeat; background-position:-50px -120px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-full:active{background:url(icon.png) no-repeat; background-position:-100px -120px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-mini{background:url(icon.png) no-repeat; background-position:0px -150px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-mini:hover{background:url(icon.png) no-repeat; background-position:-50px -150px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-mini:active{background:url(icon.png) no-repeat; background-position:-100px -150px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-speaker{background:url(icon.png) no-repeat; background-position:0px -180px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-speaker:hover{background:url(icon.png) no-repeat; background-position:-50px -180px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-speaker:active{background:url(icon.png) no-repeat; background-position:-100px -180px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-con-mute{background:url(icon.png) no-repeat; background-position:0px -210px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-mute:hover{background:url(icon.png) no-repeat; background-position:-50px -210px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.btn-con-mute:active{background:url(icon.png) no-repeat; background-position:-100px -210px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.icon-setting{background:url(icon.png) no-repeat; background-position:0px -240px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.icon-setting:hover{background:url(icon.png) no-repeat; background-position:-50px -240px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.icon-setting:active{background:url(icon.png) no-repeat; background-position:-100px -240px; width:25px; height:25px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.layout-left{background:url(icon.png) no-repeat; background-position:-200px 0px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-right{background:url(icon.png) no-repeat; background-position:-240px 0px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-both{background:url(icon.png) no-repeat; background-position:-280px 0px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-change{background:url(icon.png) no-repeat; background-position:-320px 0px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.layout-left.active{background:url(icon.png) no-repeat; background-position:-200px -30px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-right.active{background:url(icon.png) no-repeat; background-position:-240px -30px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-both.active{background:url(icon.png) no-repeat; background-position:-280px -30px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.layout-change.active{background:url(icon.png) no-repeat; background-position:-320px -30px; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+
+/*layer popup*/
+.layer {display:none; position:fixed; _position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;}
+	.layer .bg {position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:.4; filter:alpha(opacity=40);-moz-opacity: 0.4; -khtml-opacity: 0.4;  }
+	.layer .pop-layer {display:block;}
+
+	.pop-layer {display:none; position: absolute; top: 250px; right: 20px; width: 250px; height:auto; background: url(bg-popup-body.png) repeat; z-index: 10; }	
+	.pop-layer .pop-container {padding:0;color:#c7c8cf;font-size: 13px; border: 1px solid #1c1d24 }
+	.pop-layer .pop-head { background: url(bg-popup-head.png) repeat; font-size: 13px; padding: 8px 10px}
+	.pop-layer .pop-content { padding:15px 15px }
+	
+	.cbtn{ background:url(icon.png) no-repeat; background-position:-50px -430px ; width:17px; height:17px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; float: right}
+
+.mT20 { margin-top: 20px}
+.mR { margin-right: 7px}
+.pop-layer .pop-content h5 { padding-bottom: 7px; font-size: 12px; font-weight: normal}
+.pop-layer .info-text{ padding:7px 0; min-height: 80px;  color: #898990}
+.pop-layer .copy{ text-align: right; padding-top: 5px; color: #898990; font-size: 11px}
+.line-bottom{ background: url(line.png) repeat-x bottom; }
+
+.hover > span{ padding: 0px 3px 3px 3px; display: inline-block}
+.hover > span:hover{ background: url(bg-popup-head.png) repeat; cursor: default}
+.hover > span.active{ background: url(bg-popup-head.png) repeat; color:#e88c1e}
+
+.btn-screen{ position: absolute; top:50%; left:50%; z-index: 10;  margin-left: -200px;  margin-top: -60px}
+
+.btn-camera{background:url(icon.png) no-repeat; background-position:0px -620px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: 80px; margin-top: -60px}
+.btn-camera:hover{background:url(icon.png) no-repeat; background-position:-150px -620px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: 80px; margin-top: -60px}
+
+.btn-ch{background:url(icon.png) no-repeat; background-position:0px -480px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10;  margin-left: -200px;  margin-top: -60px}
+.btn-ch:hover{background:url(icon.png) no-repeat; background-position:-150px -480px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; position: absolute; top:50%; left:50%; z-index: 10; margin-left: -200px;  margin-top: -60px}
+
+.btn-ch1{background:url(icon.png) no-repeat; background-position:-400px -0px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-ch1:hover{background:url(icon.png) no-repeat; background-position:-550px -0px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-ch2{background:url(icon.png) no-repeat; background-position:-400px -150px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-ch2:hover{background:url(icon.png) no-repeat; background-position:-550px -150px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-ch3{background:url(icon.png) no-repeat; background-position:-400px -300px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-ch3:hover{background:url(icon.png) no-repeat; background-position:-550px -300px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-ch4{background:url(icon.png) no-repeat; background-position:-400px -450px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-ch4:hover{background:url(icon.png) no-repeat; background-position:-550px -450px; width:120px; height:120px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+/* 배속 */
+#video-speed{ position: absolute; top:50%; right:15px; z-index: 10; margin-top: -71px}
+
+.speed-current{background:url(icon.png) no-repeat; background-position:-100px -740px; width:41px; height:41px; line-height: 41px; display:block; text-align: center; color:#fff; margin:10px 0 }
+
+.btn-speed-up{background:url(icon.png) no-repeat; background-position:0px -740px; width:41px; height:41px ; display:block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-speed-up:hover{background:url(icon.png) no-repeat; background-position:-50px -740px; width:41px; height:41px ; display:block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+.btn-speed-down{background:url(icon.png) no-repeat; background-position:-150px -740px; width:41px; height:41px ; display:block;overflow:hidden;line-height:9999px; vertical-align:middle; }
+.btn-speed-down:hover{background:url(icon.png) no-repeat; background-position:-200px -740px; width:41px; height:41px ; display:block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+
+
+@media screen and (max-width: 640px){
+	.btn-screen{margin-left: -140px}
+	.btn-screen:hover{margin-left: -140px}
+	.btn-camera{margin-left: 20px}
+	.btn-camera:hover{margin-left: 20px}
+	
+}
+
+@media screen and (max-width: 480px){
+	.vf-time{display:none}
+}
+
+@media screen and (max-width: 380px) {
+	.btn-screen {
+		margin-left: -120px
+	}
+
+	.btn-screen:hover {
+		margin-left: -120px
+	}
+
+	.btn-camera {
+		margin-left: 0px
+	}
+
+	.btn-camera:hover {
+		margin-left: 0px
+	}
+
+	#video-speed {
+		right: 5px;
+	}
+}
+
+/* ywtag 추가(18.04.27) */
+.main_layout3{background:url(icon_mainselect2.png) no-repeat; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.main_layout3:hover{background:url(icon_mainselect2_active.png) no-repeat; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.main_layout4{background:url(icon_mainselect.png) no-repeat; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+.main_layout4:hover{background:url(icon_mainselect_active.png) no-repeat; width:24px; height:16px ; display:inline-block;overflow:hidden;line-height:9999px; vertical-align:middle;}
+#video-loading-message {position: absolute; top:50%; left:calc(50% - 119px); z-index: 10; color:#e88c1e; font-size: 30px; width: 238px; display: none;}
+
+/* 로고 */
+#cg_logo{ border: 0; position: absolute; right:15px; z-index: 10; margin-top: 44px;}
+
+/*width:41px; height:41px ; display:block;overflow:hidden;line-height:9999px; vertical-align:middle;*/
+

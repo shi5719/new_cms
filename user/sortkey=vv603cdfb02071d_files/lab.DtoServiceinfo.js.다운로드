@@ -1,0 +1,13 @@
+
+/*
+	lab.DtoServiceinfo.js, version 1.0
+	Copyright 2017.09.08, ywtag
+	Re...
+
+*/
+
+var DtoServiceinfo = Base.extend({
+
+    _contentinfo_mode: ''
+
+});

@@ -1,0 +1,856 @@
+
+/*
+ lab.UixPlayerMobile.js, version 1.0
+ Copyright 2017.10.19, ywtag
+ Re...
+
+ */
+
+var UixPlayerMobile = Base.extend({
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     // ------------------------------------ variant block --------------------------------------------------------
+     // ------------------------------------------------------------------------------------------------------------------*/
+
+    medialoadcount: 0,
+    initmedialoadcompleted: false,
+    loadingsuccess: false,
+
+    mouseDownLayoutX : 0,
+    isvideodraging: false,
+
+    media1: null,
+    media2: null,
+    media3: null,
+    media4: null,
+
+
+
+
+    media1videoWidth : 0,
+    media2videoWidth : 0,
+    media3videoWidth : 0,
+    media4videoWidth : 0,
+
+    media1videoHeight : 0,
+    media2videoHeight : 0,
+    media3videoHeight : 0,
+    media4videoHeight : 0,
+
+    perLastMainL : 0.0,
+    perLastMainT : 0.0,
+    perLastMainW : 0.0,
+    perLastMainH : 0.0,
+
+    perLastSubL : 0.0,
+    perLastSubT : 0.0,
+    perLastSubW : 0.0,
+    perLastSubH : 0.0,
+
+    currentSceneMode: "POP",
+
+    media1canplay: false,
+    media2canplay: false,
+    media3canplay: false,
+    media4canplay: false,
+
+    isseekprocessresult: false,
+
+    media1seeking: false,
+    media2seeking: false,
+    media3seeking: false,
+    media4seeking: false,
+
+    media1full: false,
+    media2full: false,
+    media3full: false,
+    media4full: false,
+
+    media1duration: 0.0,
+
+    dtoContentInfo: null,
+
+    mainEventTarget: null,
+
+    keepPlay: true,
+
+    constructor: function() {
+
+
+
+    },
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     // ------------------------------------ get/set block --------------------------------------------------------
+     // ------------------------------------------------------------------------------------------------------------------*/
+
+    setEventTarget: function(_eventTarget) {
+
+        this.mainEventTarget = _eventTarget;
+    },
+
+
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     // ------------------------------------ function block --------------------------------------------------------
+     // ------------------------------------------------------------------------------------------------------------------*/
+
+    initialize: function(_dto) {
+
+        this.media1canplay = false;
+        this.media1seeking = false;
+
+        this.media1duration = 0.0;
+        this.medialoadcount = 0;
+
+        this.loadingsuccess = false;
+        this.mouseDownLayoutX = 0;
+
+        this.dtoContentInfo = _dto;
+
+        this.initLayout();
+
+        this.registEvent();
+
+        videojs.options.techOrder = this.dtoContentInfo._techOrder;
+
+        if (bizDevice.isAndroid()) {
+            var options = {
+                html5: {
+                    nativeAudioTracks: false,
+                    nativeVideoTracks: false
+                }
+            };
+            videojs.options.hls.overrideNative = true;
+            this.media1 = videojs(MediaIDS.MEDIA_ID1, options);
+        }
+        else {
+
+            this.media1 = videojs(MediaIDS.MEDIA_ID1);
+        }
+        //var player = videojs('test', options);
+
+
+
+
+        this.initMedia(this.media1);
+    },
+
+    registEvent: function() {
+
+
+        $(HtmlDefine.MAINBODY_VIDEOALL_WRAPPER).on('touchstart', this.OnMouseTouchVideoWrapper);
+        $(HtmlDefine.MAINBODY_VIDEOALL_WRAPPER).on('touchend', this.OnMouseTouchEndVideoWrapper);
+
+    },
+
+    initLayout: function() {
+
+        $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('display', 'none');
+        $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('display', 'none');
+        $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('display', 'none');
+        $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('display', 'none');
+    },
+
+    initMedia: function(_mediaobj) {
+
+        var churl = '';
+        if (_mediaobj.id() == MediaIDS.MEDIA_ID1) {
+
+            if (bizDevice.isAndroid()) {
+                churl = this.dtoContentInfo._content_httpurl1;
+                //churl = "rtsp://222.112.224.200:1935/vod/laby1.0.4.mp4";
+            }
+            else {
+                churl = this.dtoContentInfo._m_contenturl1;
+            }
+        }
+        else if (_mediaobj.id() == MediaIDS.MEDIA_ID2) {
+
+            if (bizDevice.isAndroid()) {
+                churl = this.dtoContentInfo._content_httpurl2;
+            }
+            else
+            {
+                churl = this.dtoContentInfo._m_contenturl2;
+            }
+        }
+        else if (_mediaobj.id() == MediaIDS.MEDIA_ID3) {
+            if (bizDevice.isAndroid()) {
+                churl = this.dtoContentInfo._content_httpurl3;
+            }
+            else {
+                churl = this.dtoContentInfo._m_contenturl3;
+            }
+        }
+        else if (_mediaobj.id() == MediaIDS.MEDIA_ID4) {
+            if (bizDevice.isAndroid()) {
+                churl = this.dtoContentInfo._content_httpurl4;
+            }
+            else {
+                churl = this.dtoContentInfo._m_contenturl4;
+            }
+        }
+
+        var streamingtype;
+
+        if (bizDevice.isAndroid()) {
+            streamingtype = this.dtoContentInfo._http_content_streamingtype;
+        }
+        else {
+            streamingtype = this.dtoContentInfo._m_contentstreamingtype;
+        }
+
+        console.log('[' + streamingtype + '.] ' + churl);
+
+        //alert('[' + streamingtype + '.] ' + churl);
+
+        _mediaobj.on('ready', function() {
+            // loadeddata 버그시 필요한 event
+            console.log("ready.. : " + _mediaobj.id() );
+
+
+            this.src({
+                src: churl, type: streamingtype, withCredentials: false
+            });
+
+            this.load();
+            this.pause();
+
+            if(mainApp.islive === "1") {
+                console.log("live play... : " + _mediaobj.id() );
+                this.play();
+            }
+        });
+
+        _mediaobj.on('loadstart', function() {
+            // loadeddata 버그시 필요한 event
+            console.log("loadstart : " + _mediaobj.id() );
+
+            //alert("loadstart : " + _mediaobj.id() );
+        });
+
+        _mediaobj.on('loadeddata', function() {
+
+            // 다운로드 안된 영상 Play시 마다 작동되는 이벤트(오래있으면 이벤트 발생안함)
+            // Seek 이벤트는 로드가 된 다음에 호출해야 함
+            // alert(mainApp.lastTime);
+            var me = bizVideoPlayer.getUixVideoPlayer();
+
+            me.isseekprocessresult_set(true);
+
+            if (mainApp.lastTime > 0) {
+                if (_mediaobj.id() == MediaIDS.MEDIA_ID1) {
+                    me.seek(0, mainApp.lastTime);
+                } else if (_mediaobj.id() == MediaIDS.MEDIA_ID2) {
+                    me.seek(1, mainApp.lastTime);
+                } else if (_mediaobj.id() == MediaIDS.MEDIA_ID3) {
+                    me.seek(2, mainApp.lastTime);
+                } else if (_mediaobj.id() == MediaIDS.MEDIA_ID4) {
+                    me.seek(3, mainApp.lastTime);
+                }
+            }
+        });
+
+        _mediaobj.on('loadedmetadata', function() {
+            // 최초 1회만 작동되는 이벤트
+            console.log("loadedmetadata : " + _mediaobj.id() );
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+
+
+            me.medialoadcount++;
+
+            // 브라우저 최초 로딩시에만 이벤트 발생
+            me.loadingsuccess = false;
+
+            if (me.dtoContentInfo._contenttype == ContentType.VIDEO1) {
+
+                me.mainEventTarget.fire(EventDefine.VIDEO_LOADEDDATA, me.medialoadcount);
+
+                me.media1canplay = true;
+                _mediaobj.volume(0.8);
+
+
+
+                if (me.medialoadcount == 1) {
+                    me.initmedialoadcompleted = true;
+                    me.loadingsuccess = true;
+                    me.initmedialoadcompleted = false;
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_LOADINGCOMPLETED);
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_VOLUMECHANGE, 0.8);
+                }
+            }
+            else if (me.dtoContentInfo._contenttype == ContentType.VIDEO2) {
+
+                me.mainEventTarget.fire(EventDefine.VIDEO_LOADEDDATA, me.medialoadcount);
+
+                if (_mediaobj.id() == MediaIDS.MEDIA_ID1) {
+
+                    me.media1canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media2 = videojs(MediaIDS.MEDIA_ID2);
+                    me.initMedia(me.media2);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID2) {
+
+                    me.media2canplay = true;
+                    _mediaobj.volume(0.8);
+                }
+
+                if (me.medialoadcount == 2) {
+                    me.initmedialoadcompleted = true;
+                    me.loadingsuccess = true;
+
+                    me.initmedialoadcompleted = false;
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_LOADINGCOMPLETED);
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_VOLUMECHANGE, 0.8);
+                }
+            }
+            else if (me.dtoContentInfo._contenttype == ContentType.VIDEO3) {
+
+                me.mainEventTarget.fire(EventDefine.VIDEO_LOADEDDATA, me.medialoadcount);
+
+                if (_mediaobj.id() == MediaIDS.MEDIA_ID1) {
+
+                    me.media1canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media2 = videojs(MediaIDS.MEDIA_ID2);
+                    me.initMedia(me.media2);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID2) {
+
+                    me.media2canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media3 = videojs(MediaIDS.MEDIA_ID3);
+                    me.initMedia(me.media3);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID3) {
+
+                    me.media3canplay = true;
+                    _mediaobj.volume(0.8);
+                }
+
+                if (me.medialoadcount == 3) {
+                    me.initmedialoadcompleted = true;
+                    me.loadingsuccess = true;
+
+                    me.initmedialoadcompleted = false;
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_LOADINGCOMPLETED);
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_VOLUMECHANGE, 0.8);
+                }
+            }
+            else if (me.dtoContentInfo._contenttype == ContentType.VIDEO4) {
+
+                me.mainEventTarget.fire(EventDefine.VIDEO_LOADEDDATA, me.medialoadcount);
+
+                if (_mediaobj.id() == MediaIDS.MEDIA_ID1) {
+
+                    me.media1canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media2 = videojs(MediaIDS.MEDIA_ID2);
+                    me.initMedia(me.media2);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID2) {
+
+                    me.media2canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media3 = videojs(MediaIDS.MEDIA_ID3);
+                    me.initMedia(me.media3);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID3) {
+
+                    me.media3canplay = true;
+                    _mediaobj.volume(0.8);
+
+                    me.media4 = videojs(MediaIDS.MEDIA_ID4);
+                    me.initMedia(me.media4);
+                }
+                else if (_mediaobj.id() == MediaIDS.MEDIA_ID4) {
+
+                    me.media4canplay = true;
+                    _mediaobj.volume(0.8);
+                }
+
+                if (me.medialoadcount == 4) {
+                    me.initmedialoadcompleted = true;
+                    me.loadingsuccess = true;
+
+                    me.initmedialoadcompleted = false;
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_LOADINGCOMPLETED);
+                    if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_VOLUMECHANGE, 0.8);
+                }
+            }
+        });
+
+        _mediaobj.on('durationchange', function() {
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+            me.media1duration = _mediaobj.duration();
+
+            if (isNaN(me.media1duration)) {
+
+                me.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, 86400*1);
+            }
+            else if(me.media1duration == "Infinity") {
+                me.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, 86400*1);
+            }
+            else if(me.media1duration == 'undefine') {
+                me.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, 86400*1);
+            }
+            else {
+                me.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, me.media1duration);
+            }
+
+            me.mainEventTarget.fire(EventDefine.VIDEO_TIMEUPDATE, 0);
+        });
+
+        _mediaobj.on('canplaythrough', function() {
+
+            console.log('canplaythrough: ' + _mediaobj.id());
+            //console.log("initMedia is canplaythrough!! " + _mediaobj.id() );
+        });
+
+        _mediaobj.on('error', function(e) {
+
+            // MEDIA_ERR_CUSTOM","MEDIA_ERR_ABORTED","MEDIA_ERR_NETWORK","MEDIA_ERR_DECODE","MEDIA_ERR_SRC_NOT_SUPPORTED","MEDIA_ERR_ENCRYPTED
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+            me.mainEventTarget.fire(EventDefine.VIDEO_ERROR, this.error().code, _mediaobj.id());
+
+            me.media1canplay = false;
+
+            console.log('initMedia is error!' + _mediaobj.id(), this.error().code, this.error().type , this.error().message);
+
+        });
+
+        _mediaobj.on('timeupdate', function() {
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+            me.mainEventTarget.fire(EventDefine.VIDEO_TIMEUPDATE, _mediaobj.currentTime());
+        });
+
+        _mediaobj.on('pause', function() {
+
+            // paused event
+            console.log('paused: ' + _mediaobj.id());
+
+        });
+
+        _mediaobj.on('play', function() {
+
+            // 영상 Play시 마다 작동되는 이벤트
+
+            // play event
+            console.log('played: ' + _mediaobj.id());
+
+//			var me = bizVideoPlayer.getUixVideoPlayer();
+//			me.mainEventTarget.fire(EventDefine.VIDEO_DURATIONCHANGE, "1");
+
+        });
+
+        _mediaobj.on('seeked', function() {
+
+            // paused event
+            console.log('seeked: ' + _mediaobj.id());
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+
+            me.media1seeking = false;
+        });
+
+        _mediaobj.on('ended', function() {
+
+            // ended event
+            console.log('ended');
+
+            var me = bizVideoPlayer.getUixVideoPlayer();
+            me.mainEventTarget.fire(EventDefine.VIDEO_ENDED);
+
+        });
+
+        _mediaobj.on('canplay', function() {
+
+
+        });
+
+    },
+
+    isseekprocessresult_set: function(_result) {
+
+        var me = bizVideoPlayer.getUixVideoPlayer();
+        me.isseekprocessresult = _result;
+    },
+
+    isseekprocessresult_get: function() {
+
+        var me = bizVideoPlayer.getUixVideoPlayer();
+        return me.isseekprocessresult;
+    },
+
+    release: function() {
+
+        this.mainEventTarget = null;
+    },
+
+    play: function(_chindex) {
+        var lastTime = mainApp.lastTime;
+        /* 모바일은 전체화면으로 띄움 */
+        console.log('this.media1.play(): ' + _chindex);
+        var me = bizVideoPlayer.getUixVideoPlayer();
+
+        //안드로이드
+        if (bizDevice.isAndroid()) {
+            if (this.keepPlay == true) {
+                if (mainApp.startat > 0) {
+                    this.keepPlay = false;
+                    mainApp.seekchannel(_chindex, mainApp.startat);
+                }
+            }
+            if (_chindex == 0) { if (this.media1canplay) { me.setLayoutMobile(_chindex); if(this.media1.paused()) this.media1.play();} }
+            else if (_chindex == 1) { if (this.media2canplay) { me.setLayoutMobile(_chindex); if(this.media2.paused()) this.media2.play();} }
+            else if (_chindex == 2) { if (this.media3canplay) { me.setLayoutMobile(_chindex); if(this.media3.paused()) this.media3.play();} }
+            else if (_chindex == 3) { if (this.media4canplay) { me.setLayoutMobile(_chindex); if(this.media4.paused()) this.media4.play();} }
+        }
+        else {
+            // iphone 계열은 풀화면
+            if (_chindex == 0) {
+                if (this.media1canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media1.paused()) {
+                        if (this.keepPlay == true) {
+                            if (mainApp.startat > 0) {
+                                this.keepPlay = false;
+                                this.media1.play();
+                                setTimeout(function () {
+                                    mainApp.seekchannel(_chindex, mainApp.startat);
+                                }, 200);
+                            } else {
+                                this.media1.play();
+                            }
+                        } else {
+                            this.media1.play();
+                        }
+                        //this.media1.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 1) {
+                if (this.media2canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media2.paused()) {
+                        if (this.keepPlay == true) {
+                            if (mainApp.startat > 0) {
+                                this.keepPlay = false;
+                                this.media2.play();
+                                setTimeout(function () {
+                                    mainApp.seekchannel(_chindex, mainApp.startat);
+                                }, 200);
+                            } else {
+                                this.media2.play();
+                            }
+                        } else {
+                            this.media2.play();
+                        }
+                        //this.media2.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 2) {
+                if (this.media3canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media3.paused()) {
+                        if (this.keepPlay == true) {
+                            if (mainApp.startat > 0) {
+                                this.keepPlay = false;
+                                this.media3.play();
+                                setTimeout(function () {
+                                    mainApp.seekchannel(_chindex, mainApp.startat);
+                                }, 200);
+                            } else {
+                                this.media3.play();
+                            }
+                        } else {
+                            this.media3.play();
+                        }
+                        //this.media3.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 3) {
+                if (this.media4canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media4.paused()) {
+                        if (this.keepPlay == true) {
+                            if (mainApp.startat > 0) {
+                                this.keepPlay = false;
+                                this.media4.play();
+                                setTimeout(function () {
+                                    mainApp.seekchannel(_chindex, mainApp.startat);
+                                }, 200);
+                            } else {
+                                this.media4.play();
+                            }
+                        } else {
+                            this.media4.play();
+                        }
+                        //this.media4.requestFullscreen();
+                    }
+                }
+            }
+        }
+    },
+
+    playandseek: function(_chindex, _time) {
+
+        /* 모바일은 전체화면으로 띄움 */
+        console.log('this.media1.play(): ' + _chindex);
+        var me = bizVideoPlayer.getUixVideoPlayer();
+
+        if (bizDevice.isAndroid()) {
+            if (_chindex == 0) { if (this.media1canplay) { me.setLayoutMobile(_chindex); if(this.media1.paused()) this.media1.play();} }
+            else if (_chindex == 1) { if (this.media2canplay) { me.setLayoutMobile(_chindex); if(this.media2.paused()) this.media2.play();} }
+            else if (_chindex == 2) { if (this.media3canplay) { me.setLayoutMobile(_chindex); if(this.media3.paused()) this.media3.play();} }
+            else if (_chindex == 3) { if (this.media4canplay) { me.setLayoutMobile(_chindex); if(this.media4.paused()) this.media4.play();} }
+        }
+        else {
+            // iphone 계열은 풀화면
+            if (_chindex == 0) {
+                if (this.media1canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media1.paused()) {
+                        this.media1.play();
+                        //this.media1.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 1) {
+                if (this.media2canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media2.paused()) {
+                        this.media2.play();
+                        //this.media2.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 2) {
+                if (this.media3canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if(this.media3.paused()) {
+                        this.media3.play();
+                        //this.media3.requestFullscreen();
+                    }
+                }
+            }
+            else if (_chindex == 3) {
+                if (this.media4canplay) {
+                    me.setLayoutMobile(_chindex);
+                    if (this.media4.paused()) {
+                        this.media4.play();
+                        //this.media4.requestFullscreen();
+                    }
+                }
+            }
+        }
+    },
+
+    pause: function(_chindex) {
+
+        console.log('pause()');
+
+        if (this.media1canplay) { if(!this.media1.paused()) { this.media1.pause(); }}
+        if (this.media2canplay) { if(!this.media2.paused()) { this.media2.pause(); }}
+        if (this.media3canplay) { if(!this.media3.paused()) { this.media3.pause(); }}
+        if (this.media4canplay) { if(!this.media4.paused()) { this.media4.pause(); }}
+    },
+
+    stop: function(_chindex) {
+
+        console.log('stop()');
+
+        if (this.media1canplay) { if(!this.media1.paused()) { this.media1.pause(); this.media1.currentTime(0); }}
+        if (this.media2canplay) { if(!this.media2.paused()) { this.media2.pause(); this.media2.currentTime(0); }}
+        if (this.media3canplay) { if(!this.media3.paused()) { this.media3.pause(); this.media3.currentTime(0); }}
+        if (this.media4canplay) { if(!this.media4.paused()) { this.media4.pause(); this.media4.currentTime(0); }}
+    },
+
+    seekStart: function() {
+
+        if (this.media1canplay) { this.media1seeking = true; }
+        if (this.media2canplay) { this.media2seeking = true; }
+        if (this.media3canplay) { this.media3seeking = true; }
+        if (this.media4canplay) { this.media4seeking = true; }
+    },
+
+    // iphone, ipad의 경우 처음재생하는 채널은 seek 가 안되는 버그가 있음(코드도 오류있음)
+    seek: function(_chindex, _time) {
+        if (bizDevice.isAndroid()) {
+            if (_chindex == 0) { if (this.media1canplay) { this.media1.currentTime(_time);} }
+            else if (_chindex == 1) { if (this.media2canplay) { this.media2.currentTime(_time);} }
+            else if (_chindex == 2) { if (this.media3canplay) { this.media3.currentTime(_time);} }
+            else if (_chindex == 3) { if (this.media4canplay) { this.media4.currentTime(_time);} }
+        }
+        else {
+            if (_chindex == 0) { if (this.media1canplay) { this.media1.currentTime(_time);} }
+            else if (_chindex == 1) { if (this.media2canplay) { this.media2.currentTime(_time);} }
+            else if (_chindex == 2) { if (this.media3canplay) { this.media3.currentTime(_time);} }
+            else if (_chindex == 3) { if (this.media4canplay) { this.media4.currentTime(_time);} }
+        }
+    },
+
+    vol: function(_vol) {
+
+        return;
+        if (this.media1canplay) { this.media1.volume(_vol); }
+        if (this.media2canplay) { this.media2.volume(_vol); }
+        if (this.media3canplay) { this.media3.volume(_vol); }
+        if (this.media4canplay) { this.media4.volume(_vol); }
+
+    },
+
+    test: function() {
+
+        console.log(this.media1duration);
+
+        console.log(this.media1.paused());
+
+        console.log(this.media1.readyState());//4 = noproblem
+
+        alert('test');
+
+        this.setLayout2Test();
+
+    },
+
+    speed: function(_rate) {
+
+        if (this.media1canplay) { this.media1.playbackRate(_rate); }
+        if (this.media2canplay) { this.media2.playbackRate(_rate); }
+        if (this.media3canplay) { this.media3.playbackRate(_rate); }
+        if (this.media4canplay) { this.media4.playbackRate(_rate); }
+    },
+
+    mainchannel: function (_index) {
+
+        return;
+    },
+
+    quardchannel: function(_index) {
+        return;
+    },
+
+    setLayoutMobile: function(_channelindex) {
+
+        var me = bizVideoPlayer.getUixVideoPlayer();
+
+        var w = $(window).innerWidth();
+        var h = $(window).innerHeight();
+
+        if(_channelindex == 0) {
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('left', '{0}px'.format(0));
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('top', '{0}px'.format(0));
+
+            $(HtmlDefine.VIDEO_ID1).css('width', '{0}px'.format(w));
+            $(HtmlDefine.VIDEO_ID1).css('height', '{0}px'.format(h));
+
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('display', 'inline-block');
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('display', 'none');
+        }
+        else if(_channelindex == 1)
+        {
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('left', '{0}px'.format(0));
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('top', '{0}px'.format(0));
+
+            $(HtmlDefine.VIDEO_ID2).css('width', '{0}px'.format(w));
+            $(HtmlDefine.VIDEO_ID2).css('height', '{0}px'.format(h));
+
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('display', 'inline-block');
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('display', 'none');
+        }
+        else if(_channelindex == 2)
+        {
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('left', '{0}px'.format(0));
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('top', '{0}px'.format(0));
+
+            $(HtmlDefine.VIDEO_ID3).css('width', '{0}px'.format(w));
+            $(HtmlDefine.VIDEO_ID3).css('height', '{0}px'.format(h));
+
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('display', 'inline-block');
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('display', 'none');
+        }
+        else if(_channelindex == 3)
+        {
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('left','{0}px'.format(0));
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('top', '{0}px'.format(0));
+
+            $(HtmlDefine.VIDEO_ID4).css('width', '{0}px'.format(w));
+            $(HtmlDefine.VIDEO_ID4).css('height','{0}px'.format(h));
+
+            $(HtmlDefine.MAINBODY_VIDEO4_WRAPPER).css('display', 'inline-block');
+            $(HtmlDefine.MAINBODY_VIDEO1_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO2_WRAPPER).css('display', 'none');
+            $(HtmlDefine.MAINBODY_VIDEO3_WRAPPER).css('display', 'none');
+        }
+    },
+
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     // ------------------------------------ event function block --------------------------------------------------------
+     // ------------------------------------------------------------------------------------------------------------------*/
+
+
+    evt: function() {
+
+    },
+
+    resizeWindow: function() {
+
+        this.setLayoutMobile(mainApp.lastChannelindex);
+    },
+
+    OnMouseMoveVideoWrapper: function() {
+
+        /*
+         var me = bizVideoPlayer.getUixVideoPlayer();
+         if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_ALLWRAP_MOUSEOVER);
+         */
+
+    },
+
+
+    OnMouseTouchVideoWrapper: function(e) {
+
+        e.preventDefault();  // 다른이벤트는 막음
+    },
+
+    OnMouseTouchEndVideoWrapper: function(e) {
+
+        var me = bizVideoPlayer.getUixVideoPlayer();
+        if (me.mainEventTarget) me.mainEventTarget.fire(EventDefine.VIDEO_ALLWRAP_MOUSEOVER);
+    },
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
