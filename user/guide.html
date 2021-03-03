@@ -94,24 +94,56 @@
         </nav>
         <!--// header -->
         <!-- contents (sidebar, article) -->
-        <div class="contents-upload" >
-            <div class="container-md mt-5 pb-5" style="background-color:#fff; height:80vh; min-height:80vh">
+        <div class="contents-upload">
+            <div class="container-md mt-5 pb-5" style="background-color:#fff; height:auto; min-height:80vh">
                 <div style="position:relative; width:100%; height:250px; background: url(../public/images/contents/manual.png) no-repeat right 20px;">
                     <div style="position:absolute; left:10px; top:100px"><h4>사용자매뉴얼</h4></div>
                     <div style="position:absolute; left:10px; top:140px"><h6>콘텐츠관리시스템 이용자를 위한 매뉴얼입니다.</h6></div>
                 </div>
                 <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-                      <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-                      <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                    <div class="nav nav-contents" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">교수자 매뉴얼</a>
+                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">학습자 매뉴얼</a>
                     </div>
-                  </nav>
-                  <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-                  </div>
+                </nav>
+                <div class="tab-content font-14" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div style="border:1px solid #eee; padding:20px; margin:10px 0;">
+                            <div class="row mb-5">
+                                <ul class="col-6 list-group list-group-flush">
+                                    <li class="list-group-item" aria-disabled="true">
+                                        <a href=""><img src="../public/images/icon/pdf.png" alt="" />1. 접속하기</a>
+                                    </li>
+                                    <li class="list-group-item">1-1. 로그인하기</li>
+                                    <li class="list-group-item">1-2. 아이디 비밀번호 확인하기</li>
+                                </ul>
+                                <ul class="col-6 list-group list-group-flush">
+                                    <li class="list-group-item" aria-disabled="true"><a href="">2. 콘텐츠 목록</a></li>
+                                    <li class="list-group-item">2-1. 콘텐츠 목록</li>
+                                    <li class="list-group-item">2-2. 사용자 계정 정보</li>
+                                    <li class="list-group-item">2-3. 콘텐츠 리스트</li>
+                                    <li class="list-group-item">2-4. 새폴더 만들기</li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <ul class="col-6 list-group list-group-flush">
+                                    <li class="list-group-item" aria-disabled="true"><a href="">3. 콘텐츠 등록</a></li>
+                                    <li class="list-group-item">3-1. 동영상 업로드</li>
+                                    <li class="list-group-item">3-2. 문서 업로드</li>
+                                    <li class="list-group-item">3-3. 소셜미디어 업로드</li>
+                                    <li class="list-group-item">3-4. 콘텐츠파일 업로드</li>
+                                </ul>
+                                <ul class="col-6 list-group list-group-flush">
+                                    <li class="list-group-item" aria-disabled="true"><a href="">4. 헬프데스크</a></li>
+                                    <li class="list-group-item">4. 헬프데스크</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div style="border:1px solid #eee; padding:20px; margin:10px 0 ">학습자 매뉴얼</div>
+                    </div>
+                </div>
             </div>
         <!--// contents (sidebar, article) -->
         </div>

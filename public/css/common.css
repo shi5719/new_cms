@@ -1232,3 +1232,36 @@ li.plupload_droptext {
 .jspVerticalBar {
   width: 5px;
 }
+
+/* 사용자매뉴얼 탭 */
+.nav-contents {
+  border-bottom: 2px solid #2f24c1;
+}
+
+.nav-contents .nav-item {
+  margin-bottom: -1px;
+}
+
+.nav-contents .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.nav-contents .nav-link.disabled {
+  color: #6c757d;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.nav-contents .nav-link.active,
+.nav-contents .nav-item.show .nav-link {
+  color: #fff;
+  background-color: #2f24c1;
+}
+
+.nav-contents .dropdown-menu {
+  margin-top: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
