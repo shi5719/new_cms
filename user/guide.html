@@ -95,18 +95,23 @@
         <!--// header -->
         <!-- contents (sidebar, article) -->
         <div class="contents-upload" >
-            <div class="container-md mt-5 pb-5" style="background-color:#fff; min-height:700px;">
-                <div class="py-3">
-                    <span class="mr-3">사용자가이드( 예시예시예시 )</span>
-                    <span class="font-12">예시예시예시 뭐넣을까 CMS 초기 접속 후 원활한 사용을 위한 가이드입니다.</span>
+            <div class="container-md mt-5 pb-5" style="background-color:#fff; height:80vh; min-height:80vh">
+                <div style="position:relative; width:100%; height:250px; background: url(../public/images/contents/helpdesk.png) no-repeat right 50px;">
+                    <div style="position:absolute; left:10px; top:100px"><h4>사용자가이드</h4></div>
+                    <div style="position:absolute; left:10px; top:140px"><h6>콘텐츠관리시스템 이용자를 위한 가이드입니다.</h6></div>
                 </div>
-                <div class="w-100">
-                    <h6 class="text-left">1.콘텐츠목록</h6>
-                    <p class="mb-3"><img src="../public/images/contents/guide-01.png" style="border:1px solid #fff" alt="" /></p>
-                    <span class="text-left">기타 궁금하신 사항은 헬프데스크를 이용해주시기 바랍니다.</span>
-                    <a class="btn btn-orange btn-xs ml-1" href="helpdesk.html">헬프데스크 바로가기</a>
-                   
-                </div>    
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                      <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                      <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                    </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                  </div>
             </div>
         <!--// contents (sidebar, article) -->
         </div>
