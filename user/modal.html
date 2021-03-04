@@ -426,6 +426,75 @@
             </div>
             <!--// LMS 업로드-->
 
+            <!-- 관리자모드 : 사용자추가 -->
+            <a type="submit" class="btn btn-orange btn-sm" data-toggle="modal" data-target="#modal-editcontent">
+                <span class="font-14">사용자 추가</span>
+            </a>
+            <div class="modal fade" id="modal-editcontent" tabindex="-1" aria-labelledby="modal-editcontent-Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h6 class="modal-title" id="modal-editcontent-Label">사용자 추가</h6>
+                        <a href="" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-video-info">
+                                <tbody>
+                                <tr>
+                                    <th width="80px" class="">이름</th>
+                                    <td><input class="form-control form-control-sm" type="text" placeholder=""></td>
+                                </tr>
+                                <tr>
+                                    <th>등록자ID</th>
+                                    <td>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>사용자 유형</th>
+                                    <td><input class="form-control form-control-sm" type="text" placeholder=""> 
+                                        <span class="font-12 text_s">*태그는 쉼표(,)와 엔터로 구분</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="folder-open" id="folder-open" value="">
+                                            <label class="form-check-label" for="folder-open">공개</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="folder-close" id="folder-close" value="">
+                                            <label class="form-check-label" for="folder-close">비공개</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>소속 1</th>
+                                    <td>
+                                        ㅂ123
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>소속 2</th>
+                                    <td>
+                                        ㅂ123
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-orange"><span>확인</span></a>
+                            <a type="button" class="btn btn-light" data-dismiss="modal"><span></span>취소</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// 관리자모드 : 사용자추가 -->
+
 
         </div>
     </div>
