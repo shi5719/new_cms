@@ -65,7 +65,7 @@ a:hover {
 }
 
 @font-face {
-  font-family: "NotoKrR", sans-serif;
+  font-family: "NotoKrR";
   font-style: normal;
   font-weight: 300;
   src: local("Noto Sans Regular"), local("NotoSans-Regular"),
@@ -75,7 +75,7 @@ a:hover {
     url(./fonts/NotoSansKR-Regular.woff) format("woff");
 }
 @font-face {
-  font-family: "NotoKrM", sans-serif;
+  font-family: "NotoKrM";
   font-style: normal;
   font-weight: 500;
   src: local("Noto Sans Medium"), local("NotoSans-Medium"),
@@ -85,7 +85,7 @@ a:hover {
     url(./fonts/NotoSansKR-Medium.woff) format("woff");
 }
 @font-face {
-  font-family: "NotoKrB", sans-serif;
+  font-family: "NotoKrB";
   font-style: normal;
   font-weight: 700;
   src: local("Noto Sans Bold"), local("NotoSans-Bold"),
