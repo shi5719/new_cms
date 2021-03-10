@@ -53,8 +53,8 @@ a:hover {
   font-size: 0.75rem;
 }
 .form-control-xs {
-  height: calc(0.875rem + 0.5rem + 2px);
-  padding: 0.25rem 0.5rem;
+  height: calc(1rem + 0.5rem + 2px);
+  padding: 0.1rem 0.5rem 0.25rem 0.375rem;
   font-size: 0.75rem;
   line-height: 1;
   border-radius: 0.2rem;
@@ -65,7 +65,7 @@ a:hover {
 }
 
 @font-face {
-  font-family: "NotoKrR";
+  font-family: "NotoKrR", sans-serif;
   font-style: normal;
   font-weight: 300;
   src: local("Noto Sans Regular"), local("NotoSans-Regular"),
@@ -75,7 +75,7 @@ a:hover {
     url(./fonts/NotoSansKR-Regular.woff) format("woff");
 }
 @font-face {
-  font-family: "NotoKrM";
+  font-family: "NotoKrM", sans-serif;
   font-style: normal;
   font-weight: 500;
   src: local("Noto Sans Medium"), local("NotoSans-Medium"),
@@ -85,7 +85,7 @@ a:hover {
     url(./fonts/NotoSansKR-Medium.woff) format("woff");
 }
 @font-face {
-  font-family: "NotoKrB";
+  font-family: "NotoKrB", sans-serif;
   font-style: normal;
   font-weight: 700;
   src: local("Noto Sans Bold"), local("NotoSans-Bold"),
