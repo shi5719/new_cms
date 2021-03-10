@@ -488,7 +488,7 @@ a.text-primary:focus {
 }
 .bg_login {
   width: 100%;
-  height: 37.5rem;
+  height: 900px;
   background: url(../images/login/bg_school.png) no-repeat center top #ccc;
   background-size: cover;
   position: absolute;
@@ -507,7 +507,7 @@ a.text-primary:focus {
   height: 31.25rem;
   z-index: 100;
   max-width: 31.25rem;
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
   position: absolute;
   left: 50%;
   top: 10rem;
