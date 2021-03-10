@@ -341,7 +341,7 @@ a.text-primary:focus {
     height: 100vh;
     min-height: 100%;
     padding: 0;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-family: "NotoKrR";
   }
   .info {
@@ -449,7 +449,7 @@ a.text-primary:focus {
   .table-video-info th,
   .table-video-info td {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     padding: 0.75rem 0rem 0.75rem 0.3rem;
   }
   .table-video-info td {
