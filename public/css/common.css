@@ -20,7 +20,7 @@ h6,
 input,
 textarea,
 select {
-  font-family: "dotum", sans-serif;
+  font-family: "NotoKrM", sans-serif;
   transform: skew(-0.001deg);
 }
 .form-control,
