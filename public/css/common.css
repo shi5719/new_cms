@@ -1043,21 +1043,24 @@ li.plupload_droptext {
 }
 .leftnav-manager ol {
   list-style: none;
-  margin: 1rem 0.75rem;
+  margin: 1rem 0.75rem 1rem 1.5rem;
   padding: 0;
 }
 .leftnav-manager ol li {
   color: #222;
+  font-size: 0.8rem;
+  font-family: "NotoKrB";
 }
 .leftnav-manager ol li ol {
   margin: 0.5rem 0 1rem 1.5rem;
 }
 .leftnav-manager ol li ol li {
   padding-bottom: 3px;
+  font-family: "NotoKrR";
 }
 .leftnav-manager ol li a {
   color: #707070;
-  font-size: 14px;
+  font-size: 0.8rem;
   padding-right: 20px;
 }
 .leftnav-manager ol li a.active,
