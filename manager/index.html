@@ -57,7 +57,7 @@
             <!-- admin info -->
             <div class="dropdown">
                 <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../public/images/icon/user.png" />
+                    <img src="../public/images/icon/user.png" class="mb-1 mr-1" />
                     <span>시스템관리자(admin_12345)</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-xl-right dropdown-menu-header" aria-labelledby="dropdownMenuLink">
@@ -134,7 +134,7 @@
                                     <span>사용자 목록</span>
                                 </div>
                                 <div class="w-100"></div>
-                                <div class="col form-inline text-muted mb-2">
+                                <div class="col-auto mr-auto form-inline text-muted mb-2">
                                     <!-- 전체선택 체크박스 -->
                                     <span class="pr-3">사용자 유형별 보기</span>
                                     <span class="icheck-material-indigo mr-3">
@@ -161,31 +161,43 @@
                                         <input type="checkbox" id="chkbox6-gen" />
                                         <label for="chkbox6-gen">일반</label>
                                     </span>
-                                    <!-- search btn -->
-                                    <a class="btn btn-orange btn-sm mr-1"><i class="fas fa-search"></i> <span>조회</span></a>
+                                    <!-- search btn
+                                    <a class="btn btn-orange btn-sm mr-1"><i class="fas fa-search"></i> <span>조회</span></a> -->
                                     <a href="" class="btn btn-orange btn-sm disabled" type="submit">
                                         <span>선택초기화</span>
                                     </a>
                                 </div>
                                 
+                                <div class="col-auto">
+                                    <div class="form-inline">
+                                        <input class="form-control form-control-sm my-1 mr-1" type="search" placeholder="제목,작성자 검색" aria-label="Search">
+                                        <a class="btn btn-orange btn-sm"><i class="fas fa-search"></i> <span>조회</span></a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <!--// form box -->
 
                         <!-- list -->
                         <div class="manager-list">
-                            <div class="form-inline px-3 py-1">
+                            <div class="form-inline" style="padding:5px 15px">
                                 <div class="w-50 float-left">
-                                    <input class="form-control form-control-xs my-1 mr-1" type="search" placeholder="제목,작성자 검색" aria-label="Search">
-                                    <a class="btn btn-orange btn-xs"><i class="fas fa-search"></i> <span>조회</span></a>
-                                </div>
-                                <div class="w-50 float-right text-right">
-                                    <span class="mr-3">123 <span class="text_s">명의 사용자</span></span>
                                     <a href="" class="btn btn-xs btn-outline-orange mr-1"><i class="fas fa-arrow-down"></i> 조회목록 다운로드</a>
                                     <a href="" class="btn btn-xs btn-outline-orange"><i class="fas fa-plus"></i> 사용자 추가</a>
                                 </div>
+                                <div class="w-50 float-right text-right">
+                                    
+                                    <span class="mr-3">123 <span class="text_s">명의 사용자</span></span>
+                                    <select class="form-control" id="contents_view">
+                                        <option selected>50개씩 보기</option>
+                                        <option value="1">100개씩 보기</option>
+                                        <option value="2">200개씩 보기</option>
+                                    </select>
+                                </div>
                                 <div style="clear:both"></div>
                             </div>
+
                             
                             <div>
                                 <table class="table-manager">

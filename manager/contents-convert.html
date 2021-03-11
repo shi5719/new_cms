@@ -57,7 +57,7 @@
             <!-- admin info -->
             <div class="dropdown">
                 <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../public/images/icon/user.png" />
+                    <img src="../public/images/icon/user.png" class="mb-1 mr-1" />
                     <span>시스템관리자(admin_12345)</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-xl-right dropdown-menu-header" aria-labelledby="dropdownMenuLink">
@@ -134,10 +134,10 @@
                                     <span>콘텐츠 변환 목록</span>
                                 </div>
                                 <div class="w-100"></div>
-                                <div class="col form-inline text-muted mb-2">
+                                <div class="col-auto mr-auto"></div>
+                                <div class="col-auto form-inline text-muted mb-2">
                                     <!-- 기간검색 -->
                                     <div class="form-group mr-4">
-                                        <label for="contents_style" class="pr-2">기간</label>
                                         <select class="form-control form-control mr-sm-2 my-1" id="contents_style">
                                             <option selected>기간 전체</option>
                                             <option value="1">1주일</option>
@@ -164,11 +164,9 @@
                                               <a  class="btn btn-sm btn-outline-orange" type="" id="day-end"><i class="far fa-calendar-alt"></i></a>
                                             </div> -->
                                         </div>
-                                        <a class="btn btn-orange btn-sm ml-1"><i class="fas fa-search"></i> <span>조회</span></a>
                                     </div>
                                     <!-- 검색조건 -->
                                     <div class="form-group">
-                                        <label for="contents_style" class="pr-3">검색 조건</label>
                                         <div class="pr-2">
                                             <label class="sr-only" for="contents_style">콘텐츠 유형</label>
                                             <select class="form-control" id="contents_style">
@@ -207,7 +205,7 @@
 
                         <!-- list -->
                         <div class="manager-list">
-                            <div class="form-inline px-3 py-1">
+                            <div class="form-inline" style="padding:5px 15px">
                                 <div class="w-50 float-left">
                                     <span class="icheck-material-indigo">
                                         <input type="checkbox" id="select-all" />
@@ -218,7 +216,7 @@
                                     <a class="btn btn-outline-orange btn-xs disabled"><span>삭제</span></a>
                                 </div>
                                 <div class="w-50 float-right text-right">
-                                    <span class="mr-3 font-12 text_s">휴지통 용량 3.3 TB / <span class="text-primary">7336</span> 개</span>
+                                    <span class="mr-3 font-12 text_s">콘텐츠 용량 3.3 TB / <span class="text-primary">7336</span> 개</span>
                                     <select class="form-control" id="contents_view">
                                         <option selected>50개씩 보기</option>
                                         <option value="1">100개씩 보기</option>
@@ -230,7 +228,7 @@
 
                             <table class="table-manager font-14">
                                 <colgroup>
-                                    <col width="50px"/>
+                                    <col width="47px"/>
                                     <col width="120px"/>
                                     <col/>
                                     <col width="70px"/>
@@ -280,8 +278,8 @@
                                     <th></th>
                                 </tr>
                                 <tr>
-                                    <td class="text-center">
-                                        <div class="icheck-material-indigo align-self-center">
+                                    <td class="text-left">
+                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
@@ -338,8 +336,8 @@
                                 </tr>
 
                                 <tr>
-                                    <td class="text-center">
-                                        <div class="icheck-material-indigo align-self-center">
+                                    <td class="text-left">
+                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
@@ -396,8 +394,8 @@
                                 </tr>
 
                                 <tr>
-                                    <td class="text-center">
-                                        <div class="icheck-material-indigo align-self-center">
+                                    <td class="text-left">
+                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
