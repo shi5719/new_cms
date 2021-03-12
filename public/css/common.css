@@ -698,12 +698,12 @@ span.fancytree-drag-helper-img,
   display: inline-block;
   vertical-align: top;
   background-repeat: no-repeat;
-  background-image: url("../vendor/fancytree/images/icons.gif");
+  background-image: url("../images/icon/fancytree-icons.gif");
   background-position: 0px 0px;
 }
 .fancytree-connectors .fancytree-exp-n span.fancytree-expander,
 .fancytree-connectors .fancytree-exp-nl span.fancytree-expander {
-  background-image: url("../vendor/fancytree/images/icons.gif");
+  background-image: url("../images/icon/fancytree-icons.gif");
   margin-top: 0;
 }
 .fancytree-loading span.fancytree-expander,
