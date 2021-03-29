@@ -1464,7 +1464,7 @@ li.plupload_droptext {
 .user-video-s {
   position: relative;
   width: 98%;
-  height: 100vh;
+  height: calc(100vh - 90px);
   min-height: 100%;
   padding: 0;
   font-size: 0.75rem;
