@@ -1450,6 +1450,12 @@ li.plupload_droptext {
 .cbp-spmenu-vertical-s table.fancytree-ext-table {
   font-size: 0.75rem;
 }
+.cbp-spmenu-vertical-s .panel-title,
+.cbp-spmenu-vertical-s .panel-title li {
+  font-size: 0.75rem;
+  list-style: none;
+  font-family: "NotoKrR";
+}
 .user-list-s {
   width: 100%;
   font-size: 0.75rem;
@@ -1457,7 +1463,7 @@ li.plupload_droptext {
 }
 .user-video-s {
   position: relative;
-  width: 100%;
+  width: 98%;
   height: 100vh;
   min-height: 100%;
   padding: 0;
