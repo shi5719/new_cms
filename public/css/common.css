@@ -69,9 +69,8 @@ a:hover {
   font-style: normal;
   font-weight: 300;
   src: local("Noto Sans Regular"), local("NotoSans-Regular"),
-    url(./fonts/NotoSansKR-Regular.eot);
-  src: url(./fonts/NotoSansKR-Regular.eot?#iefix) format("embedded-opentype"),
-    url(./fonts/NotoSansKR-Regular.woff2) format("woff2"),
+    url(./fonts/NotoSansKR-Regular.otf);
+  src: url(./fonts/NotoSansKR-Regular.woff2) format("woff2"),
     url(./fonts/NotoSansKR-Regular.woff) format("woff");
 }
 @font-face {
@@ -79,9 +78,8 @@ a:hover {
   font-style: normal;
   font-weight: 500;
   src: local("Noto Sans Medium"), local("NotoSans-Medium"),
-    url(./fonts/NotoSansKR-Medium.eot);
-  src: url(./fonts/NotoSansKR-Medium.eot?#iefix) format("embedded-opentype"),
-    url(./fonts/NotoSansKR-Medium.woff2) format("woff2"),
+    url(./fonts/NotoSansKR-Medium.otf);
+  src: url(./fonts/NotoSansKR-Medium.woff2) format("woff2"),
     url(./fonts/NotoSansKR-Medium.woff) format("woff");
 }
 @font-face {
@@ -89,9 +87,8 @@ a:hover {
   font-style: normal;
   font-weight: 700;
   src: local("Noto Sans Bold"), local("NotoSans-Bold"),
-    url(./fonts/NotoSansKR-Bold.eot);
-  src: url(./fonts/NotoSansKR-Bold.eot?#iefix) format("embedded-opentype"),
-    url(./fonts/NotoSansKR-Bold.woff2) format("woff2"),
+    url(./fonts/NotoSansKR-Bold.otf);
+  src: url(./fonts/NotoSansKR-Bold.woff2) format("woff2"),
     url(./fonts/NotoSansKR-Bold.woff) format("woff");
 }
 
