@@ -401,10 +401,10 @@ a.text-primary:focus {
     width: 13.75rem;
   }
 
-  .view_option,
+  /* .view_option,
   .sidebar-toggle-box {
     display: none;
-  }
+  } */
   .info {
     width: 90%;
   }
@@ -426,9 +426,9 @@ a.text-primary:focus {
   .user-video {
     display: none;
   }
-  .view_option {
+  /* .view_option {
     display: none;
-  }
+  } */
   .inv_mo {
     display: none;
   }
