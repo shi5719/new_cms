@@ -444,6 +444,7 @@ a.text-primary:focus {
   .user-article {
     /* -ms-flex: 0 0 100%;
     flex: 0 0 100%; */
+    width: 100%;
     max-width: 0 0 100%;
     min-height: 100%;
   }
