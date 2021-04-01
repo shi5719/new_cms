@@ -379,13 +379,17 @@ a.text-primary:focus {
     width: calc(100% - 250px);
   }
   .user-list {
-    width: calc(100% - 47.5rem);
+    /* width: calc(100% - 47.5rem); */
+    width: calc(100% - 600px);
+    float: left;
     border-left: 1px solid #ccc;
   }
 
   .user-video {
-    -ms-flex: 0 0 47.5rem; /* width 160px */
-    flex: 0 0 47.5rem;
+    /* -ms-flex: 0 0 47.5rem; width 160px
+    flex: 0 0 47.5rem; */
+    width: 600px;
+    float: left;
     border-left: 1px solid #ccc;
   }
 
