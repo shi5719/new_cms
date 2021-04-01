@@ -442,8 +442,8 @@ a.text-primary:focus {
   }
   .user-list,
   .user-article {
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%;
+    /* -ms-flex: 0 0 100%;
+    flex: 0 0 100%; */
     max-width: 0 0 100%;
     min-height: 100%;
   }
