@@ -1245,7 +1245,7 @@ li.plupload_droptext {
   border-radius: 3px;
 }
 .pagingType01 .page {
-  padding: 5px 8px;
+  padding: 0 7px 2px 7px;
   margin: 3px;
   color: #707070;
   font-size: 0.8rem;
@@ -1253,7 +1253,7 @@ li.plupload_droptext {
   border-radius: 3px;
 }
 .pagingType01 .pageUpDown {
-  padding: 5px 8px;
+  padding: 0 7px 2px 7px;
   border: 1px solid #dddddd;
   color: #707070;
   margin: 2px;
@@ -1284,64 +1284,6 @@ li.plupload_droptext {
   cursor: not-allowed;
 }
 
-/* paging */
-.pagingType02 {
-  text-align: center;
-  width: 100%;
-  clear: both;
-  margin-top: 20px;
-  line-height: 30px;
-}
-
-.pagingType02 .paginate_button .current {
-  padding: 6px 10px;
-  margin: 3px;
-  font-size: 13px;
-  color: #2f42c1;
-  font-weight: bold;
-  border-radius: 3px;
-}
-.pagingType02 .paginate_button {
-  padding: 5px 8px;
-  margin: 3px;
-  color: #707070;
-  font-size: 0.8rem;
-  font-weight: normal;
-  border-radius: 3px;
-}
-.pagingType02 .paginate_button .previous,
-.pagingType02 .paginate_button .next {
-  padding: 5px 8px;
-  border: 1px solid #dddddd;
-  color: #707070;
-  margin: 2px;
-  border-radius: 3px;
-}
-
-.pagingType02 a {
-  border: 0px;
-  color: #333;
-}
-.pagingType02 a:hover {
-  text-decoration: none;
-  color: #000;
-}
-
-.pagingType02:hover {
-  background: none;
-  color: #000;
-}
-.pagingType02 .pageUpDown:hover {
-  background: #f5f5f5;
-}
-.pagingType02 .paginate_button .disabled {
-  padding: 0 7px 2px 7px;
-  border: 1px solid #e7e7e7;
-  color: #707070;
-  margin: 1px;
-  border-radius: 3px;
-  cursor: not-allowed;
-}
 /* helpdesk */
 .helpdesk {
   font-size: 0.8;
