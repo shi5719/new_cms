@@ -346,7 +346,7 @@ a.text-primary:focus {
   width: 230px;
   height: 100%;
   position: relative;
-  z-index: 999;
+  z-index: 900;
   border-right: 1px solid #cfd5d7;
   background: #fff;
   -webkit-transition: all 0.3s ease-in-out;
@@ -384,7 +384,9 @@ a.text-primary:focus {
     float: left;
     border-left: 1px solid #ccc;
   }
-
+  .modal-visible {
+    display: none;
+  }
   .user-video {
     /* -ms-flex: 0 0 47.5rem; width 160px
     flex: 0 0 47.5rem; */
@@ -392,7 +394,6 @@ a.text-primary:focus {
     float: left;
     border-left: 1px solid #ccc;
   }
-
   .user-video-modal {
     display: none;
   }
@@ -418,10 +419,19 @@ a.text-primary:focus {
   .cbp-spmenu-vertical {
     width: 250px;
   }
+  /*.user-list {
+    width: 50%;
+    float: left;
+    border-left: 1px solid #ccc;
+  }*/
+  .user-list {
+    width: 100%;
+    font-size: 0.75rem;
+    font-family: "NotoKrR";
+  }
   .user-video {
     display: none;
   }
-
   .form-search {
     width: 13.75rem;
   }
@@ -1436,6 +1446,32 @@ li.plupload_droptext {
   font-family: "NotoKrR";
   border-left: 1px solid #ccc;
 }
+
+#layerBtn {
+  cursor: pointer;
+}
+#lay {
+  position: absolute;
+  background-color: #fff;
+  z-index: 12000;
+  left: 50%;
+  top: 50px;
+  width: 50%;
+  margin-left: -25%;
+  padding: 10px;
+  font-size: 0.75rem;
+  font-family: "NotoKrR";
+}
+#blind_box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 999;
+}
+
 .table-thumbnail .img-thumbnail-s {
   padding: 0.25rem;
   background-color: #fff;

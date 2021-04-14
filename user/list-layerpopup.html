@@ -290,6 +290,8 @@
                                         <a type="submit" class="btn btn-orange btn-sm" data-toggle="modal" data-target="#movefileModal">
                                             <i class="fas fa-mouse-pointer"></i> <span>이동</span>
                                         </a>
+                                        <!-- 영상 레이어팝업 -->
+                                        <a  id="layerBtn" class="btn btn-orange btn-sm openMask">영상 레이어팝업</a>
                                         <div class="modal fade" id="movefileModal" tabindex="-1" aria-labelledby="movefileModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                               <div class="modal-content">
@@ -353,96 +355,6 @@
                             </div>
                         </div>
                         <!--// form box -->
-
-                        <!-- 동영상 팝업 -->
-                        <div class="modal fade" id="modal-video" tabindex="-1" aria-labelledby="modal-video-label" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h6 class="modal-title" id="modal-video-label">콘텐츠 시청</h6>
-                                    <a href="" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </a>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="videowrap">
-                                            <iframe src="https://postech.labycms.com/lab241player_180124/labplayer.php?cnt_uid=cnt0000937&islive=0&ispublic=1&cnt_playtype=0" frameborder="0" allowfullscreen></iframe>
-                                        </div>
-                                        <!-- 타이틀, 버튼-->
-                                        <div class="container-fluid p-3 bg-light">
-                                            <div class="row">
-                                                <div class="col-12 mb-2 text-left font-16">
-                                                    <i class="fas fa-caret-square-right"></i> 
-                                                    <span>2021년 콘텐츠 - 일반물리학 및 실험2_1일차 가이드라인 : 예비보고서 쓰는 방법</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 text-right">
-                                                    <a href="" class="btn btn-sm text_s"><i class="fas fa-share-alt"></i> 공유</a>
-                                                    <a href="" class="btn btn-sm text_s"><i class="fas fa-arrow-circle-down"></i> 원본</a>
-                                                    <a href="" class="btn btn-sm text_s"><i class="fas fa-share"></i> 이동</a>
-                                                    <a href="" class="btn btn-sm text_s"><i class="fas fa-edit"></i> 수정</a>
-                                                    <a href="" class="btn btn-sm text_s"><i class="far fa-trash-alt"></i> 삭제</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <table class="table table-video-info">
-                                                <caption></caption>
-                                                <colgroup>
-                                                    <col/>
-                                                    <col />
-                                                    <col/>
-                                                    <col />
-                                                </colgroup>
-                                                <tbody>
-                                                    <tr>
-                                                        <th>· 등록일시</th>
-                                                        <td> 10:59:12</td>
-                                                        <th>· 수정일시</th>
-                                                        <td>2020.12.22 10:59:12</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 유형</th>
-                                                        <td>LABY2</td>
-                                                        <th>· 용량</th>
-                                                        <td>100MB</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 재생시간</th>
-                                                        <td>55:10</td>
-                                                        <th>· 조회수</th>
-                                                        <td>12345</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 공개설정</th>
-                                                        <td colspan="3">공개</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 폴더위치</th>
-                                                        <td colspan="3">t001 > 2021년 콘텐츠</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 태그</th>
-                                                        <td colspan="3">2021년 콘텐츠, 일반물리학, 실험</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>· 제작자</th>
-                                                        <td colspan="3">홍길동 교수</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!--<button type="button" class="btn btn-orange">확인</button>-->
-                                        <button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--// 동영상 팝업 -->
-
                         
                         <!-- list -->
                         <div class="user-list">
@@ -639,6 +551,104 @@
                             </div>
                         </div>
                         <!--// video -->
+
+
+                        <!-- 영상 레이어팝업 -->
+                        <script>
+                            $(document).ready(function(){
+                            $("#lay").hide()
+                            $("#layerBtn").click(function(){
+                                $('<div id="blind_box"></div>').css('opacity',0.5).appendTo('body');     
+                                $('#lay').fadeIn(300);    
+                                $('#lay').css('z-index', '1000');        
+                            });
+                            
+                            $("#close").click(function(){
+                                $("#blind_box").remove()
+                                $('#lay').hide()
+                            });
+                            });
+                        </script>
+                        <!-- video -->
+                        <div id="lay" class="user-video">
+                            <div class="videowrap">
+                                <!-- 닫기버튼 -->
+                                <div class="btn-close">
+                                    <a href="" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                </div>
+                                <iframe src="../public/images/contents/video.mp4" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <!-- 타이틀, 버튼 -->
+                            <div class="container-fluid p-3 bg-light">
+                                <div class="row">
+                                    <div class="col-12 mb-2 text-left">
+                                        <i class="fas fa-caret-square-right"></i> 
+                                        2021년 콘텐츠 - 일반물리학 및 실험2_1일차 가이드라인 : 예비보고서 쓰는 방법
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-right">
+                                        <button type="button" class="btn btn-sm text_s"><i class="fas fa-share-alt"></i> 공유</button>
+                                        <button type="button" class="btn btn-sm text_s"><i class="fas fa-arrow-circle-down"></i> 원본</button>
+                                        <button type="button" class="btn btn-sm text_s"><i class="fas fa-share"></i> 이동</button>
+                                        <button type="button" class="btn btn-sm text_s"><i class="fas fa-edit"></i> 수정</button>
+                                        <button type="button" class="btn btn-sm text_s"><i class="far fa-trash-alt"></i> 삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table table-video-info">
+                                    <caption></caption>
+                                    <colgroup>
+                                        <col width="15%"/>
+                                        <col width="35%"/>
+                                        <col width="15%"/>
+                                        <col width="35%"/>
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>· 등록일시</th>
+                                            <td> 10:59:12</td>
+                                            <th>· 수정일시</th>
+                                            <td>2020.12.22 10:59:12</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 유형</th>
+                                            <td>LABY2</td>
+                                            <th>· 용량</th>
+                                            <td>100MB</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 재생시간</th>
+                                            <td>55:10</td>
+                                            <th>· 조회수</th>
+                                            <td>12345</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 공개설정</th>
+                                            <td colspan="3">공개</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 폴더위치</th>
+                                            <td colspan="3">t001 > 2021년 콘텐츠</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 태그</th>
+                                            <td colspan="3">2021년 콘텐츠, 일반물리학, 실험</td>
+                                        </tr>
+                                        <tr>
+                                            <th>· 제작자</th>
+                                            <td colspan="3">홍길동 교수</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--// video 영상 레이어팝업 -->
+
+
                     </div>
                 </div>
             </div>
