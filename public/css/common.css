@@ -355,7 +355,15 @@ a.text-primary:focus {
   transition: all 0.3s ease-in-out;
   top: 0;
 }
-
+.btn-video-close {
+  z-index: 99999999;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 2px;
+  top: -31px;
+  cursor: pointer;
+}
 /* responsive -desktop */
 @media (min-width: 1311px) {
   .user-list,
@@ -372,9 +380,7 @@ a.text-primary:focus {
   .info {
     width: 50%;
   }
-  .sidebar-toggle-box {
-    display: none;
-  }
+
   .user-article {
     width: calc(100% - 250px);
   }
@@ -400,6 +406,8 @@ a.text-primary:focus {
   #layerBtn {
     cursor: pointer;
   }
+  .sidebar-toggle-box,
+  .btn-video-close,
   #lay,
   #blind_box {
     display: none;
@@ -444,7 +452,8 @@ a.text-primary:focus {
   }
 
   .view_option,
-  .sidebar-toggle-box {
+  .sidebar-toggle-box,
+  .btn-video-close {
     display: none;
   }
   .info {
@@ -498,7 +507,7 @@ a.text-primary:focus {
     background-color: #fff;
     z-index: 12000;
     left: 50%;
-    top: 50px;
+    top: 90px;
     width: 95%;
     margin-left: -47%;
     padding: 10px;
