@@ -66,7 +66,7 @@
                         <a class="nav-link" href="#"><i class="fas fa-book"></i> 매뉴얼다운로드</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link2" href="guide.html">사용자매뉴얼</a>
+                        <a class="nav-link2" href="guide.html">사용자가이드</a>
                     </li>
                 </ul>
                 <!-- admin info -->
@@ -94,60 +94,91 @@
         </nav>
         <!--// header -->
         <!-- contents (sidebar, article) -->
-        <div class="contents-upload">
-            <div class="container-md mt-5 pb-5" style="background-color:#fff; height:auto; min-height:80vh">
-                <div style="position:relative; width:100%; height:250px; background: url(../public/images/contents/manual.png) no-repeat right 20px;">
-                    <div style="position:absolute; left:10px; top:100px"><h4>사용자매뉴얼</h4></div>
-                    <div style="position:absolute; left:10px; top:140px"><h6>콘텐츠관리시스템 이용자를 위한 매뉴얼입니다.</h6></div>
+        <div class="contents-upload" >
+            <div class="container-md mt-5 pb-5" style="background-color:#fff; min-height:700px;">
+                <div style="position:relative; width:100%; height:250px; background: url(../public/images/contents/live.png) no-repeat right 20px;">
+                    <div style="position:absolute; left:10px; top:100px"><h4>라이브채널</h4></div>
+                    <div style="position:absolute; left:10px; top:140px"><h6>실시간 라이브채널 목록입니다.</h6></div>
                 </div>
-                <nav>
-                    <div class="nav nav-contents" id="nav-tab" role="tablist">
-                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">교수자 매뉴얼</a>
-                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">학습자 매뉴얼</a>
+                <!-- my live -->
+                <div class="w-100 p-5 mb-5 live_box">
+                    <div class="live_media mb-5">
+                        <div class="live_media_player mr-5"></div>
+                        <div class="live_media_body mt-3">
+                            <p class="text-danger">나의 라이브채널</p>
+                            <h4>을미개혁 10초만에 암기하기</h4>
+                            <div class="text_s font-light mb-4">두문자 암기, 역사암기 꿀팁, 중간 기말고사 대비</div>
+                            <a type="submit" class="btn btn-outline-orange"><i class="far fa-edit"></i> <span>편집</span></a>
+                            <a type="submit" class="btn btn-orange ml-2"><span>지난 콘텐츠 바로가기</span></a>
+                        </div>
                     </div>
-                </nav>
-                <div class="tab-content font-14" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <div style="border:1px solid #eee; padding:20px; margin:10px 0;">
-                            <div class="row mb-5">
-                                <ul class="col-6 list-group list-group-flush">
-                                    <li class="list-group-item" aria-disabled="true">
-                                        <a href=""><img src="../public/images/icon/pdf.png" alt="" />1. 접속하기</a>
-                                    </li>
-                                    <li class="list-group-item">1-1. 로그인하기</li>
-                                    <li class="list-group-item">1-2. 아이디 비밀번호 확인하기</li>
-                                </ul>
-                                <ul class="col-6 list-group list-group-flush">
-                                    <li class="list-group-item" aria-disabled="true"><a href="">2. 콘텐츠 목록</a></li>
-                                    <li class="list-group-item">2-1. 콘텐츠 목록</li>
-                                    <li class="list-group-item">2-2. 사용자 계정 정보</li>
-                                    <li class="list-group-item">2-3. 콘텐츠 리스트</li>
-                                    <li class="list-group-item">2-4. 새폴더 만들기</li>
-                                </ul>
+                    <form>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-1 col-form-label">제목</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="name">
                             </div>
-                            <div class="row">
-                                <ul class="col-6 list-group list-group-flush">
-                                    <li class="list-group-item" aria-disabled="true"><a href="">3. 콘텐츠 등록</a></li>
-                                    <li class="list-group-item">3-1. 동영상 업로드</li>
-                                    <li class="list-group-item">3-2. 문서 업로드</li>
-                                    <li class="list-group-item">3-3. 소셜미디어 업로드</li>
-                                    <li class="list-group-item">3-4. 콘텐츠파일 업로드</li>
-                                </ul>
-                                <ul class="col-6 list-group list-group-flush">
-                                    <li class="list-group-item" aria-disabled="true"><a href="">4. 헬프데스크</a></li>
-                                    <li class="list-group-item">4. 헬프데스크</li>
-                                </ul>
+                        </div>
+                        <div class="form-group row">
+                            <label for="contents" class="col-sm-1 col-form-label">내용</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <a type="submit" class="btn btn-outline-orange"><span>확인</span></a>
+                            <a type="submit" class="btn btn-light ml-2"><span>취소</span></a>
+                        </div>
+                    </form>
+                </div>
+                <!--// my live -->
+                <!-- on air -->
+                <h4>On Air</h4>
+                <div class="w-100 px-5 live_box_onair">
+                    <!-- onair 1 -->
+                    <div class="py-5 border-bottom">
+                        <div class="form-inline mb-1">
+                            <img src="../public/images/icon/live.png" class="mb-1 mr-2" alt="라이브 아이콘" /> 
+                            <h4>홍길동</h4> <span class="text-danger ml-1">님의 라이브</span>
+                        </div>
+                        <div class="live_media">
+                            <div class="live_media_player mr-5"></div>
+                            <div class="live_media_body mt-3">
+                                <h4>을미개혁 10초만에 암기하기 역사 시험대비</h4>
+                                <div class="text_s font-light mb-2">두문자 암기, 역사암기 꿀팁, 중간 기말고사 대비</div>
+                                <div class="text_s font-light mb-4"><i class="far fa-user"></i> 홍길동 선생님 (honggildong123)</div>
+                                <a type="submit" class="btn btn-orange"><span>시청하기</span></a>
+                                <a type="submit" class="btn btn-outline-orange ml-2"><i class="fas fa-share-alt"></i></a><!--공유-->
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <div style="border:1px solid #eee; padding:20px; margin:10px 0 ">학습자 매뉴얼</div>
+                    <!--// onair 1 -->
+                    <!-- onair 2 -->
+                    <div class="py-5">
+                        <div class="form-inline mb-1">
+                            <img src="../public/images/icon/live.png" class="mb-1 mr-2" alt="라이브 아이콘" /> 
+                            <h4>홍길동</h4> <span class="text-danger ml-1">님의 라이브</span>
+                        </div>
+                        <div class="live_media">
+                            <div class="live_media_player mr-5">
+                                <img src="../public/images/contents/live_noimage.png" style="margin-top:30px" alt="noimage" />
+                            </div>
+                            <div class="live_media_body mt-3">
+                                <h4>을미개혁 10초만에 암기하기 역사 시험대비</h4>
+                                <div class="text_s font-light mb-2">두문자 암기, 역사암기 꿀팁, 중간 기말고사 대비</div>
+                                <div class="text_s font-light mb-4"><i class="far fa-user"></i> 홍길동 선생님 (honggildong123)</div>
+                                <a type="submit" class="btn btn-orange"><span>시청하기</span></a>
+                                <a type="submit" class="btn btn-outline-orange ml-2"><i class="fas fa-share-alt"></i></a><!--공유-->
+                            </div>
+                        </div>
                     </div>
+                    <!--// onair 2 -->
                 </div>
+                <!--// on air -->
             </div>
-        <!--// contents (sidebar, article) -->
         </div>
-        <!-- wrap (width 100% height 100%)-->
+        <!--// contents (sidebar, article) -->
     </div>
+    <!-- wrap (width 100% height 100%)-->
 </body>
 </html>

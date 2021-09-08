@@ -505,6 +505,65 @@
             </div>
             <!--// 관리자모드 : 사용자추가 -->
 
+            <!-- 학기 설정 -->
+            <a type="submit" class="btn btn-orange btn-sm" data-toggle="modal" data-target="#modal-term">
+                <span class="font-14">학기 설정</span>
+            </a>
+            <div class="modal fade" id="modal-term" tabindex="-1" aria-labelledby="modal-term-Label" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h6 class="modal-title" id="modal-term-Label">학기 설정</h6>
+                        <a href="" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-right">
+                                <label class="sr-only" for="">연도</label>
+                                <select class="form-control" id="">
+                                    <option selected>2021</option>
+                                    <option value="2">2020</option>
+                                    <option value="3">2019</option>
+                                </select>
+                            </p>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="float-left">가을학기</span>
+                                    <span class="float-right"><a href="" style="width:60px" class="btn btn-xs btn-outline-blue" data-dismiss="modal">
+                                        설정</a>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="float-left">2학기</span>
+                                    <span class="float-right"><a href="" style="width:60px" class="btn btn-xs btn-outline-blue disabled data-dismiss="modal">
+                                        설정됨</a>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="float-left">여름학기</span>
+                                    <span class="float-right"><a href="" style="width:60px" class="btn btn-xs btn-outline-blue" data-dismiss="modal">
+                                        설정</a>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="float-left">1학기</span>
+                                    <span class="float-right"><a href="" style="width:60px" class="btn btn-xs btn-outline-blue" data-dismiss="modal">
+                                        설정</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-orange"><span>확인</span></a>
+                            <a type="button" class="btn btn-light" data-dismiss="modal"><span></span>취소</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// 학기 설정 -->
+            
+
 
         </div>
     </div>
