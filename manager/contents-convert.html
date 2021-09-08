@@ -57,7 +57,7 @@
             <!-- admin info -->
             <div class="dropdown">
                 <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../public/images/icon/user.png" class="mb-1 mr-1" />
+                    <img src="../public/images/icon/user.png" />
                     <span>시스템관리자(admin_12345)</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-xl-right dropdown-menu-header" aria-labelledby="dropdownMenuLink">
@@ -104,14 +104,6 @@
                         <ol>
                             <li><a href="stat-classroom.html">강의실별 이용 통계</a></li>
                             <li><a href="stat-user.html">사용자별 이용 통계</a></li>
-                            <li><a href="stat-day.html">일별 이용 현황</a></li>
-                            <li><a href="stat-month.html">월별 이용 현황</a></li>
-                        </ol>
-                    </li>
-                    <li><i class="fas fa-power-off"></i><span class="pl-2">로그인 접속현황</span>
-                        <ol>
-                            <li><a href="login01.html">로그인 접속 현황</a></li>
-                            <li><a href="login02.html">로그인 접속 로그</a></li>
                         </ol>
                     </li>
                     <li><i class="fas fa-database"></i><span class="pl-2">저장공간 관리</span>
@@ -142,10 +134,10 @@
                                     <span>콘텐츠 변환 목록</span>
                                 </div>
                                 <div class="w-100"></div>
-                                <div class="col-auto mr-auto"></div>
-                                <div class="col-auto form-inline text-muted mb-2">
+                                <div class="col form-inline text-muted mb-2">
                                     <!-- 기간검색 -->
                                     <div class="form-group mr-4">
+                                        <label for="contents_style" class="pr-2">기간</label>
                                         <select class="form-control form-control mr-sm-2 my-1" id="contents_style">
                                             <option selected>기간 전체</option>
                                             <option value="1">1주일</option>
@@ -172,9 +164,11 @@
                                               <a  class="btn btn-sm btn-outline-orange" type="" id="day-end"><i class="far fa-calendar-alt"></i></a>
                                             </div> -->
                                         </div>
+                                        <a class="btn btn-orange btn-sm ml-1"><i class="fas fa-search"></i> <span>조회</span></a>
                                     </div>
                                     <!-- 검색조건 -->
                                     <div class="form-group">
+                                        <label for="contents_style" class="pr-3">검색 조건</label>
                                         <div class="pr-2">
                                             <label class="sr-only" for="contents_style">콘텐츠 유형</label>
                                             <select class="form-control" id="contents_style">
@@ -213,7 +207,7 @@
 
                         <!-- list -->
                         <div class="manager-list">
-                            <div class="form-inline" style="padding:5px 15px">
+                            <div class="form-inline px-3 py-1">
                                 <div class="w-50 float-left">
                                     <span class="icheck-material-indigo">
                                         <input type="checkbox" id="select-all" />
@@ -224,7 +218,7 @@
                                     <a class="btn btn-outline-orange btn-xs disabled"><span>삭제</span></a>
                                 </div>
                                 <div class="w-50 float-right text-right">
-                                    <span class="mr-3 font-12 text_s">콘텐츠 용량 3.3 TB / <span class="text-primary">7336</span> 개</span>
+                                    <span class="mr-3 font-12 text_s">휴지통 용량 3.3 TB / <span class="text-primary">7336</span> 개</span>
                                     <select class="form-control" id="contents_view">
                                         <option selected>50개씩 보기</option>
                                         <option value="1">100개씩 보기</option>
@@ -236,7 +230,7 @@
 
                             <table class="table-manager font-14">
                                 <colgroup>
-                                    <col width="47px"/>
+                                    <col width="50px"/>
                                     <col width="120px"/>
                                     <col/>
                                     <col width="70px"/>
@@ -257,6 +251,7 @@
                                     <col width="90px"/>
 
                                     <col width="90px"/>-->
+                                    <col width="34px"/>
                                 </colgroup>
                                 <tbody>
                                 <!-- list 01-->
@@ -268,12 +263,8 @@
 
                                     <th>등록자ID</th>
                                     <th>사용자유형</th>
-                                    <th>
-                                        <a href=""><i class="fas fa-caret-down"></i></a>
-                                        <span class="px-1">등록일시</span>
-                                        <a href=""><i class="fas fa-caret-up"></i></a>
-                                    </th>
-                                    <th>수정일시</th>
+                                    <th><a href="">등록일시 <i class="fas fa-caret-down"></i></a></th>
+                                    <th><a href="">수정일시 <i class="fas fa-caret-up"></i></a></th>
 
                                     <th>유형</th>
                                     <th>재생시간</th>
@@ -286,10 +277,11 @@
                                     <th>원본</th>
 
                                     <th>MP4</th> -->
+                                    <th></th>
                                 </tr>
                                 <tr>
-                                    <td class="text-left">
-                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
+                                    <td class="text-center">
+                                        <div class="icheck-material-indigo align-self-center">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
@@ -329,11 +321,25 @@
                                         <a href="" class="btn btn-xs btn-outline-orange mt-2"><i class="fas fa-arrow-down"></i> 다운로드</a>
                                         <p>242.5 MB</p>
                                     </td> -->
+                                    <td class="text-right">
+                                        <div class="dropdown align-self-center pr-2">
+                                            <a class="btn" href="#" role="button" id="dropdown-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="../public/images/icon/btn_more.png" alt="더보기" />
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-setting"  aria-labelledby="dropdown-setting">
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share-alt"></i> 공유</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-arrow-circle-down"></i> 원본</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share"></i> 이동</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-edit"></i> 수정</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="far fa-trash-alt"></i> 삭제</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="text-left">
-                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
+                                    <td class="text-center">
+                                        <div class="icheck-material-indigo align-self-center">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
@@ -373,11 +379,25 @@
                                         <a href="" class="btn btn-xs btn-outline-orange mt-2"><i class="fas fa-arrow-down"></i> 다운로드</a>
                                         <p>242.5 MB</p>
                                     </td> -->
+                                    <td class="text-right">
+                                        <div class="dropdown align-self-center pr-2">
+                                            <a class="btn" href="#" role="button" id="dropdown-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="../public/images/icon/btn_more.png" alt="더보기" />
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-setting"  aria-labelledby="dropdown-setting">
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share-alt"></i> 공유</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-arrow-circle-down"></i> 원본</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share"></i> 이동</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-edit"></i> 수정</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="far fa-trash-alt"></i> 삭제</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="text-left">
-                                        <div class="icheck-material-indigo align-self-center" style="margin-left:15px">
+                                    <td class="text-center">
+                                        <div class="icheck-material-indigo align-self-center">
                                             <input type="checkbox" id="select1" />
                                             <label for="select1"></label>
                                         </div>
@@ -417,6 +437,20 @@
                                         <a href="" class="btn btn-xs btn-outline-orange mt-2"><i class="fas fa-arrow-down"></i> 다운로드</a>
                                         <p>242.5 MB</p>
                                     </td> -->
+                                    <td class="text-right">
+                                        <div class="dropdown align-self-center pr-2">
+                                            <a class="btn" href="#" role="button" id="dropdown-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="../public/images/icon/btn_more.png" alt="더보기" />
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-setting"  aria-labelledby="dropdown-setting">
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share-alt"></i> 공유</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-arrow-circle-down"></i> 원본</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-share"></i> 이동</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="fas fa-edit"></i> 수정</a></li>
+                                                <li><a class="btn btn-sm text_s"><i class="far fa-trash-alt"></i> 삭제</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

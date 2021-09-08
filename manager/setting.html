@@ -57,7 +57,7 @@
             <!-- admin info -->
             <div class="dropdown">
                 <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../public/images/icon/user.png" class="mb-1 mr-1" />
+                    <img src="../public/images/icon/user.png" />
                     <span>시스템관리자(admin_12345)</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-xl-right dropdown-menu-header" aria-labelledby="dropdownMenuLink">
@@ -104,14 +104,6 @@
                         <ol>
                             <li><a href="stat-classroom.html">강의실별 이용 통계</a></li>
                             <li><a href="stat-user.html">사용자별 이용 통계</a></li>
-                            <li><a href="stat-day.html">일별 이용 현황</a></li>
-                            <li><a href="stat-month.html">월별 이용 현황</a></li>
-                        </ol>
-                    </li>
-                    <li><i class="fas fa-power-off"></i><span class="pl-2">로그인 접속현황</span>
-                        <ol>
-                            <li><a href="login01.html">로그인 접속 현황</a></li>
-                            <li><a href="login02.html">로그인 접속 로그</a></li>
                         </ol>
                     </li>
                     <li><i class="fas fa-database"></i><span class="pl-2">저장공간 관리</span>
@@ -148,10 +140,9 @@
                         <!-- list -->
                         <div class="manager-list">
                             <div style="width:1100px">
-                                <div class="text-primary p-2">플레이어 로고 설정</div>
-                                <table class="table-row">
+                                <table class="table-row m-2">
                                     <colgroup>
-                                        <col width="15%"/>
+                                        <col width="20%"/>
                                         <col width=""/>
                                     </colgroup>
                                     <tbody>
@@ -197,27 +188,17 @@
                                             <div class="text-muted">* 이미지파일은 크기에 상관없이 원본비율대로 표시됩니다.</div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>플레이어 배속 사용 여부</th>
+                                        <td>
+                                            <span class="icheck-material-indigo mr-3">
+                                                <input type="checkbox" id="chkbox2" />
+                                                <label for="chkbox2">사용</label>
+                                            </span>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
-                                <!-- -->
-                                <div class="text-primary p-2">플레이어 배속 설정</div>
-                                <table class="table-row ">
-                                    <colgroup>
-                                        <col width="15%"/>
-                                        <col width=""/>
-                                    </colgroup>
-                                    <tbody>
-                                <tr>
-                                    <th>플레이어 배속 사용 여부</th>
-                                    <td>
-                                        <span class="icheck-material-indigo mr-3">
-                                            <input type="checkbox" id="chkbox2" />
-                                            <label for="chkbox2">사용</label>
-                                        </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                                 <p class="text-center mt-3">
                                     <a class="btn btn-orange "><span>확인</span></a>
                                     <a class="btn btn-light ml-1"><span>취소</span></a>
