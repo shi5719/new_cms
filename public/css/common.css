@@ -1374,9 +1374,8 @@ li.plupload_droptext {
 .helpdesk .card-body {
   color: #707070;
   line-height: 1.6;
-  padding: 1rem 1rem 1rem 3rem;
-  background: url(../images/icon/help-a.png) no-repeat 1.25rem 1rem;
-
+  padding: 30px;
+  /*background: url(../images/icon/help-a.png) no-repeat 1.25rem 1rem;*/
   font-family: "NotoKrR", sans-serif;
 }
 
