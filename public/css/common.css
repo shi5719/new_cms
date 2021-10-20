@@ -1374,9 +1374,8 @@ li.plupload_droptext {
 .helpdesk .card-body {
   color: #707070;
   line-height: 1.6;
-  padding: 1rem 1rem 1rem 3rem;
-  background: url(../images/icon/help-a.png) no-repeat 1.25rem 1rem;
-
+  padding: 30px;
+  /*background: url(../images/icon/help-a.png) no-repeat 1.25rem 1rem;*/
   font-family: "NotoKrR", sans-serif;
 }
 
@@ -1524,4 +1523,33 @@ li.plupload_droptext {
 }
 .table-s td {
   color: #707070;
+}
+
+/* 라이브채널 20210702 추가 */
+.live_box{
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.live_box_onair {
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.live_media {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.live_media_player{
+width: 330px;
+height: 200px;
+border: 1px solid #DDDDDD;
+text-align: center;
+}
+.live_media_body {
+  -ms-flex: 1;
+  flex: 1;
 }

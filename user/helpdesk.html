@@ -41,7 +41,7 @@
         <!-- External //-->
     </head>
 <body>
-    <div class="wrap-upload">
+    <div class="wrap" style="background-color: #F8F8FF"> 
         <!-- header -->
         <nav class="navbar navbar-expand-xl navbar-light bg-primary">
             <div class="navbar-brand">
@@ -97,124 +97,388 @@
         <div class="contents-upload" >
             <div class="container-md mt-5 pb-5" style="background-color:#fff; min-height:700px;">
                 <div style="position:relative; width:100%; height:250px; background: url(../public/images/contents/helpdesk.png) no-repeat right 20px;">
-                    <div style="position:absolute; left:10px; top:100px"><h4>헬프데스크</h4></div>
-                    <div style="position:absolute; left:10px; top:140px"><h6>콘텐츠관리시스템에 관하여 궁금하신 사항을 확인하실 수 있습니다.</h6></div>
+                    <div style="position:absolute; left:10px; top:60px;">
+                        <h4 class="mb-3">헬프데스크</h4>
+                        <h6 class="mb-3">콘텐츠관리시스템에 관하여 궁금하신 사항을 확인하실 수 있습니다.</h6>
+                        <ul class="text-primary list-unstyled">
+                            <li>· 문의 : 033-260-6552 (교수학습개발원)</li>
+                            <li></li>· 이메일 : ctl@cnue.ac.kr</li>
+                        </ul>
+                    </div>
                 </div>
-                <!-- faq -->
-                <div class="accordion helpdesk" id="accordionExample">
-                    <!-- faq 01 -->
-                    <div class="card">
-                        <div class="card-header" id="help1">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#answer1" aria-expanded="true" aria-controls="collapseOne">
-                                  CMS가 뭔가요?
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer1" class="collapse show" aria-labelledby="help1" data-parent="#accordionExample">
-                            <div class="card-body">
-                              콘텐츠관리시스템. 웹사이트를 구성하고 있는 다양한 콘텐츠를 효율적으로 관리할 수 있도록 도와주는 시스템. <br />
-                              인터넷이 확산되면서 CMS는 홈페이지 저작도구를 비롯해 B2C용 콘텐츠관리시스템, B2B 전자상거래에 필요한 전자 카탈로그 관리시스템 등을 모두 포함하는 개념이다. <br />
-                              최근 선보이는 CMS는 전사적자원관리(ERP)를 비롯해 다양한 정보시스템과 연동되면서 웹서비스에 필요한 소스코드까지 관리할 수 있다. <br />
-                              국내 CMS 시장은 인터넷 콘텐츠 수요가 증가하고 전자상거래에 관심이 집중되면서 지속적으로 성장하고 있다.<br />[네이버 지식백과] CMS (매일경제, 매경닷컴)
-                            </div>
-                        </div>
-                    </div>
-                    <!-- faq 02 -->
-                    <div class="card">
-                        <div class="card-header" id="help2">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#answer2" aria-expanded="false" aria-controls="collapseTwo">
-                                  동영상을 업로드하고 싶어요.
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer2" class="collapse" aria-labelledby="help2" data-parent="#accordionExample">
-                            <div class="card-body">
-                              콘텐츠관리시스템. 웹사이트를 구성하고 있는 다양한 콘텐츠를 효율적으로 관리할 수 있도록 도와주는 시스템. <br />
-                              인터넷이 확산되면서 CMS는 홈페이지 저작도구를 비롯해 B2C용 콘텐츠관리시스템, B2B 전자상거래에 필요한 전자 카탈로그 관리시스템 등을 모두 포함하는 개념이다. <br />
-                              최근 선보이는 CMS는 전사적자원관리(ERP)를 비롯해 다양한 정보시스템과 연동되면서 웹서비스에 필요한 소스코드까지 관리할 수 있다. <br />
-                              국내 CMS 시장은 인터넷 콘텐츠 수요가 증가하고 전자상거래에 관심이 집중되면서 지속적으로 성장하고 있다.<br />[네이버 지식백과] CMS (매일경제, 매경닷컴)
-                            </div>
-                        </div>
-                    </div>
-                    <!-- faq 03 -->
-                    <div class="card">
-                        <div class="card-header" id="help3">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#answer3" aria-expanded="false" aria-controls="collapseThree">
-                                  관리자모드 접속 방법
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer3" class="collapse" aria-labelledby="help3" data-parent="#accordionExample">
-                            <div class="card-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 
-                              3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. 
-                              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                              Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
-                              Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably 
-                              haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                    <!-- faq 04 -->
-                    <div class="card">
-                        <div class="card-header" id="help4">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#answer4" aria-expanded="false" aria-controls="collapseThree">
-                                  수업자동녹화란?
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer4" class="collapse" aria-labelledby="help4" data-parent="#accordionExample">
-                            <div class="card-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 
-                              3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. 
-                              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                              Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
-                              Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably 
-                              haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                    <!-- faq 05 -->
-                    <div class="card">
-                        <div class="card-header" id="help5">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#answer5" aria-expanded="false" aria-controls="collapseThree">
-                                  CMS에 최적화 된 브라우저를 알려주세요.
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer5" class="collapse" aria-labelledby="help5" data-parent="#accordionExample">
-                            <div class="card-body">
-                                본 사이트는 Chrome에 최적화 되어 있습니다. <br />
-                                단, Internet Explorer 10 이하 및 사파리 등에서 정상적인 접속이 어려울 수 있으니 안정적인 사용을 위해 최적화 된 브라우저를 통해 이용해 주시기 바랍니다.<br />
-                                <p><a href="">크롬 다운로드 바로가기</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- faq 06 -->
-                    <div class="card">
-                        <div class="card-header" id="help6">
-                            <h2 class="mb-0">
-                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#answer6" aria-expanded="false" aria-controls="collapseThree">
-                                  아이디/비밀번호를 분실했어요.
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="answer6" class="collapse" aria-labelledby="help6" data-parent="#accordionExample">
-                            <div class="card-body">
-                              본 사이트는 Chrome에 최적화 되어 있습니다. <br />
-                              단, Internet Explorer 10 이하 및 사파리 등에서 정상적인 접속이 어려울 수 있으니 안정적인 사용을 위해 최적화 된 브라우저를 통해 이용해 주시기 바랍니다.<br />
-                              <p><a href="">크롬 다운로드 바로가기</a></p>
-                            </div>
-                        </div>
-                    </div>
 
+                <!-- upload-box -->
+                <div class="upload-box row row-cols-1 border-0">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active" id="nav-cms-tab" data-toggle="tab" href="#nav-cms" role="tab" aria-controls="nav-cms" aria-selected="true">
+                                CMS
+                            </a>
+                            <a class="nav-link" id="nav-laby-tab" data-toggle="tab" href="#nav-laby" role="tab" aria-controls="nav-laby" aria-selected="false">
+                                LABY (3.0)
+                            </a>
+                            <a class="nav-link" id="nav-labyrec-tab" data-toggle="tab" href="#nav-labyrec" role="tab" aria-controls="nav-labyrec" aria-selected="false">
+                                LABYREC
+                            </a>
+                            <a class="nav-link" id="nav-labyrecoder-tab" data-toggle="tab" href="#nav-labyrecoder" role="tab" aria-controls="nav-labyrecoder" aria-selected="false">
+                                LABY RECODER
+                            </a>
+                        </div>
+                    </nav>
+                    <!-- tab-content -->
+                    <div class="tab-content" id="nav-tabContent">
+                        <!-- 1 CMS -->
+                        <div class="tab-pane fade show active" id="nav-cms" role="tabpanel" aria-labelledby="nav-cms-tab">
+                            <div class="m-3">
+                                <div class="accordion helpdesk" id="helpdesk1">
+                                    <!-- faq 01 -->
+                                    <div class="card">
+                                        <div class="card-header" id="cms-help1">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#cms-answer1" aria-expanded="true" aria-controls="collapseOne">
+                                                기관코드가 무엇인가요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="cms-answer1" class="collapse" aria-labelledby="cms-help1" data-parent="#helpdesk1"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div>기관 코드란 각 사이트별 고유한 코드 값을 말합니다.</div>
+                                                <div>로그인 시 필요하며, 관리자에게 문의하여 알 수 있습니다.</div>
+                                                <div class="mb-2">* 기관에 따라 없는 경우도 있음</div>
+                                                <img src="../public/images/contents/help-cms-01.png" alt="" width="515" height="504" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 02 -->
+                                    <div class="card">
+                                        <div class="card-header" id="cms-help2">
+                                            <h2 class="mb-0">
+                                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#cms-answer2" aria-expanded="false" aria-controls="collapseTwo">
+                                                녹화콘텐츠 진행 현황은 어디서 알 수 있나요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="cms-answer2" class="collapse" aria-labelledby="cms-help2" data-parent="#helpdesk1">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">운영자 권한을 가진 분만 확인 가능하며
+                                                    ‘콘텐츠 현황 > 녹화 콘텐츠 진행 현황’ 메뉴에서 확인 가능합니다.<br />
+                                                    녹화 상태에 따라 녹화 / 업로드 / 등록 / LMS or Web / Vimeo 로 전송 상태를 실시간으로  확인 가능합니다.
+                                                    </div>
+                                                <img src="../public/images/contents/help-cms-02.png" alt="" width="100%" style="border:1px solid #ccc;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 03 -->
+                                    <div class="card">
+                                        <div class="card-header" id="cms-help3">
+                                            <h2 class="mb-0">
+                                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#cms-answer3" aria-expanded="false" aria-controls="collapseThree">
+                                                특강 개설은 어떻게 하나요? 녹화 시 특강이 보이지 않습니다.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="cms-answer3" class="collapse" aria-labelledby="cms-help3" data-parent="#helpdesk1">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">특강은 싸이트 운영자가 개설하며, 강의별 강의자를 지정하여 생성합니다.<br />
+                                                    특강에 추가되어 있는 강의자(참여자)만 녹화프로그램을 통해 해당 특강에 녹화가 가능합니다.
+                                                    </div>
+                                                <img src="../public/images/contents/help-cms-0301.png" alt="" width="100%" style="border:1px solid #ccc; margin-bottom:20px;" />
+                                                <img src="../public/images/contents/help-cms-0302.png" alt="" width="434" height="599" style="border:1px solid #ccc;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 04 -->
+                                    <div class="card">
+                                        <div class="card-header" id="cms-help4">
+                                            <h2 class="mb-0">
+                                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#cms-answer4" aria-expanded="false" aria-controls="collapseThree">
+                                                콘텐츠 복원이 가능한가요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="cms-answer4" class="collapse" aria-labelledby="cms-help4" data-parent="#helpdesk1">
+                                            <div class="card-body font-14">
+                                                CMS는 삭제된 콘텐츠는 휴지통으로 이관됩니다.<br />
+                                                복원을 원하실 경우 운영자에게 문의 바랍니다.                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 05 -->
+                                    <div class="card">
+                                        <div class="card-header" id="cms-help5">
+                                            <h2 class="mb-0">
+                                                <a class="btn btn-link btn-block text-left font-14 collapsed" href="" data-toggle="collapse" data-target="#cms-answer5" aria-expanded="false" aria-controls="collapseThree">
+                                                동영상 업로드와 녹화콘텐츠 업로드의 차이점은 무엇인가요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="cms-answer5" class="collapse" aria-labelledby="cms-help5" data-parent="#helpdesk1">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">동영상 업로드는 스트리밍에 최적화 되지 않은 파일로 일반적인 프로그램으로 만든 동영상 파일이라 서버에서 트랜스코딩 작업이 진행됩니다.<br />
+                                                    녹화콘텐츠 업로드는 Laby 제품군으로 녹화한 콘텐츠를 말하며 스트리밍에 최적화되어 업로드 후 바로 서비스 가능합니다.
+                                                    </div>
+                                                <img src="../public/images/contents/help-cms-05.png" alt="" width="973" heigh="390" style="border:1px solid #ccc;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 1 CMS -->
+                        <!-- 2 LABY -->
+                        <div class="tab-pane fade show" id="nav-laby" role="tabpanel" aria-labelledby="nav-laby-tab">
+                            <div class="m-3">
+                                <div class="accordion helpdesk" id="helpdesk2">
+                                    <!-- faq 01 -->
+                                    <div class="card">
+                                        <div class="card-header" id="laby-help1">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#laby-answer1" aria-expanded="true" aria-controls="collapseOne">
+                                                    프로그램 화면에 로딩 화면만 계속 떠요
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="laby-answer1" class="collapse" aria-labelledby="laby-help1" data-parent="#helpdesk2"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">처음 프로그램 설치 시 강의실 정보 및 녹화 장비 정보 설정이 제대로 되지 않아 나타나는 현상입니다.<br />
+                                                    설치 담당자 혹은 전산 담당자에게 요청하셔서 바르게 설정 바랍니다.
+                                                </div>
+                                                <img src="../public/images/contents/help-laby-01.png" alt="" width="577" height="339" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 02 -->
+                                    <div class="card">
+                                        <div class="card-header" id="laby-help2">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#laby-answer2" aria-expanded="false" aria-controls="collapseOne">
+                                                    미리보기 화면이 정상적으로 나오지 않아요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="laby-answer2" class="collapse" aria-labelledby="laby-help2" data-parent="#helpdesk2">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    <p>1. 연결된 영상 소스를 확인합니다 보통 1채널은 PC 영상, 2채널은 카메라 영상이 입력됩니다.<br/>
+                                                    예를 들어 카메라의 전원, 연결된 커텍터 등 영상 입력이 정상인지 확인합니다. </p>
+                                                    <p>2. 입력 소스가 정상인데도 미리보기 화면이 나오지 않는다면 담당자에게 요청하셔서 바르게 설정하시기 바랍니다.</p>                                         
+                                                </div>
+                                                <img src="../public/images/contents/help-laby-02.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 03 -->
+                                    <div class="card">
+                                        <div class="card-header" id="laby-help3">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#laby-answer3" aria-expanded="false" aria-controls="collapseOne">
+                                                    로그인하지 않고 녹화하는 방법이 있나요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="laby-answer3" class="collapse" aria-labelledby="laby-help3" data-parent="#helpdesk2"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-4">‘비로그인으로 사용하기’를 이용하여 녹화를 할 수 있습니다.</div>
+                                                <img src="../public/images/contents/help-laby-0301.png" alt="" width="719" height="421" class="mb-2" />
+                                                <div class="mb-4">'비로그인으로 사용하기' 버튼을 클릭합니다.</div>
+                                                <img src="../public/images/contents/help-laby-0302.png" alt="" width="719" height="421" class="mb-2" />
+                                                <div>제목을 입력 후 '강의시작' 버튼을 클릭하면 녹화가 진행됩니다.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 04 -->
+                                    <div class="card">
+                                        <div class="card-header" id="laby-help4">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#laby-answer4" aria-expanded="false" aria-controls="collapseOne">
+                                                    녹화 파일 내 컴퓨터로 다운로드 하는 방법
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="laby-answer4" class="collapse" aria-labelledby="laby-help4" data-parent="#helpdesk2"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    녹화 종료 후 ‘녹화파일 다운로드’, ‘강의등록 및 업로드’ 중 선택해서<br />
+                                                    녹화파일을 다운로드하거나 CMS에 등록할 수 있습니다. (순차적으로 두가지를 진행해도 됩니다.)                                   
+                                                </div>
+                                                <img src="../public/images/contents/help-laby-04.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 05 -->
+                                    <div class="card">
+                                        <div class="card-header" id="laby-help5">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#laby-answer5" aria-expanded="false" aria-controls="collapseOne">
+                                                    소리가 메아리치듯 계속 돌거나 웅웅거리면서 계속 커져요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="laby-answer5" class="collapse" aria-labelledby="laby-help5" data-parent="#helpdesk2"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    미리보기에서 소리가 켜져 있는지 확인해주세요.<br/>
+                                                    (소리가 켜져있으면 스피커를 통해 나오는 소리가 다시 마이크로 들어가 소리가 계속 돌면서 웅웅거리게 됩니다.)
+                                                </div>
+                                                <img src="../public/images/contents/help-laby-05.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 2 LABY -->
+                        <!-- 3 LABY-REC -->
+                        <div class="tab-pane fade" id="nav-labyrec" role="tabpanel" aria-labelledby="nav-labyrec-tab">
+                            <div class="m-3">
+                                <div class="accordion helpdesk" id="helpdesk3">
+                                    <!-- faq 01 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help1">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer1" aria-expanded="true" aria-controls="collapseOne">
+                                                    1CH 미리보기 화면이 검정색으로 나와요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer1" class="collapse" aria-labelledby="labyrec-help1" data-parent="#helpdesk3"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    1. '그래픽 설정' 선택<br />
+                                                    2. '찾아보기' 선택<br />
+                                                    3. C:￦lab241￦LabyRec￦LabyRec.exe 선택 후 추가<br />
+                                                    4. 'LectureMain' 선택 후 옵션에서 절전으로 선택
+                                                </div>
+                                                <img src="../public/images/contents/help-labyrec-01.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 02 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help2">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer2" aria-expanded="true" aria-controls="collapseOne">
+                                                    2CH 미리보기 화면에 컬러바가 나와요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer2" class="collapse" aria-labelledby="labyrec-help2" data-parent="#helpdesk3"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">PC에 연결된 캡처 카드에 영상 소스 연결이 안되 있거나 카메카 출력을 확인합니다.</div>
+                                                <img src="../public/images/contents/help-labyrec-0201.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 03 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help3">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer3" aria-expanded="true" aria-controls="collapseOne">
+                                                    2CH 미리보기 화면이 빨간색으로 나와요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer3" class="collapse" aria-labelledby="labyrec-help3" data-parent="#helpdesk3"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    1. 노트북 카메라 사용 시 : 장치 관리자에 카메라 Device 연결 확인<br />
+                                                    2. 캡처 카드 사용 시 :  PC에 연결된 캡처 카드 장애..분리 후 재연결 또는 교체 요망
+                                                </div>
+                                                <img src="../public/images/contents/help-labyrec-0202.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 04 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help4">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer4" aria-expanded="true" aria-controls="collapseOne">
+                                                    "서버 연결에 실패했습니다."
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer4" class="collapse" aria-labelledby="labyrec-help4" data-parent="#helpdesk3"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    <p>1. CMS 시스템 사용 시 출력되는 메세지 이며 접속 정보가 다르거나 인터넷이  안되는 경우 표출 됩니다. <br />
+                                                    관리자에게 요청하여 설정합니다.</p>
+                                                    <p>CMS 시스템을 이용안하셔도 녹화는 가능합니다.</p>
+                                                </div>
+                                                <img src="../public/images/contents/help-labyrec-03.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- faq 05 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help5">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer5" aria-expanded="true" aria-controls="collapseOne">
+                                                    녹화된 영상은 어디로 저장되나요?
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer5" class="collapse" aria-labelledby="labyrec-help5" data-parent="#helpdesk3">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">1. 설정 메뉴를 선택하시면 영상 저장 경로를 확인할 수 있으며 변경도 가능합니다.</div>
+                                                <img src="../public/images/contents/help-labyrec-0501.png" alt="" class="mb-4" />
+                                                <div class="mb-2">2. 녹화 후 “저장 폴더 열기”로 확인 가능합니다.</div>
+                                                <img src="../public/images/contents/help-labyrec-0502.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- faq 06 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrec-help6">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrec-answer6" aria-expanded="true" aria-controls="collapseOne">
+                                                    프로그램 실행 시 로딩화면만 나와요.
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrec-answer6" class="collapse" aria-labelledby="labyrec-help6" data-parent="#helpdesk3">
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">dxwebsetup.exe 파일을 설치 후 재실행 해주시면 됩니다.<br />
+                                                    다운로드 경로 : 
+                                                </div>
+                                                <img src="../public/images/contents/help-labyrec-04.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 3 LABY-REC -->
+                        <!-- 4 LABY-RECODER -->
+                        <div class="tab-pane fade" id="nav-labyrecoder" role="tabpanel" aria-labelledby="nav-labyrecoder-tab">
+                            <div class="m-3">
+                                <div class="accordion helpdesk" id="helpdesk4">
+                                    <!-- faq 01 -->
+                                    <div class="card">
+                                        <div class="card-header" id="labyrecoder-help1">
+                                            <h2 class="mb-0"> 
+                                                <a class="btn btn-link btn-block text-left font-14" href="" data-toggle="collapse" data-target="#labyrecoder-answer1" aria-expanded="true" aria-controls="collapseOne">
+                                                    labyrecoder
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="labyrecoder-answer1" class="collapse" aria-labelledby="labyrecoder-help1" data-parent="#helpdesk4"><!-- class:show -->
+                                            <div class="card-body font-14">
+                                                <div class="mb-2">
+                                                    labyrecoder
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 4 LABY-RECODER -->
+
+
+                    </div>
                 </div>
-                <!--// faq -->
+  
             </div>
         </div>
         <!--// contents (sidebar, article) -->

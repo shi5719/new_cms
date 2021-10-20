@@ -19,7 +19,7 @@ $(document).ready(function(){
         }
     }
 
-
+    $(".niceScroll").niceScroll();
     
     $('.panel-heading a').click(function() {
         $('.panel-heading').removeClass('active');
